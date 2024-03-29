@@ -17,6 +17,7 @@ export const Tab = styled.span`
 
   span {
     font-size: 0.9rem;
+    margin-top: 3px;
   }
 
   a {
