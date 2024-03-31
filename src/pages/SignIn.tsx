@@ -2,13 +2,15 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const SignIn = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Header>
         {/* <h1>로그인</h1> */}
         <Logo src="/assets/image/logo2.png"></Logo>
         <p>이름이랑은 임의로 해놓음</p>
-        <p>나만의 식물 키우기에 로그인 해주세용!</p>
+        <p>나만의 무럭이 키우기를 시작해주세용!</p>
       </Header>
       <Body>
         <LoginBox>
@@ -34,7 +36,10 @@ const SignIn = () => {
         <KakaoBox>
           <hr />
           <p>간편 로그인</p>
-          <KakaoBtn>카카오 로그인</KakaoBtn>
+          <KakaoBtn
+            src="/assets/image/kakao_logo.png"
+            onClick={() => console.log("카카오로그인")}
+          ></KakaoBtn>
         </KakaoBox>
       </Body>
     </Container>
@@ -47,7 +52,8 @@ const Container = styled.div`
   margin: auto;
   align-items: center;
   justify-content: center;
-  padding: 60px 0;
+  padding: 50px 0;
+  height: 100%;
 `;
 
 const Header = styled.div`
@@ -62,7 +68,7 @@ const Header = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 80px;
+  height: 55px;
 `;
 
 const Body = styled.div`
@@ -147,13 +153,20 @@ const KakaoBox = styled.div`
     z-index: 1;
   }
 `;
-const KakaoBtn = styled.button`
+
+const KakaoBtn = styled.img`
   margin-top: 10px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 5px;
-  border: none;
-  background-color: #f8e056;
-  font-weight: bold;
+  height: 50px;
+  width: 365px;
+  cursor: pointer;
 `;
+// const KakaoBtn = styled.button`
+//   margin-top: 10px;
+//   width: 100%;
+//   padding: 12px;
+//   border-radius: 5px;
+//   border: none;
+//   background-color: #f8e056;
+//   font-weight: bold;
+// `;
 export default SignIn;
