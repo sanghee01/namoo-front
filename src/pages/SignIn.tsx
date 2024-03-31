@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const SignIn = () => {
   return (
     <Container>
       <Header>
-        <h1>로그인</h1>
+        {/* <h1>로그인</h1> */}
+        <Logo src="/assets/image/logo2.png"></Logo>
+        <p>이름이랑은 임의로 해놓음</p>
         <p>나만의 식물 키우기에 로그인 해주세용!</p>
       </Header>
       <Body>
@@ -26,7 +29,7 @@ const SignIn = () => {
           <span>|</span>
           <span>비밀번호 찾기</span>
           <span>|</span>
-          <span> 회원가입</span>
+          <span onClick={() => navigate("/signup")}> 회원가입</span>
         </FindBox>
         <KakaoBox>
           <hr />
@@ -56,6 +59,10 @@ const Header = styled.div`
     color: gray;
     margin-top: 2px;
   }
+`;
+
+const Logo = styled.img`
+  height: 80px;
 `;
 
 const Body = styled.div`
