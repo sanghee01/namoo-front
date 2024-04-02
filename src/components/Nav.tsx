@@ -9,7 +9,7 @@ const Nav = () => {
   return (
     <Tabs>
       <Tab>
-        <Link to="/">
+        <Link to="/home">
           <AiFillHome size="40" />
           <span>홈</span>
         </Link>

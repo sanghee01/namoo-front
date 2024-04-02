@@ -8,25 +8,32 @@ import styled from "styled-components";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
+import { useRecoilValue } from "recoil";
+import { userState } from "./recoil/atoms/userState";
 
 const Router = () => {
+  const user = useRecoilValue(userState);
+
   return (
     <BrowserRouter>
       <Container>
         <Main>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/start" element={<Start />} />
+            <Route path="/" element={<Start />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/history" element={<History />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </Main>
+        {/* 유저가 로그인할 때만 Nav 보이도록. 지금은 데이터가 없으므로 주석처리 함 */}
+        {/* {user.name && ( */}
         <Footer>
           <Nav />
         </Footer>
+        {/* )} */}
       </Container>
     </BrowserRouter>
   );
