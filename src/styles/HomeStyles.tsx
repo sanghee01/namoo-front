@@ -24,6 +24,12 @@ export const FriendshipBar = styled.div`
   display: flex;
   align-items: center;
 
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   progress {
     appearance: none;
     margin-left: 10px;
@@ -53,15 +59,34 @@ export const Main = styled.main`
 
 export const Character = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 140px;
+  margin-top: 180px;
+
+  div {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 `;
 
 export const PlantImg = styled.img`
   width: 200px;
   height: 200px;
+`;
+
+export const LevelImg = styled.img`
+  height: 25px;
+  width: 25px;
+`;
+
+export const CharacterName = styled.span`
+  font-weight: 500;
+  transform: translateY(15%);
 `;
 
 export const SideBar = styled.aside`

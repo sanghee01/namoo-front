@@ -11,7 +11,9 @@ import {
   Main,
   Character,
   PlantImg,
+  LevelImg,
   SideBar,
+  CharacterName,
 } from "../styles/HomeStyles";
 
 const Home = () => {
@@ -19,30 +21,34 @@ const Home = () => {
     <HomeBackGround>
       <Header>
         <FriendshipBar>
-          <FaHeart size="30" />
+          <FaHeart color="#b72020" size="30" />
           <progress value="80" max="100"></progress>
         </FriendshipBar>
-        <BiSolidBell size="40" />
+        <BiSolidBell color="#ffc400" size="40" />
       </Header>
       <Main>
         <Character>
           <PlantImg src="/assets/image/plant.png" alt="plant" />
+          <div>
+            <LevelImg src="/assets/image/level5.png" alt="level" />
+            <CharacterName>귀염뽀짝상추</CharacterName>
+          </div>
         </Character>
         <SideBar>
           <div>
-            <FaBook size="40" />
+            <FaBook color="#a8511c" size="40" />
             <span>퀘스트</span>
           </div>
           <div>
-            <IoIosWater size="40" />
+            <IoIosWater color="#13b5d6" size="40" />
             <span>물주기</span>
           </div>
           <div>
-            <GiHealthNormal size="40" />
+            <GiHealthNormal color="#ff600a" size="40" />
             <span>영양제</span>
           </div>
           <div>
-            <BsCameraFill size="40" />
+            <BsCameraFill color="#555555" size="40" />
             <span>질병확인</span>
           </div>
         </SideBar>
