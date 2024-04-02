@@ -11,7 +11,9 @@ import {
   Main,
   Character,
   PlantImg,
+  LevelImg,
   SideBar,
+  CharacterName,
 } from "../styles/HomeStyles";
 
 const Home = () => {
@@ -27,6 +29,10 @@ const Home = () => {
       <Main>
         <Character>
           <PlantImg src="/assets/image/plant.png" alt="plant" />
+          <div>
+            <LevelImg src="/assets/image/level5.png" alt="level" />
+            <CharacterName>귀염뽀짝상추</CharacterName>
+          </div>
         </Character>
         <SideBar>
           <div>
