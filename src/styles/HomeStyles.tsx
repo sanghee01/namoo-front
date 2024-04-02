@@ -24,6 +24,12 @@ export const FriendshipBar = styled.div`
   display: flex;
   align-items: center;
 
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   progress {
     appearance: none;
     margin-left: 10px;
@@ -80,7 +86,7 @@ export const LevelImg = styled.img`
 
 export const CharacterName = styled.span`
   font-weight: 500;
-  transform: translateY(10%);
+  transform: translateY(15%);
 `;
 
 export const SideBar = styled.aside`
