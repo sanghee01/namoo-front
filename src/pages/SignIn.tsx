@@ -7,7 +7,6 @@ const SignIn = () => {
   return (
     <Container>
       <Header>
-        {/* <h1>로그인</h1> */}
         <Logo src="/assets/image/logo2.png"></Logo>
         <p>이름이랑은 임의로 해놓음</p>
         <p>나만의 무럭이 키우기를 시작해주세용!</p>
@@ -75,7 +74,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 35px;
-  width: 65%;
+  width: 70%;
 `;
 
 const LoginBox = styled.div`
@@ -84,27 +83,26 @@ const LoginBox = styled.div`
 `;
 
 const Input = styled.input`
-  padding: 12px;
+  padding: 16px;
   margin: 5px 0;
   border-radius: 5px;
   border: 1px solid gray;
 `;
 
 const LoginCheckBox = styled.div`
-  & input {
-    border-radius: 100%;
-  }
+  cursor: pointer;
+
   & span {
     margin-left: 3px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
     color: #9a9a9a;
   }
 `;
 
 const LoginBtn = styled.button`
-  padding: 12px;
-  margin: 15px 2px;
+  padding: 16px;
+  margin: 18px 2px;
   border-radius: 5px;
   border: none;
   font-weight: bold;
@@ -112,11 +110,11 @@ const LoginBtn = styled.button`
 `;
 
 const FindBox = styled.div`
-  margin: 18px 0;
+  margin: 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 15px;
   & span {
     margin: 0 5px;
     cursor: pointer;
@@ -145,7 +143,7 @@ const KakaoBox = styled.div`
   & p {
     padding: 0 12px;
     margin-bottom: 5px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
     color: #9a9a9a;
     background-color: white;
@@ -156,17 +154,9 @@ const KakaoBox = styled.div`
 
 const KakaoBtn = styled.img`
   margin-top: 10px;
-  height: 50px;
-  width: 365px;
+  height: 56px;
+  width: 385px;
   cursor: pointer;
 `;
-// const KakaoBtn = styled.button`
-//   margin-top: 10px;
-//   width: 100%;
-//   padding: 12px;
-//   border-radius: 5px;
-//   border: none;
-//   background-color: #f8e056;
-//   font-weight: bold;
-// `;
+
 export default SignIn;

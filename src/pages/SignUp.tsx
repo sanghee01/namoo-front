@@ -11,10 +11,10 @@ const SignUp = () => {
       <Body>
         <InformationBox>
           <Input type="nickname" id="nickname" placeholder="닉네임 입력" />
-          <EmailSend>
+          {/* <EmailSend>
             <Input type="email" id="email" placeholder="이메일 입력" />
             <button>인증하기</button>
-          </EmailSend>
+          </EmailSend> */}
           <Input type="password" id="password" placeholder="비밀번호 입력" />
           <Input
             type="repassword"
@@ -68,8 +68,8 @@ const Logo = styled.img`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
-  width: 65%;
+  margin-top: 55px;
+  width: 68%;
 `;
 
 const InformationBox = styled.div`
@@ -77,29 +77,29 @@ const InformationBox = styled.div`
   flex-direction: column;
 `;
 
-const EmailSend = styled.div`
-  position: relative;
-  & button {
-    position: absolute;
-    width: 90px;
-    height: 40px;
-    border-radius: 5px;
-    border: none;
-    top: 13px;
-    right: 5px;
-    background-color: #8cd57e;
-    font-size: 13px;
-    font-weight: bold;
-  }
-`;
+// const EmailSend = styled.div`
+//   position: relative;
+//   & button {
+//     position: absolute;
+//     width: 90px;
+//     height: 40px;
+//     border-radius: 5px;
+//     border: none;
+//     top: 13px;
+//     right: 5px;
+//     background-color: #8cd57e;
+//     font-size: 13px;
+//     font-weight: bold;
+//   }
+// `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 14px;
+  padding: 17px;
   margin: 8px 0;
   border-radius: 5px;
   border: 1px solid gray;
-  font-size: 13px;
+  font-size: 15px;
 `;
 
 const SignupBtn = styled.div`
@@ -108,8 +108,8 @@ const SignupBtn = styled.div`
   justify-content: center;
   margin-top: 50px;
   & button {
-    width: 70%;
-    padding: 10px;
+    width: 75%;
+    padding: 13px;
     border-radius: 5px;
     border: none;
     font-weight: bold;
