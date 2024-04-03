@@ -1,48 +1,61 @@
-import * as P from "../styles/ProfileStyles";
 import { IoMdSettings } from "react-icons/io";
 import { IoMdBookmarks } from "react-icons/io";
 import { IoIosTrophy } from "react-icons/io";
+import HeatmapComponent from "../components/Heatmap";
+import {
+  ProfileBackGround,
+  Header,
+  Text,
+  SettingBox,
+  Main,
+  ProfileBox,
+  BtnContainer,
+  BtnBox,
+  TextBox,
+  IconBox,
+  QuestBox,
+} from "../styles/ProfileStyles";
 
 
 const Profile = () => {
   return (
-    <P.ProfileBackGround>
-      <P.Header>
-        <P.Text>
+    <ProfileBackGround>
+      <Header>
+        <Text>
           마이페이지
-        </P.Text>
-        <P.SettingBox>
+        </Text>
+        <SettingBox>
           <IoMdSettings size="40"/>
-        </P.SettingBox>  
-      </P.Header>
-      <P.Main>
-       <P.ProfileBox>
+        </SettingBox>  
+      </Header>
+      <Main>
+       <ProfileBox>
 
-       </P.ProfileBox> 
-       <P.BtnContainer>
-       <P.BtnBox>
-        <P.TextBox>
-         <P.Text>식물도감</P.Text>
-        </P.TextBox>
-        <P.IconBox>
+       </ProfileBox> 
+       <BtnContainer>
+       <BtnBox>
+        <TextBox>
+         <Text>식물도감</Text>
+        </TextBox>
+        <IconBox>
           <IoMdBookmarks color="#a8511c" size="80"/>
-        </P.IconBox>
-       </P.BtnBox>
-       <P.BtnBox>
-        <P.TextBox>
-         <P.Text>명예의 전당</P.Text>
-        </P.TextBox>
-        <P.IconBox>
+        </IconBox>
+       </BtnBox>
+       <BtnBox>
+        <TextBox>
+         <Text>명예의 전당</Text>
+        </TextBox>
+        <IconBox>
           <IoIosTrophy color="#ffc400" size="80"/>
-        </P.IconBox>
-       </P.BtnBox>
-       </P.BtnContainer>
-       <P.QuestBox>
+        </IconBox>
+       </BtnBox>
+       </BtnContainer>
+       <QuestBox>
         
-       </P.QuestBox>
-      </P.Main>
+       </QuestBox>
+      </Main>
       
-    </P.ProfileBackGround>
+    </ProfileBackGround>
   );
 };
 
