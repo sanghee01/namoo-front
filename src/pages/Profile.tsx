@@ -25,7 +25,7 @@ const Profile = () => {
          <P.Text>식물도감</P.Text>
         </P.TextBox>
         <P.IconBox>
-          <IoMdBookmarks size="80"/>
+          <IoMdBookmarks color="#a8511c" size="80"/>
         </P.IconBox>
        </P.BtnBox>
        <P.BtnBox>
@@ -33,7 +33,7 @@ const Profile = () => {
          <P.Text>명예의 전당</P.Text>
         </P.TextBox>
         <P.IconBox>
-          <IoIosTrophy size="80"/>
+          <IoIosTrophy color="#ffc400" size="80"/>
         </P.IconBox>
        </P.BtnBox>
        </P.BtnContainer>
