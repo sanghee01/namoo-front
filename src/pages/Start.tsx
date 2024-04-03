@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const Start = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Explain>
@@ -12,7 +15,7 @@ const Start = () => {
         <Logo src="/assets/image/logo2.png"></Logo>
       </SlideImg>
       <StartBtn>
-        <button>시작하기</button>
+        <button onClick={() => navigate("/signin")}>시작하기</button>
       </StartBtn>
     </Container>
   );
@@ -37,7 +40,7 @@ const Logo = styled.img`
 `;
 
 const LogoImg = styled.img`
-  width: 200px;
+  width: 180px;
   margin-bottom: 20px;
 `;
 
@@ -58,10 +61,11 @@ const SlideImg = styled.div`
 
 const StartBtn = styled.div`
   & button {
-    padding: 15px 210px;
+    padding: 19px 200px;
     border-radius: 5px;
     border: none;
     font-weight: bold;
+    font-size: 20px;
     background-color: #8cd57e;
   }
 `;
