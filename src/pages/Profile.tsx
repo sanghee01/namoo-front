@@ -1,7 +1,7 @@
 import { IoMdSettings } from "react-icons/io";
 import { IoMdBookmarks } from "react-icons/io";
 import { IoIosTrophy } from "react-icons/io";
-import HeatmapComponent from "../components/Heatmap";
+import Demo from "../components/Heatmap";
 import {
   ProfileBackGround,
   Header,
@@ -51,7 +51,7 @@ const Profile = () => {
        </BtnBox>
        </BtnContainer>
        <QuestBox>
-        
+        <Demo />
        </QuestBox>
       </Main>
       

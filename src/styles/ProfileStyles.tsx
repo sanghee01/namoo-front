@@ -102,10 +102,13 @@ export const BtnBox = styled.div`
 `
 
 export const QuestBox = styled.div`
+  display: flex;
   height: 22%;
   border-radius: 30px;
   background-color:#feefc6;
   margin: 10px;
+  justify-content: center;
+  padding: 10px;
 
   &:hover {
     border: 2px solid #f0e68c;
