@@ -16,16 +16,16 @@ const SignUp = () => {
             <button>인증하기</button>
           </EmailSend> */}
           <Input type="password" id="password" placeholder="비밀번호 입력" />
+          <p>
+            * 8자 이상 <br /> * 알파벳, 숫자를 이용하여 조합
+          </p>
           <Input
             type="repassword"
             id="repassword"
             placeholder="비밀번호 재입력"
           />
-          <Input
-            type="phone"
-            id="phone"
-            placeholder="휴대폰 번호 입력(- 제외 11자리 입력)"
-          />
+          <Input type="phone" id="phone" placeholder="휴대폰 번호 입력" />
+          <p> * '-' 제외하고 11자리 입력</p>
           <Input
             type="destination"
             id="destination"
@@ -70,6 +70,13 @@ const Body = styled.div`
   flex-direction: column;
   margin-top: 55px;
   width: 68%;
+
+  & p {
+    white-space: pre-wraps;
+    font-size: 14px;
+    color: gray;
+    font-weight: bold;
+  }
 `;
 
 const InformationBox = styled.div`

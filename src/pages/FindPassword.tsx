@@ -6,11 +6,12 @@ const FindPassword = () => {
       <Header>
         <Logo src="/assets/image/logo2.png"></Logo>
         <Title>비밀번호 찾기</Title>
-        <p>기존에 가입한 이메일을 통해 새로운 비밀번호를 설정하세요.</p>
+        <p>비밀번호를 잊어버리셨나요?</p>
+        <p>기존에 가입한 이메일을 통해 새로운 비밀번호를 설정할 수 있어요.</p>
       </Header>
       <Body>
         <input type="email" id="email" placeholder="이메일" />
-        <button>이메일로 보내기</button>
+        <button>재설정 메일 보내기</button>
         <p>해당 이메일의 메일함을 확인 한 후 접속해주세요.</p>
       </Body>
     </Container>

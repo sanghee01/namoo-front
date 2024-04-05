@@ -8,6 +8,7 @@ import styled from "styled-components";
 import SignIn from "./pages/SignIn";
 import FindId from "./pages/FindId";
 import FindPassword from "./pages/FindPassword";
+import NeedActivate from "./pages/NeedActivate";
 import RePassword from "./pages/RePassword";
 import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
@@ -24,8 +25,10 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Start />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/needactivate" element={<NeedActivate />} />
             <Route path="/findid" element={<FindId />} />
             <Route path="/findpassword" element={<FindPassword />} />
+            <Route path="/repassword" element={<RePassword />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/home" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
