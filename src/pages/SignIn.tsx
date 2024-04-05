@@ -26,9 +26,9 @@ const SignIn = () => {
           <LoginBtn>로그인</LoginBtn>
         </LoginBox>
         <FindBox>
-          <span onClick={() => console.log(1)}>아이디 찾기</span>
+          <span onClick={() => navigate("/findid")}>아이디 찾기</span>
           <span>|</span>
-          <span>비밀번호 찾기</span>
+          <span onClick={() => navigate("/findpassword")}>비밀번호 찾기</span>
           <span>|</span>
           <span onClick={() => navigate("/signup")}> 회원가입</span>
         </FindBox>
@@ -83,7 +83,7 @@ const LoginBox = styled.div`
 `;
 
 const Input = styled.input`
-  padding: 16px;
+  padding: 15px;
   margin: 5px 0;
   border-radius: 5px;
   border: 1px solid gray;
@@ -91,7 +91,6 @@ const Input = styled.input`
 
 const LoginCheckBox = styled.div`
   cursor: pointer;
-
   & span {
     margin-left: 3px;
     font-size: 15px;
