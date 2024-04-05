@@ -58,7 +58,7 @@ export const Main = styled.main`
   height: 90%;
 `;
 
-export const ProfileBox = styled.div`
+export const ProfileCard = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -76,6 +76,45 @@ export const ProfileBox = styled.div`
   }
 
 `;
+export const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:150px;
+  height:250px;
+  margin:10px 0px 10px 10px;
+
+`;
+
+export const DetailBox = styled.div`
+  display: flex;
+  flex-direction: column;  
+  justify-content: center;
+  width:150px;
+  height:40px;
+  margin:15px;
+
+  span{
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+`
+export const PlantImg = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+export const CharacterName = styled.span`
+  margin:5px 5px 0px 5px;
+  font-weight: 500;
+`;
+
+export const Level = styled.span`
+  font-weight: 400;
+  font-size: 12px;
+`
 
 export const BtnContainer = styled.div`
   width: 100%;
@@ -102,10 +141,13 @@ export const BtnBox = styled.div`
 `
 
 export const QuestBox = styled.div`
+  display: flex;
   height: 22%;
   border-radius: 30px;
   background-color:#feefc6;
   margin: 10px;
+  justify-content: center;
+  padding: 10px;
 
   &:hover {
     border: 2px solid #f0e68c;
