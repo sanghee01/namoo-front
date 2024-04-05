@@ -8,7 +8,7 @@ const SignIn = () => {
     <Container>
       <Header>
         <Logo src="/assets/image/logo2.png"></Logo>
-        <p>이름이랑은 임의로 해놓음</p>
+
         <p>나만의 무럭이 키우기를 시작해주세용!</p>
       </Header>
       <Body>
@@ -73,7 +73,7 @@ const Logo = styled.img`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
+  margin-top: 42px;
   width: 70%;
 `;
 

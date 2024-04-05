@@ -19,7 +19,7 @@ const FindId = () => {
           id="number"
           placeholder="인증번호를 입력해주세요."
         />
-        <p>해당 이메일로 전송된 입력해주세요.</p>
+        <p>해당 이메일로 전송된 인증번호를 입력해주세요.</p>
         <button>이메일로 보내기</button>
       </Body>
     </Container>
@@ -97,6 +97,7 @@ const Body = styled.div`
   & p {
     color: #77b56a;
     font-weight: bold;
+    margin-bottom: 17px;
   }
 `;
 
