@@ -8,7 +8,12 @@ import {
   Text,
   SettingBox,
   Main,
+  ProfileCard,
   ProfileBox,
+  DetailBox,
+  PlantImg,
+  Level,
+  CharacterName,
   BtnContainer,
   BtnBox,
   TextBox,
@@ -29,9 +34,25 @@ const Profile = () => {
         </SettingBox>  
       </Header>
       <Main>
-       <ProfileBox>
-
-       </ProfileBox> 
+       <ProfileCard>
+        <ProfileBox>
+          <PlantImg src="/assets/image/plant.png" alt="plant" />
+          <CharacterName>귀염뽀짝상추</CharacterName>
+          <Level>Lv.1</Level>
+        </ProfileBox>
+        <DetailBox>
+          <Text>2024.04.06</Text>
+          <span>생년월일</span>
+        </DetailBox>
+        <DetailBox>
+          <Text>98%</Text>
+          <span>애정도</span>
+        </DetailBox>
+        <DetailBox>
+          <Text>생명수가 필요해!</Text>
+          <span>오늘의 한마디</span>
+        </DetailBox>
+       </ProfileCard> 
        <BtnContainer>
        <BtnBox>
         <TextBox>

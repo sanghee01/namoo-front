@@ -13,6 +13,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/recoil": "^0.0.9",
     "@uiw/react-heat-map": "^2.2.2",
+    "@uiw/react-tooltip": "^4.22.3",
     "cal-heatmap": "^4.2.4",
     "chart.js": "^4.4.2",
     "react": "^18.2.0",
