@@ -95,7 +95,7 @@ const InformationBox = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  padding: 17px;
+  padding: 15px;
   margin: 8px 0;
   border-radius: 5px;
   border: 1px solid gray;
