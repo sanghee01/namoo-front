@@ -13,7 +13,7 @@ import RePassword from "./pages/RePassword";
 import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
 import { useRecoilValue } from "recoil";
-import { userState } from "./recoil/atoms/userState";
+import { userState } from "./recoil/state";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -36,12 +36,12 @@ const Router = () => {
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </Main>
-        {/* 유저가 로그인할 때만 Nav 보이도록. 지금은 데이터가 없으므로 주석처리 함 */}
-        {/* {user.name && ( */}
-        <Footer>
-          <Nav />
-        </Footer>
-        {/* )} */}
+        {/* 로그인 상태에만 Nav bar 보이도록 */}
+        {user && (
+          <Footer>
+            <Nav />
+          </Footer>
+        )}
       </Container>
     </BrowserRouter>
   );

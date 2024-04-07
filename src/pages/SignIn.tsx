@@ -1,14 +1,24 @@
 import { useNavigate } from "react-router";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { userState } from "../recoil/state";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(userState);
+
+  // 로그인 버튼 클릭 시 실행되는 함수
+  function clickLoginBtn() {
+    navigate("/home");
+    // 이 자리에 HTTP 요청 함수 올 예정
+    const user = "홍길동";
+    setUser(user);
+  }
 
   return (
     <Container>
       <Header>
         <Logo src="/assets/image/logo2.png"></Logo>
-
         <p>나만의 무럭이 키우기를 시작해주세용!</p>
       </Header>
       <Body>
@@ -23,7 +33,7 @@ const SignIn = () => {
             />
             <span>로그인 상태 유지</span>
           </LoginCheckBox>
-          <LoginBtn>로그인</LoginBtn>
+          <LoginBtn onClick={() => clickLoginBtn()}>로그인</LoginBtn>
         </LoginBox>
         <FindBox>
           <span onClick={() => navigate("/findid")}>아이디 찾기</span>
