@@ -1,6 +1,8 @@
 import { IoMdSettings } from "react-icons/io";
 import { IoMdBookmarks } from "react-icons/io";
 import { IoIosTrophy } from "react-icons/io";
+import { MdArrowBackIos } from "react-icons/md";
+import { Link } from "react-router-dom";
 import Demo from "../components/Heatmap";
 import {
   ProfileBackGround,
@@ -19,16 +21,23 @@ import {
   TextBox,
   IconBox,
   QuestBox,
+  Container,
 } from "../styles/ProfileStyles";
+
 
 
 const Profile = () => {
   return (
     <ProfileBackGround>
       <Header>
+        <Container>
+        <Link to="/myplant">
+            <MdArrowBackIos size="30"/>
+        </Link>
         <Text>
           식물이야기
         </Text>
+        </Container>
         <SettingBox>
           <IoMdSettings size="40"/>
         </SettingBox>  
