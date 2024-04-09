@@ -27,7 +27,7 @@ const Profile = () => {
     <ProfileBackGround>
       <Header>
         <Text>
-          마이페이지
+          식물이야기
         </Text>
         <SettingBox>
           <IoMdSettings size="40"/>

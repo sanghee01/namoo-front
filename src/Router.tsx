@@ -12,6 +12,7 @@ import NeedActivate from "./pages/NeedActivate";
 import RePassword from "./pages/RePassword";
 import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
+import MyPlant from "./pages/MyPlant";
 import { useRecoilValue } from "recoil";
 import { userState } from "./recoil/atoms/userState";
 
@@ -34,6 +35,8 @@ const Router = () => {
             <Route path="/chat" element={<Chat />} />
             <Route path="/history" element={<History />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/myplant" element={<MyPlant />} />
+
           </Routes>
         </Main>
         {/* 유저가 로그인할 때만 Nav 보이도록. 지금은 데이터가 없으므로 주석처리 함 */}
