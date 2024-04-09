@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { BsChatDotsFill } from "react-icons/bs";
 import { BsBarChartFill } from "react-icons/bs";
-import { BiSolidUser } from "react-icons/bi";
+import { ImLeaf } from "react-icons/im";
 import { Tabs, Tab } from "../styles/NavStyles";
 
 const Nav = () => {
@@ -27,8 +27,8 @@ const Nav = () => {
         </Link>
       </Tab>
       <Tab>
-        <Link to="/profile">
-          <BiSolidUser size="40" />
+        <Link to="/myplant">
+          <ImLeaf size="40" />
           <span>프로필</span>
         </Link>
       </Tab>
