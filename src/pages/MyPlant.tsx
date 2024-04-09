@@ -8,7 +8,7 @@ const MyPlant = () => {
             <Header>
                 <Text>내 식물들</Text>
                     <Link to="/addplant">
-                        <FcPlus size="40" />
+                        <FcPlus size="30" />
                     </Link>
                 
             </Header>
