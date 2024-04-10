@@ -66,20 +66,24 @@ const Profile = () => {
         </ProfileCard> 
         <BtnContainer>
         <BtnBox>
-          <TextBox>
-          <Text>식물도감</Text>
-          </TextBox>
-        <IconBox>
-          <IoMdBookmarks color="#a8511c" size="80"/>
-        </IconBox>
+          <Link to="/encyclopedia" >
+            <TextBox>
+              <Text>식물도감</Text>
+            </TextBox>
+          <IconBox>
+            <IoMdBookmarks color="#a8511c" size="80"/>
+          </IconBox>
+          </Link>
         </BtnBox>
         <BtnBox>
-        <TextBox>
-          <Text>명예의 전당</Text>
-        </TextBox>
-        <IconBox>
-          <IoIosTrophy color="#ffc400" size="80"/>
-        </IconBox>
+          <Link to="/achievement">
+            <TextBox>
+              <Text>명예의 전당</Text>
+            </TextBox>
+          <IconBox>
+            <IoIosTrophy color="#ffc400" size="80"/>
+          </IconBox>
+          </Link>
         </BtnBox>
         </BtnContainer>
         <QuestBox>
