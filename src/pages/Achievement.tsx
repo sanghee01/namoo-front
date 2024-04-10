@@ -7,7 +7,7 @@ const Achievement = () => {
     return(
         <AchievementBackGround>
             <Header>
-                    <Link to="/myplant">
+                    <Link to="/profile">
                         <MdArrowBackIos size="30"/>
                     </Link>
                     <Text>
@@ -82,16 +82,14 @@ export const Badge = styled.div`
     height: 90%;
     margin: 10px;
     padding: 20px;
-
-    &:hover {
-    border: 2px solid #f0e68c;
-    cursor: pointer; 
-}
 `;
 
 export const BadgeImg = styled.img`
     width: 130px;
     height: 130px;
+
+    &:hover {
+        cursor: pointer; 
 `;
 
 export default Achievement;
