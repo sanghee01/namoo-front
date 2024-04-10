@@ -39,7 +39,9 @@ const Profile = () => {
           </Text>
         </Container>
         <SettingBox>
-          <IoMdSettings size="40"/>
+          <Link to="/setting" >
+            <IoMdSettings size="40"/>
+          </Link>
         </SettingBox>  
       </Header>
       <Main>

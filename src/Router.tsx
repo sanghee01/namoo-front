@@ -14,6 +14,7 @@ import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
 import MyPlant from "./pages/MyPlant";
 import AddPlant from "./pages/AddPlant";
+import Setting from "./pages/Setting";
 import { useRecoilValue } from "recoil";
 import { userState } from "./recoil/state";
 
@@ -38,6 +39,7 @@ const Router = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/myplant" element={<MyPlant />} />
             <Route path="/addplant" element={<AddPlant />} />
+            <Route path="/setting" element={<Setting />} />
           </Routes>
         </Main>
         {/* 로그인 상태에만 Nav bar 보이도록 */}
