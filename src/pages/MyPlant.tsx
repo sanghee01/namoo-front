@@ -7,7 +7,10 @@ const MyPlant = () => {
         <MyPlantBackGround>
             <Header>
                 <Text>내 식물들</Text>
-                <FcPlus size="40" />
+                    <Link to="/addplant">
+                        <FcPlus size="30" />
+                    </Link>
+                
             </Header>
             <Container>
                 <PlantCard>
@@ -92,9 +95,7 @@ export const ImgBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:150px;
     height:250px;
-    margin:10px 0px 10px 10px;
 
 `;
 
