@@ -1,18 +1,20 @@
 import styled from "styled-components";
 
-const FindPassword = () => {
+const RePassword = () => {
   return (
     <Container>
       <Header>
-        <Logo src="/assets/image/logo2.png"></Logo>
-        <Title>비밀번호 찾기</Title>
-        <p>비밀번호를 잊어버리셨나요?</p>
-        <p>기존에 가입한 이메일을 통해 새로운 비밀번호를 설정할 수 있어요.</p>
+        <Logo src="/assets/images/logo2.png"></Logo>
+        <Title>비밀번호 재설정</Title>
+        <p>새롭게 사용할 비밀번호를 설정해주세요.</p>
       </Header>
       <Body>
-        <input type="email" id="email" placeholder="이메일" />
-        <button>재설정 메일 보내기</button>
-        <p>해당 이메일의 메일함을 확인 한 후 접속해주세요.</p>
+        <input type="password" id="password" placeholder="새로운 비밀번호 입력" />
+        <p>
+          * 8자 이상 <br /> * 알파벳, 숫자를 이용하여 조합
+        </p>
+        <input type="password" id="password" placeholder="새로운 비밀번호 재입력" />
+        <button>재설정 완료</button>
       </Body>
     </Container>
   );
@@ -70,9 +72,11 @@ const Body = styled.div`
   }
 
   & p {
-    color: #77b56a;
+    white-space: pre-wraps;
+    font-size: 14px;
+    color: gray;
     font-weight: bold;
+    margin-bottom: 17px;
   }
 `;
-
-export default FindPassword;
+export default RePassword;

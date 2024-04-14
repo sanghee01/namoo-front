@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { userState } from "../recoil/state";
+import { userState } from "../../state/atoms";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const SignIn = () => {
   return (
     <Container>
       <Header>
-        <Logo src="/assets/image/logo2.png"></Logo>
+        <Logo src="/assets/images/logo2.png"></Logo>
         <p>나만의 무럭이 키우기를 시작해주세용!</p>
       </Header>
       <Body>
@@ -26,11 +26,7 @@ const SignIn = () => {
           <Input type="email" id="email" placeholder="이메일" />
           <Input type="password" id="password" placeholder="비밀번호" />
           <LoginCheckBox>
-            <input
-              type="checkbox"
-              id="keeplogin"
-              placeholder="로그인 상태 유지"
-            />
+            <input type="checkbox" id="keeplogin" placeholder="로그인 상태 유지" />
             <span>로그인 상태 유지</span>
           </LoginCheckBox>
           <LoginBtn onClick={() => clickLoginBtn()}>로그인</LoginBtn>
@@ -45,10 +41,7 @@ const SignIn = () => {
         <KakaoBox>
           <hr />
           <p>간편 로그인</p>
-          <KakaoBtn
-            src="/assets/image/kakao_logo.png"
-            onClick={() => console.log("카카오로그인")}
-          ></KakaoBtn>
+          <KakaoBtn src="/assets/images/kakao_logo.png" onClick={() => console.log("카카오로그인")}></KakaoBtn>
         </KakaoBox>
       </Body>
     </Container>
