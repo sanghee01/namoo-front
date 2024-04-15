@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { userState } from "../../state/atoms";
 import { useCallback, useState } from "react";
 import axios from "axios";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const setUser = useSetRecoilState(userState);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
