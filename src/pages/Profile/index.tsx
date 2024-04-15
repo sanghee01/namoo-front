@@ -3,7 +3,7 @@ import { IoMdBookmarks } from "react-icons/io";
 import { IoIosTrophy } from "react-icons/io";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Demo from "../components/Heatmap";
+import Demo from "../../components/Heatmap";
 import {
   ProfileBackGround,
   Header,
@@ -22,9 +22,7 @@ import {
   IconBox,
   QuestBox,
   Container,
-} from "../styles/ProfileStyles";
-
-
+} from "./styles";
 
 const Profile = () => {
   return (
@@ -32,22 +30,20 @@ const Profile = () => {
       <Header>
         <Container>
           <Link to="/myplant">
-            <MdArrowBackIos size="30"/>
+            <MdArrowBackIos size="30" />
           </Link>
-          <Text>
-          식물이야기
-          </Text>
+          <Text>식물이야기</Text>
         </Container>
         <SettingBox>
-          <Link to="/setting" >
-            <IoMdSettings size="40"/>
+          <Link to="/setting">
+            <IoMdSettings size="40" />
           </Link>
-        </SettingBox>  
+        </SettingBox>
       </Header>
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src="/assets/image/plant.png" alt="plant" />
+            <PlantImg src="/assets/images/plant.png" alt="plant" />
             <CharacterName>귀염뽀짝상추</CharacterName>
             <Level>Lv.1</Level>
           </ProfileBox>
@@ -63,34 +59,33 @@ const Profile = () => {
             <Text>생명수가 필요해!</Text>
             <span>오늘의 한마디</span>
           </DetailBox>
-        </ProfileCard> 
+        </ProfileCard>
         <BtnContainer>
-        <BtnBox>
-          <Link to="/encyclopedia" >
-            <TextBox>
-              <Text>식물도감</Text>
-            </TextBox>
-          <IconBox>
-            <IoMdBookmarks color="#a8511c" size="80"/>
-          </IconBox>
-          </Link>
-        </BtnBox>
-        <BtnBox>
-          <Link to="/achievement">
-            <TextBox>
-              <Text>명예의 전당</Text>
-            </TextBox>
-          <IconBox>
-            <IoIosTrophy color="#ffc400" size="80"/>
-          </IconBox>
-          </Link>
-        </BtnBox>
+          <BtnBox>
+            <Link to="/encyclopedia">
+              <TextBox>
+                <Text>식물도감</Text>
+              </TextBox>
+              <IconBox>
+                <IoMdBookmarks color="#a8511c" size="80" />
+              </IconBox>
+            </Link>
+          </BtnBox>
+          <BtnBox>
+            <Link to="/achievement">
+              <TextBox>
+                <Text>명예의 전당</Text>
+              </TextBox>
+              <IconBox>
+                <IoIosTrophy color="#ffc400" size="80" />
+              </IconBox>
+            </Link>
+          </BtnBox>
         </BtnContainer>
         <QuestBox>
           <Demo />
         </QuestBox>
       </Main>
-      
     </ProfileBackGround>
   );
 };

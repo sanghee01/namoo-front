@@ -11,15 +11,7 @@ import {
 import { Line } from "react-chartjs-2";
 import faker from "faker";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 interface IHistoryData {
   dataName: string;
@@ -29,13 +21,7 @@ interface IHistoryData {
   backgroundColor: string;
 }
 
-const HistoryChart = ({
-  dataName,
-  min,
-  max,
-  borderColor,
-  backgroundColor,
-}: IHistoryData) => {
+const HistoryChart = ({ dataName, min, max, borderColor, backgroundColor }: IHistoryData) => {
   const options = {
     responsive: true,
     plugins: {

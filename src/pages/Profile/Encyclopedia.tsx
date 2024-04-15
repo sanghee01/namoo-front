@@ -1,16 +1,11 @@
 import styled from "styled-components";
 
 const Encyclopedia = () => {
-    return(
-        <EncyclopediaBackGround>
-            <Header>
-
-            </Header>
-        </EncyclopediaBackGround>
-
-            
-    );
-
+  return (
+    <EncyclopediaBackGround>
+      <Header></Header>
+    </EncyclopediaBackGround>
+  );
 };
 
 export const EncyclopediaBackGround = styled.div`

@@ -3,7 +3,7 @@ import { AiFillHome } from "react-icons/ai";
 import { BsChatDotsFill } from "react-icons/bs";
 import { BsBarChartFill } from "react-icons/bs";
 import { ImLeaf } from "react-icons/im";
-import { Tabs, Tab } from "../styles/NavStyles";
+import { Tabs, Tab } from "./styles";
 
 const Nav = () => {
   return (

@@ -5,7 +5,7 @@ const SignUp = () => {
     <Container>
       <Header>
         {/* <h1>로그인</h1> */}
-        <Logo src="/assets/image/logo2.png"></Logo>
+        <Logo src="/assets/images/logo2.png"></Logo>
         <p>가입을 통해 똑똑한 나만의 무럭이를 키워보세요!</p>
       </Header>
       <Body>
@@ -19,18 +19,10 @@ const SignUp = () => {
           <p>
             * 8자 이상 <br /> * 알파벳, 숫자를 이용하여 조합
           </p>
-          <Input
-            type="repassword"
-            id="repassword"
-            placeholder="비밀번호 재입력"
-          />
+          <Input type="repassword" id="repassword" placeholder="비밀번호 재입력" />
           <Input type="phone" id="phone" placeholder="휴대폰 번호 입력" />
           <p> * '-' 제외하고 11자리 입력</p>
-          <Input
-            type="destination"
-            id="destination"
-            placeholder="키트를 배송 받을 배송지 입력"
-          />
+          <Input type="destination" id="destination" placeholder="키트를 배송 받을 배송지 입력" />
         </InformationBox>
         <SignupBtn>
           <button>가입하기</button>

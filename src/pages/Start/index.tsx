@@ -11,8 +11,8 @@ const Start = () => {
         <p>놀러오신 것을 환영합니다!</p>
       </Explain>
       <SlideImg>
-        <LogoImg src="/assets/image/logoimg1.png"></LogoImg>
-        <Logo src="/assets/image/logo2.png"></Logo>
+        <LogoImg src="/assets/images/logoimg1.png"></LogoImg>
+        <Logo src="/assets/images/logo2.png"></Logo>
       </SlideImg>
       <StartBtn>
         <button onClick={() => navigate("/signin")}>시작하기</button>
