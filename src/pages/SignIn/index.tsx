@@ -2,18 +2,53 @@ import { useNavigate } from "react-router";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { userState } from "../../state/atoms";
+import { useCallback, useState } from "react";
+import axios from "axios";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userState);
 
-  // 로그인 버튼 클릭 시 실행되는 함수
-  function clickLoginBtn() {
-    navigate("/home");
-    // 이 자리에 HTTP 요청 함수 올 예정
-    const user = "홍길동";
-    setUser(user);
-  }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [logInError, setLogInError] = useState(false);
+
+  const onChangeEmail = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(e.target.value);
+    },
+    [email],
+  );
+
+  const onChangePassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(e.target.value);
+    },
+    [password],
+  );
+
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setLogInError(false);
+      axios
+        .post(
+          `${import.meta.env.VITE_SERVER_APIADDRESS}/member/login`,
+          { email, password },
+          {
+            withCredentials: true,
+          },
+        )
+        .then((response) => {
+          console.log("성공", response);
+        })
+        .catch((error) => {
+          console.dir(error);
+          setLogInError(error.response?.status === 401);
+        });
+    },
+    [email, password],
+  );
 
   return (
     <Container>
@@ -21,16 +56,17 @@ const SignIn = () => {
         <Logo src="/assets/images/logo2.png"></Logo>
         <p>나만의 무럭이 키우기를 시작해주세용!</p>
       </Header>
-      <Body>
-        <LoginBox>
-          <Input type="email" id="email" placeholder="이메일" />
-          <Input type="password" id="password" placeholder="비밀번호" />
+      <LoginForm onSubmit={onSubmit}>
+        <InputBox>
+          <Input type="email" id="email" name="email" onChange={onChangeEmail} placeholder="이메일" />
+          <Input type="password" id="password" name="password" onChange={onChangePassword} placeholder="비밀번호" />
           <LoginCheckBox>
-            <input type="checkbox" id="keeplogin" placeholder="로그인 상태 유지" />
+            <input type="checkbox" id="keeplogin" name="keeplogin" placeholder="로그인 상태 유지" />
             <span>로그인 상태 유지</span>
           </LoginCheckBox>
-          <LoginBtn onClick={() => clickLoginBtn()}>로그인</LoginBtn>
-        </LoginBox>
+          {logInError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
+          <LoginBtn type="submit">로그인</LoginBtn>
+        </InputBox>
         <FindBox>
           <span onClick={() => navigate("/findid")}>아이디 찾기</span>
           <span>|</span>
@@ -43,7 +79,7 @@ const SignIn = () => {
           <p>간편 로그인</p>
           <KakaoBtn src="/assets/images/kakao_logo.png" onClick={() => console.log("카카오로그인")}></KakaoBtn>
         </KakaoBox>
-      </Body>
+      </LoginForm>
     </Container>
   );
 };
@@ -73,14 +109,14 @@ const Logo = styled.img`
   height: 55px;
 `;
 
-const Body = styled.div`
+const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 42px;
   width: 70%;
 `;
 
-const LoginBox = styled.div`
+const InputBox = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -159,6 +195,12 @@ const KakaoBtn = styled.img`
   height: 56px;
   width: 385px;
   cursor: pointer;
+`;
+
+const Error = styled.div`
+  color: #e01e5a;
+  margin: 8px 0 16px;
+  font-weight: bold;
 `;
 
 export default SignIn;
