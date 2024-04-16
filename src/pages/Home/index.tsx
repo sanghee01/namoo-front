@@ -9,8 +9,10 @@ import {
   Header,
   FriendshipBar,
   Main,
+  CharacterBox,
   Character,
   PlantImg,
+  TableImg,
   LevelImg,
   SideBar,
   CharacterName,
@@ -27,13 +29,16 @@ const Home = () => {
         <BiSolidBell color="#ffc400" size="40" />
       </Header>
       <Main>
-        <Character>
-          <PlantImg src="/assets/images/plant.png" alt="plant" />
-          <div>
-            <LevelImg src="/assets/images/level5.png" alt="level" />
-            <CharacterName>귀염뽀짝상추</CharacterName>
-          </div>
-        </Character>
+        <CharacterBox>
+          <TableImg src="/assets/images/table.png" alt="plant" />
+          <Character>
+            <PlantImg src="/assets/images/plant.png" alt="plant" />
+            <div>
+              <LevelImg src="/assets/images/level5.png" alt="level" />
+              <CharacterName>귀염뽀짝상추</CharacterName>
+            </div>
+          </Character>
+        </CharacterBox>
         <SideBar>
           <div>
             <FaBook color="#a8511c" size="40" />
@@ -45,6 +50,7 @@ const Home = () => {
           </div>
           <div>
             <GiHealthNormal color="#ff600a" size="40" />
+            <div></div>
             <span>영양제</span>
           </div>
           <div>

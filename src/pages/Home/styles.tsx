@@ -57,18 +57,23 @@ export const Main = styled.main`
   height: 90%;
 `;
 
-export const Character = styled.div`
+export const CharacterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 180px;
+  margin-top: 70px;
+`;
 
+export const Character = styled.div`
+  position: relative;
+  top: -200px;
   div {
     margin-top: 10px;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 5px;
   }
@@ -77,6 +82,12 @@ export const Character = styled.div`
 export const PlantImg = styled.img`
   width: 200px;
   height: 200px;
+`;
+
+export const TableImg = styled.img`
+  position: relative;
+  bottom: -340px;
+  width: 360px;
 `;
 
 export const LevelImg = styled.img`
