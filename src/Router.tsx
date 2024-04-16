@@ -69,6 +69,7 @@ export default Router;
 const Container = styled.div`
   border-left: 1px solid lightgray;
   border-right: 1px solid lightgray;
+  overflow: hidden;
   width: 550px;
   height: 100dvh;
   margin: auto;
@@ -79,9 +80,12 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  height: 90%;
+  height: 100dvh;
 `;
 
 const Footer = styled.div`
-  height: 10%;
+  width: 550px;
+  height: 95px;
+  position: absolute;
+  bottom: 0;
 `;
