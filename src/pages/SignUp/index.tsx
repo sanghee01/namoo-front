@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import { useCallback, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
   const [mismatchError, setMismatchError] = useState(false);
-  const [signUpError, setSignUpError] = useState("");
-  const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const onChangeEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,45 +45,32 @@ const SignUp = () => {
     [password],
   );
 
-  const onChangePhoneNumber = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPhoneNumber(e.target.value);
-    },
-    [phoneNumber],
-  );
-
-  const onChangeAddress = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setAddress(e.target.value);
-    },
-    [address],
-  );
-
   const onSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!mismatchError) {
         console.log(email, username, password, passwordCheck);
-        setSignUpError("");
-        setSignUpSuccess(false);
-        axios
-          .post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/join`, {
+        setEmailError("");
+        setUsernameError("");
+        setPasswordError("");
+        try {
+          const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/join`, {
             email,
             username,
             password,
-          })
-          .then((response) => {
-            console.log("성공", response);
-            setSignUpSuccess(true);
-          })
-          .catch((error) => {
-            console.log("에러발생:", error.response);
-            setSignUpError(error.response.data);
-          })
-          .finally(() => {});
+          });
+          console.log("성공", response);
+          alert(response.data.message);
+          navigate("/signin");
+        } catch (error: any) {
+          const errorMessage = error.response.data.content;
+          if (errorMessage.email) setEmailError(errorMessage.email);
+          if (errorMessage.password) setPasswordError(errorMessage.password);
+          if (errorMessage.username) setUsernameError(errorMessage.username);
+        }
       }
     },
-    [email, username, password, passwordCheck, phoneNumber, address, mismatchError],
+    [email, username, password, passwordCheck, mismatchError],
   );
 
   return (
@@ -100,7 +89,7 @@ const SignUp = () => {
             onChange={onChangeName}
             placeholder="닉네임 입력"
           />
-          {/* <EmailSend> */}
+          {usernameError && <Error>{usernameError}</Error>}
           <Input
             type="email"
             id="email"
@@ -109,8 +98,7 @@ const SignUp = () => {
             onChange={onChangeEmail}
             placeholder="이메일 입력"
           />
-          {/* <button>인증하기</button> */}
-          {/* </EmailSend> */}
+          {emailError && <Error>{emailError}</Error>}
           <Input
             type="password"
             id="password"
@@ -128,27 +116,8 @@ const SignUp = () => {
             onChange={onChangePasswordCheck}
             placeholder="비밀번호 재입력"
           />
-          <Input
-            type="number"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={phoneNumber}
-            onChange={onChangePhoneNumber}
-            placeholder="휴대폰 번호 입력"
-          />
-          <p> * '-' 제외하고 11자리 입력</p>
-          <Input
-            type="text"
-            id="address"
-            name="address"
-            value={address}
-            onChange={onChangeAddress}
-            placeholder="키트를 배송 받을 배송지 입력"
-          />
+          {passwordError && <Error>{passwordError}</Error>}
           {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
-          {!username && <Error>닉네임을 입력해주세요.</Error>}
-          {signUpError && <Error>{signUpError}</Error>}
-          {signUpSuccess && <Success>회원가입되었습니다! 로그인해주세요.</Success>}
         </InformationBox>
         <SignupBtn type="submit">가입하기</SignupBtn>
       </SignUpForm>
@@ -200,22 +169,6 @@ const InformationBox = styled.div`
   flex-direction: column;
 `;
 
-// const EmailSend = styled.div`
-//   position: relative;
-//   & button {
-//     position: absolute;
-//     width: 90px;
-//     height: 40px;
-//     border-radius: 5px;
-//     border: none;
-//     top: 13px;
-//     right: 5px;
-//     background-color: #8cd57e;
-//     font-size: 13px;
-//     font-weight: bold;
-//   }
-// `;
-
 const Input = styled.input`
   width: 100%;
   padding: 15px;
@@ -237,11 +190,6 @@ const SignupBtn = styled.button`
 const Error = styled.div`
   color: #e01e5a;
   margin: 8px 0 16px;
-  font-weight: bold;
-`;
-
-const Success = styled.div`
-  color: #2eb67d;
   font-weight: bold;
 `;
 

@@ -2,13 +2,15 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useCallback, useState } from "react";
 import axios from "axios";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../state/atoms";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(userState);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [logInError, setLogInError] = useState(false);
 
   const onChangeEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,24 +27,23 @@ const SignIn = () => {
   );
 
   const onSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      setLogInError(false);
-      axios
-        .post(
-          `${import.meta.env.VITE_SERVER_APIADDRESS}/member/login`,
-          { email, password },
-          {
-            withCredentials: true,
-          },
-        )
-        .then((response) => {
-          console.log("성공", response);
-        })
-        .catch((error) => {
-          console.dir(error);
-          setLogInError(error.response?.status === 401);
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/login`, {
+          email,
+          password,
         });
+        console.log("성공", response);
+        setUser(response.data.content.username);
+        navigate("/home");
+      } catch (error: any) {
+        console.log(error.response);
+        alert(error.response.data.message);
+        const errorMessage = error.response.data.content;
+        if (errorMessage.email) alert(`아이디는 ${errorMessage.email}`);
+        if (errorMessage.password) alert(`비밀번호는 ${errorMessage.password}`);
+      }
     },
     [email, password],
   );
@@ -61,7 +62,6 @@ const SignIn = () => {
             <input type="checkbox" id="keeplogin" name="keeplogin" placeholder="로그인 상태 유지" />
             <span>로그인 상태 유지</span>
           </LoginCheckBox>
-          {logInError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
           <LoginBtn type="submit">로그인</LoginBtn>
         </InputBox>
         <FindBox>
@@ -192,12 +192,6 @@ const KakaoBtn = styled.img`
   height: 56px;
   width: 385px;
   cursor: pointer;
-`;
-
-const Error = styled.div`
-  color: #e01e5a;
-  margin: 8px 0 16px;
-  font-weight: bold;
 `;
 
 export default SignIn;
