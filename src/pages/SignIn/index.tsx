@@ -194,10 +194,4 @@ const KakaoBtn = styled.img`
   cursor: pointer;
 `;
 
-const Error = styled.div`
-  color: #e01e5a;
-  margin: 8px 0 16px;
-  font-weight: bold;
-`;
-
 export default SignIn;
