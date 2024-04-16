@@ -28,22 +28,29 @@ const Router = () => {
       <Container>
         <Main>
           <Routes>
-            <Route path="/" element={<Start />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/needactivate" element={<NeedActivate />} />
-            <Route path="/findid" element={<FindId />} />
-            <Route path="/findpassword" element={<FindPassword />} />
-            <Route path="/repassword" element={<RePassword />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/myplant" element={<MyPlant />} />
-            <Route path="/addplant" element={<AddPlant />} />
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/achievement" element={<Achievement />} />
-            <Route path="/encyclopedia" element={<Encyclopedia />} />
+            {user ? (
+              <>
+                <Route path="/needactivate" element={<NeedActivate />} />
+                <Route path="/findid" element={<FindId />} />
+                <Route path="/findpassword" element={<FindPassword />} />
+                <Route path="/repassword" element={<RePassword />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/myplant" element={<MyPlant />} />
+                <Route path="/addplant" element={<AddPlant />} />
+                <Route path="/setting" element={<Setting />} />
+                <Route path="/achievement" element={<Achievement />} />
+                <Route path="/encyclopedia" element={<Encyclopedia />} />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<Start />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+              </>
+            )}
           </Routes>
         </Main>
         {/* 로그인 상태에만 Nav bar 보이도록 */}
