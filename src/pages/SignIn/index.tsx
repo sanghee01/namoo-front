@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../state/atoms";
+import React from "react";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -71,11 +72,14 @@ const SignIn = () => {
           <span>|</span>
           <span onClick={() => navigate("/signup")}> 회원가입</span>
         </FindBox>
-        <KakaoBox>
+        <EasyLoginBox>
           <hr />
           <p>간편 로그인</p>
-          <KakaoBtn src="/assets/images/kakao_logo.png" onClick={() => console.log("카카오로그인")}></KakaoBtn>
-        </KakaoBox>
+          <KakaoLogin>
+            <img src="/assets/images/kakaoLogo.svg" />
+            <button onClick={() => console.log("카카오로그인")}>카카오 로그인</button>
+          </KakaoLogin>
+        </EasyLoginBox>
       </LoginForm>
     </Container>
   );
@@ -88,7 +92,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   padding: 50px 0;
-  height: 100%;
+  height: 100dvh;
 `;
 
 const Header = styled.div`
@@ -100,10 +104,18 @@ const Header = styled.div`
     color: gray;
     margin-top: 2px;
   }
+  @media screen and (max-width: 450px) {
+    & p {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 const Logo = styled.img`
   height: 55px;
+  @media screen and (max-width: 450px) {
+    height: 45px;
+  }
 `;
 
 const LoginForm = styled.form`
@@ -123,15 +135,26 @@ const Input = styled.input`
   margin: 5px 0;
   border-radius: 5px;
   border: 1px solid gray;
+
+  @media screen and (max-width: 450px) {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
 `;
 
 const LoginCheckBox = styled.div`
   cursor: pointer;
   & span {
     margin-left: 3px;
-    font-size: 15px;
+    font-size: 0.9rem;
     font-weight: bold;
     color: #9a9a9a;
+  }
+
+  @media screen and (max-width: 450px) {
+    & span {
+      font-size: 0.75rem;
+    }
   }
 `;
 
@@ -142,6 +165,11 @@ const LoginBtn = styled.button`
   border: none;
   font-weight: bold;
   background-color: #8cd57e;
+  @media screen and (max-width: 450px) {
+    padding: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
 `;
 
 const FindBox = styled.div`
@@ -149,22 +177,30 @@ const FindBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 0.9rem;
   & span {
     margin: 0 5px;
     cursor: pointer;
     font-weight: bold;
     color: #9a9a9a;
   }
+
+  @media screen and (max-width: 450px) {
+    padding: 10px;
+    font-size: 0.8rem;
+    margin: 7px 0;
+    & span {
+      margin: 0 4px;
+    }
+  }
 `;
 
-const KakaoBox = styled.div`
+const EasyLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0;
-  padding: 10px 0;
-
+  width: 100%;
+  margin-top: 30px;
   & hr {
     position: relative;
     bottom: -8px;
@@ -176,22 +212,51 @@ const KakaoBox = styled.div`
     border: none;
   }
   & p {
-    padding: 0 12px;
-    margin-bottom: 5px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #9a9a9a;
-    background-color: white;
+    padding: 0 8px;
+    margin-bottom: 16px;
     line-height: 16px;
+    letter-spacing: -0.3px;
     z-index: 1;
+    color: #9a9a9a;
+    background-color: #fff;
+  }
+  @media screen and (max-width: 450px) {
+    & p {
+      font-size: 0.9rem;
+    }
   }
 `;
+const KakaoLogin = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  background-color: #fddc3f;
+  padding: 16px 12px;
+  border-radius: 10px;
+  width: 100%;
+  & img {
+    z-index: 1;
+  }
+  & button {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    background-color: inherit;
+    margin-left: -22.66px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
 
-const KakaoBtn = styled.img`
-  margin-top: 10px;
-  height: 56px;
-  width: 385px;
-  cursor: pointer;
+  @media screen and (max-width: 450px) {
+    padding: 10px;
+    & button {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+  }
 `;
 
 export default SignIn;
