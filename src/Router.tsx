@@ -80,16 +80,18 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  height: 100dvh;
+  height: 90dvh;
+  @media screen and (max-width: 600px) {
+    height: 89dvh;
+  }
 `;
 
 const Footer = styled.div`
-  width: 550px;
-  height: 95px;
   position: absolute;
-  bottom: 0;
+  width: 550px;
+  height: 10dvh;
   @media screen and (max-width: 600px) {
-    height: 75px;
     width: 100%;
+    height: 11dvh;
   }
 `;

@@ -4,7 +4,7 @@ export const HomeBackGround = styled.div`
   background-image: url("/assets/images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: bottom;
+  background-position: 0% 60%;
   height: 100%;
 `;
 
@@ -85,7 +85,7 @@ export const CharacterBox = styled.div`
 
 export const Character = styled.div`
   position: relative;
-  top: -200px;
+  top: -175px;
   div {
     margin-top: 10px;
     display: flex;
@@ -94,7 +94,7 @@ export const Character = styled.div`
     gap: 5px;
   }
   @media screen and (max-width: 600px) {
-    top: -140px;
+    top: -128px;
   }
 `;
 
@@ -108,11 +108,11 @@ export const PlantImg = styled.img`
 
 export const TableImg = styled.img`
   position: relative;
-  bottom: -340px;
+  bottom: -360px;
   width: 360px;
 
   @media screen and (max-width: 600px) {
-    bottom: -235px;
+    bottom: -245px;
     width: 250px;
   }
 `;
@@ -139,7 +139,7 @@ export const CharacterName = styled.span`
 export const SideBar = styled.aside`
   position: absolute;
   right: 0;
-  bottom: 250px;
+  bottom: 170px;
   width: 20%;
 
   div {
@@ -160,7 +160,7 @@ export const SideBar = styled.aside`
   }
 
   @media screen and (max-width: 600px) {
-    bottom: 170px;
+    bottom: 110px;
 
     svg {
       width: 30px;
