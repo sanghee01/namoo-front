@@ -18,6 +18,15 @@ export const Header = styled.div`
   svg:hover {
     cursor: pointer;
   }
+
+  @media screen and (max-width: 600px) {
+    svg:first-child {
+      width: 24px;
+    }
+    svg {
+      width: 30px;
+    }
+  }
 `;
 
 export const FriendshipBar = styled.div`
@@ -48,6 +57,13 @@ export const FriendshipBar = styled.div`
     background: #ff8a8a;
     border-radius: 0px;
   }
+
+  @media screen and (max-width: 600px) {
+    progress {
+      height: 20px;
+      width: 170px;
+    }
+  }
 `;
 
 export const Main = styled.main`
@@ -77,32 +93,53 @@ export const Character = styled.div`
     align-items: center;
     gap: 5px;
   }
+  @media screen and (max-width: 600px) {
+    top: -140px;
+  }
 `;
 
 export const PlantImg = styled.img`
   width: 200px;
-  height: 200px;
+
+  @media screen and (max-width: 600px) {
+    width: 140px;
+  }
 `;
 
 export const TableImg = styled.img`
   position: relative;
   bottom: -340px;
   width: 360px;
+
+  @media screen and (max-width: 600px) {
+    bottom: -235px;
+    width: 250px;
+  }
 `;
 
 export const LevelImg = styled.img`
   height: 25px;
   width: 25px;
+  @media screen and (max-width: 600px) {
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 export const CharacterName = styled.span`
   font-weight: 500;
+  font-size: 1rem;
   transform: translateY(15%);
+
+  @media screen and (max-width: 600px) {
+    font-size: 0.85rem;
+  }
 `;
 
 export const SideBar = styled.aside`
   position: absolute;
   right: 0;
+  bottom: 250px;
   width: 20%;
 
   div {
@@ -120,5 +157,20 @@ export const SideBar = styled.aside`
 
   div:hover {
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 600px) {
+    bottom: 170px;
+
+    svg {
+      width: 30px;
+    }
+    div {
+      padding: 7px 0px;
+      span {
+        margin-top: 3%;
+        font-size: 0.8rem;
+      }
+    }
   }
 `;
