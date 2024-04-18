@@ -88,4 +88,8 @@ const Footer = styled.div`
   height: 95px;
   position: absolute;
   bottom: 0;
+  @media screen and (max-width: 600px) {
+    height: 75px;
+    width: 100%;
+  }
 `;
