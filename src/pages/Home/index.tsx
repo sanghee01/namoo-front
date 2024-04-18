@@ -50,7 +50,6 @@ const Home = () => {
           </div>
           <div>
             <GiHealthNormal color="#ff600a" size="40" />
-            <div></div>
             <span>영양제</span>
           </div>
           <div>

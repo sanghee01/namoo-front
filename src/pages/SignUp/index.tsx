@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-
+import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../SignIn/style";
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -75,12 +74,12 @@ const SignUp = () => {
 
   return (
     <Container>
-      <Header>
+      <Header onClick={() => navigate("/signin")}>
         <Logo src="/assets/images/logo2.png"></Logo>
         <p>가입을 통해 똑똑한 나만의 무럭이를 키워보세요!</p>
       </Header>
-      <SignUpForm onSubmit={onSubmit}>
-        <InformationBox>
+      <SubmitForm onSubmit={onSubmit}>
+        <InputBox>
           <Input
             type="text"
             id="username"
@@ -118,79 +117,11 @@ const SignUp = () => {
           />
           {passwordError && <Error>{passwordError}</Error>}
           {mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}
-        </InformationBox>
-        <SignupBtn type="submit">가입하기</SignupBtn>
-      </SignUpForm>
+        </InputBox>
+        <SubmitBtn type="submit">가입하기</SubmitBtn>
+      </SubmitForm>
     </Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 0;
-  height: 100%;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  & p {
-    font-weight: bold;
-    color: gray;
-    margin-top: 2px;
-  }
-`;
-
-const Logo = styled.img`
-  height: 55px;
-`;
-
-const SignUpForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  margin-top: 55px;
-  width: 68%;
-
-  & p {
-    white-space: pre-wraps;
-    font-size: 14px;
-    color: gray;
-    font-weight: bold;
-  }
-`;
-
-const InformationBox = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 15px;
-  margin: 8px 0;
-  border-radius: 5px;
-  border: 1px solid gray;
-  font-size: 15px;
-`;
-
-const SignupBtn = styled.button`
-  margin-top: 50px;
-  padding: 13px;
-  border-radius: 5px;
-  border: none;
-  font-weight: bold;
-  background-color: #8cd57e;
-`;
-
-const Error = styled.div`
-  color: #e01e5a;
-  margin: 8px 0 16px;
-  font-weight: bold;
-`;
 
 export default SignUp;

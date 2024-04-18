@@ -33,4 +33,16 @@ export const Tab = styled.span`
     cursor: pointer;
     filter: brightness(0.9);
   }
+  @media screen and (max-width: 600px) {
+    width: 100%;
+
+    span {
+      font-size: 0.8rem;
+      margin-top: 0px;
+    }
+
+    svg {
+      width: 30px;
+    }
+  }
 `;
