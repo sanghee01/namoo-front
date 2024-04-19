@@ -78,6 +78,8 @@ const StartBtn = styled.button`
   font-weight: bold;
   font-size: 1.3em;
   background-color: #8cd57e;
+  color: black;
+
   &:hover {
     cursor: pointer;
     filter: contrast(70%);

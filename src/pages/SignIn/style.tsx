@@ -179,6 +179,7 @@ export const KakaoLogin = styled.div`
     border: none;
     background-color: inherit;
     margin-left: -27.66px;
+    color: black;
   }
   &:hover {
     cursor: pointer;
