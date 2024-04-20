@@ -60,7 +60,7 @@ const SignUp = () => {
           });
           console.log("성공", response);
           alert(response.data.message);
-          navigate("/signin");
+          navigate("/login");
         } catch (error: any) {
           const errorMessage = error.response.data.content;
           if (errorMessage.email) setEmailError(errorMessage.email);

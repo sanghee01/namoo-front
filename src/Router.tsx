@@ -41,13 +41,13 @@ const Router = () => {
                 <Route path="/myplant" element={<MyPlant />} />
                 <Route path="/addplant" element={<AddPlant />} />
                 <Route path="/setting" element={<Setting />} />
-                <Route path="/achievement" element={<Achievement />} />
+                <Route path="/achievesment" element={<Achievement />} />
                 <Route path="/encyclopedia" element={<Encyclopedia />} />
               </>
             ) : (
               <>
                 <Route path="/" element={<Start />} />
-                <Route path="/signin" element={<SignIn />} />
+                <Route path="/login" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
               </>
             )}

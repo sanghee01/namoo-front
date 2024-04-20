@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../state/atoms";
+import { useLocation } from "react-router";
 import React from "react";
 import {
   Container,
@@ -21,6 +22,18 @@ import {
 const SignIn = () => {
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userState);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const activate = searchParams.get("activate");
+  const didMountRef = useRef(false);
+
+  useEffect(() => {
+    if (!didMountRef.current && activate === "true") {
+      didMountRef.current = true;
+      alert("메일 인증 성공! 로그인을 해주세요.");
+    }
+  }, []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -14,7 +14,7 @@ const Start = () => {
         <LogoImg src="/assets/images/logoimg1.png"></LogoImg>
         <Logo src="/assets/images/logo2.png"></Logo>
       </ImgBox>
-      <StartBtn onClick={() => navigate("/signin")}>시작하기</StartBtn>
+      <StartBtn onClick={() => navigate("/login")}>시작하기</StartBtn>
     </Container>
   );
 };
