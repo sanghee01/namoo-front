@@ -1,6 +1,21 @@
+import React, { useState } from 'react';
 import styled from "styled-components";
+import Postcode from "../components/Postcode";
+
 
 const AddPlant = () => {
+      // 상태 선언: 주소, 우편번호, 상세주소
+      const [address, setAddress] = useState('');
+      const [postcode, setPostcode] = useState('');
+      const [detailAddress, setDetailAddress] = useState('');
+  
+      // 주소와 우편번호를 설정하는 함수
+      const handleSelectAddress = (fullAddress: string, zonecode: string) => {
+          setAddress(fullAddress);
+          setPostcode(zonecode);
+      };
+  
+
     return(
         <AddPlantBackGround>
             <Header>
@@ -26,8 +41,29 @@ const AddPlant = () => {
             </SelectPlant>
             <SubText>02 식물 이름</SubText>  
                 <Input type="name" id="name" placeholder="이름" />
-            <SubText>03 입양 날짜</SubText> 
-                <Input type="number" id="date" placeholder="년도-월-일" />
+            <SubText>03 배송지 주소</SubText>
+            <PostcodeContainer>
+                <ShortInput 
+                    type="text"
+                    placeholder="우편번호"
+                    value={postcode}
+                    readOnly
+                />
+                <Postcode onSelectAddress={(addr, code) => handleSelectAddress(addr, code)}/>
+            </PostcodeContainer>
+            <Input 
+                type="text" 
+                placeholder="주소"
+                value={address}
+                readOnly
+            />
+            <Input 
+                type="text"
+                placeholder="상세주소를 입력하세요"
+                value={detailAddress}
+                onChange={(e) => setDetailAddress(e.target.value)}
+            />
+            
             <BtnContainer>
                 <Button>동의합니다</Button>
             </BtnContainer>
@@ -86,7 +122,7 @@ export const PlantCard = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    height: 90%;
+    height: 80%;
     border-radius: 30px;
     background-color:#feefc6;
     margin: 10px;
@@ -133,7 +169,7 @@ export const Input = styled.input`
 export const BtnContainer = styled.div`
     display: flex;
     justify-content: center;
-    padding: 40px;
+    padding: 2px;
 `;
 
 export const Button = styled.button`
@@ -167,6 +203,16 @@ export const Button = styled.button`
     & + & {
     margin-left: 1rem;
     }
+`;
+
+const PostcodeContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ShortInput = styled(Input)`
+  width: 200px; // 기존 Input 컴포넌트의 스타일을 상속받되, 가로 길이만 조정
+  margin-right: 10px; // 우편번호 입력란과 주소 찾기 버튼 사이에 간격을 줍니다.
 `;
 
 
