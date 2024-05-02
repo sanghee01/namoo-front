@@ -1,43 +1,48 @@
 import styled from "styled-components";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { Text } from "./styles";
+import { Text }from "./styles";
 
 const Achievement = () => {
-  return (
-    <AchievementBackGround>
-      <Header>
-        <Link to="/myplant">
-          <MdArrowBackIos size="30" />
-        </Link>
-        <Text>뱃지 보관함</Text>
-      </Header>
-      <Container>
-        <Badge>
-          <BadgeImg src="/assets/images/lock.png" alt="lock" />
-        </Badge>
-        <Badge>
-          <BadgeImg src="/assets/images/lock.png" alt="lock" />
-        </Badge>
-      </Container>
-      <Container>
-        <Badge>
-          <BadgeImg src="/assets/images/lock.png" alt="lock" />
-        </Badge>
-        <Badge>
-          <BadgeImg src="/assets/images/lock.png" alt="lock" />
-        </Badge>
-      </Container>
-      <Container>
-        <Badge>
-          <BadgeImg src="/assets/images/lock.png" alt="lock" />
-        </Badge>
-        <Badge>
-          <BadgeImg src="/assets/images/lock.png" alt="lock" />
-        </Badge>
-      </Container>
-    </AchievementBackGround>
-  );
+    return(
+        <AchievementBackGround>
+            <Header>
+                    <Link to="/profile">
+                        <MdArrowBackIos size="30"/>
+                    </Link>
+                    <Text>
+                        뱃지 보관함
+                    </Text>
+            </Header>
+            <Container>
+                <Badge>
+                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                </Badge>
+                <Badge>
+                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                </Badge>
+            </Container>
+            <Container>
+                <Badge>
+                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                </Badge>
+                <Badge>
+                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                </Badge>
+            </Container>
+            <Container>
+                <Badge>
+                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                </Badge>
+                <Badge>
+                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                </Badge>
+            </Container>
+        </AchievementBackGround>
+
+            
+    );
+
 };
 
 export const AchievementBackGround = styled.div`
@@ -61,32 +66,31 @@ export const Header = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 100%;
-  height: 25%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
+    width: 100%;
+    height: 25%; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 `;
 
 export const Badge = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  height: 90%;
-  margin: 10px;
-  padding: 20px;
-
-  &:hover {
-    border: 2px solid #f0e68c;
-    cursor: pointer;
-  }
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    height: 90%;
+    margin: 10px;
+    padding: 20px;
 `;
 
 export const BadgeImg = styled.img`
-  width: 130px;
-  height: 130px;
+    width: 130px;
+    height: 130px;
+
+    &:hover {
+        cursor: pointer; 
 `;
+
 
 export default Achievement;
