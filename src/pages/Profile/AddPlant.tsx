@@ -27,14 +27,14 @@ const AddPlant = () => {
             <SelectPlant>
                 <PlantCard>
                     <ImgBox>
-                        <PlantImg src="/assets/image/plant.png" alt="plant" />
+                        <PlantImg src="/assets/images/plant.png" alt="plant" />
                         <Name>상추</Name>
                     </ImgBox>
                     
                 </PlantCard> 
                 <PlantCard>
                     <ImgBox>
-                        <StrawberryImg src="/assets/image/strawberry.png" alt="strawberry" />
+                        <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
                         <Name>딸기</Name>
                     </ImgBox>
                 </PlantCard>
