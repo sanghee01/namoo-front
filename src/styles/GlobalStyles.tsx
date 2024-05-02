@@ -43,8 +43,11 @@ const GlobalStyles = createGlobalStyle`
     }
     
     a {
-    color: inherit;
+    color: black;
     text-decoration: none;
+        &:visited {
+        color: black;
+        }
     }
 
     img,

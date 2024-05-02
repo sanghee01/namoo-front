@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const HomeBackGround = styled.div`
-  background-image: url("/assets/image/background.png");
+  background-image: url("/assets/images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: bottom;
+  background-position: 0% 60%;
   height: 100%;
 `;
 
@@ -17,6 +17,15 @@ export const Header = styled.div`
 
   svg:hover {
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 600px) {
+    svg:first-child {
+      width: 24px;
+    }
+    svg {
+      width: 30px;
+    }
   }
 `;
 
@@ -48,6 +57,13 @@ export const FriendshipBar = styled.div`
     background: #ff8a8a;
     border-radius: 0px;
   }
+
+  @media screen and (max-width: 600px) {
+    progress {
+      height: 20px;
+      width: 170px;
+    }
+  }
 `;
 
 export const Main = styled.main`
@@ -57,41 +73,73 @@ export const Main = styled.main`
   height: 90%;
 `;
 
-export const Character = styled.div`
+export const CharacterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 180px;
+  margin-top: 70px;
+`;
 
+export const Character = styled.div`
+  position: relative;
+  top: -175px;
   div {
     margin-top: 10px;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 5px;
+  }
+  @media screen and (max-width: 600px) {
+    top: -128px;
   }
 `;
 
 export const PlantImg = styled.img`
   width: 200px;
-  height: 200px;
+
+  @media screen and (max-width: 600px) {
+    width: 140px;
+  }
+`;
+
+export const TableImg = styled.img`
+  position: relative;
+  bottom: -360px;
+  width: 360px;
+
+  @media screen and (max-width: 600px) {
+    bottom: -245px;
+    width: 250px;
+  }
 `;
 
 export const LevelImg = styled.img`
   height: 25px;
   width: 25px;
+  @media screen and (max-width: 600px) {
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 export const CharacterName = styled.span`
   font-weight: 500;
+  font-size: 1rem;
   transform: translateY(15%);
+
+  @media screen and (max-width: 600px) {
+    font-size: 0.85rem;
+  }
 `;
 
 export const SideBar = styled.aside`
   position: absolute;
   right: 0;
+  bottom: 170px;
   width: 20%;
 
   div {
@@ -109,5 +157,20 @@ export const SideBar = styled.aside`
 
   div:hover {
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 600px) {
+    bottom: 110px;
+
+    svg {
+      width: 30px;
+    }
+    div {
+      padding: 7px 0px;
+      span {
+        margin-top: 3%;
+        font-size: 0.8rem;
+      }
+    }
   }
 `;

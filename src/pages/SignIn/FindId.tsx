@@ -1,28 +1,22 @@
 import styled from "styled-components";
 
-const RePassword = () => {
+const FindId = () => {
   return (
     <Container>
       <Header>
-        <Logo src="/assets/image/logo2.png"></Logo>
-        <Title>비밀번호 재설정</Title>
-        <p>새롭게 사용할 비밀번호를 설정해주세요.</p>
+        <Logo src="/assets/images/logo2.png"></Logo>
+        <Title>아이디 찾기</Title>
+        <p>기존에 가입한 이메일을 통해 인증번호를 받으세요.</p>
       </Header>
       <Body>
-        <input
-          type="password"
-          id="password"
-          placeholder="새로운 비밀번호 입력"
-        />
-        <p>
-          * 8자 이상 <br /> * 알파벳, 숫자를 이용하여 조합
-        </p>
-        <input
-          type="password"
-          id="password"
-          placeholder="새로운 비밀번호 재입력"
-        />
-        <button>재설정 완료</button>
+        <EmailSend>
+          <input type="email" id="email" placeholder="이메일" />
+          <button>인증하기</button>
+        </EmailSend>
+
+        <input type="number" id="number" placeholder="인증번호를 입력해주세요." />
+        <p>해당 이메일로 전송된 인증번호를 입력해주세요.</p>
+        <button>이메일로 보내기</button>
       </Body>
     </Container>
   );
@@ -52,6 +46,22 @@ const Header = styled.div`
   }
 `;
 
+const EmailSend = styled.div`
+  position: relative;
+  & button {
+    width: 95px;
+    position: absolute;
+    height: 48px;
+    border-radius: 5px;
+    border: none;
+    top: 4px;
+    right: 5px;
+    background-color: #8cd57e;
+    font-size: 14px;
+    font-weight: bold;
+  }
+`;
+
 const Title = styled.p`
   font-size: 22px;
   margin-bottom: 55px;
@@ -64,6 +74,7 @@ const Body = styled.div`
   width: 70%;
 
   & input {
+    width: 100%;
     padding: 15px;
     margin: 5px 0;
     border-radius: 5px;
@@ -80,11 +91,10 @@ const Body = styled.div`
   }
 
   & p {
-    white-space: pre-wraps;
-    font-size: 14px;
-    color: gray;
+    color: #77b56a;
     font-weight: bold;
     margin-bottom: 17px;
   }
 `;
-export default RePassword;
+
+export default FindId;

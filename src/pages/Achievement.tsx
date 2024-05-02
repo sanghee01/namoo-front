@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-import {Text }from "../styles/ProfileStyles";
+import { Text }from "./Profile/styles";
 
 const Achievement = () => {
     return(
@@ -91,5 +91,6 @@ export const BadgeImg = styled.img`
     &:hover {
         cursor: pointer; 
 `;
+
 
 export default Achievement;

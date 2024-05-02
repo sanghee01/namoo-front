@@ -9,12 +9,14 @@ import {
   Header,
   FriendshipBar,
   Main,
+  CharacterBox,
   Character,
   PlantImg,
+  TableImg,
   LevelImg,
   SideBar,
   CharacterName,
-} from "../styles/HomeStyles";
+} from "./styles";
 
 const Home = () => {
   return (
@@ -27,13 +29,16 @@ const Home = () => {
         <BiSolidBell color="#ffc400" size="40" />
       </Header>
       <Main>
-        <Character>
-          <PlantImg src="/assets/image/plant.png" alt="plant" />
-          <div>
-            <LevelImg src="/assets/image/level5.png" alt="level" />
-            <CharacterName>귀염뽀짝상추</CharacterName>
-          </div>
-        </Character>
+        <CharacterBox>
+          <TableImg src="/assets/images/table.png" alt="plant" />
+          <Character>
+            <PlantImg src="/assets/images/plant.png" alt="plant" />
+            <div>
+              <LevelImg src="/assets/images/level5.png" alt="level" />
+              <CharacterName>귀염뽀짝상추</CharacterName>
+            </div>
+          </Character>
+        </CharacterBox>
         <SideBar>
           <div>
             <FaBook color="#a8511c" size="40" />

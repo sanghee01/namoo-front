@@ -26,7 +26,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 5px;
-`
+`;
 
 export const SettingBox = styled.div`
   display: flex;
@@ -48,8 +48,7 @@ export const TextBox = styled.div`
   align-items: flex-start;
   padding: 25px;
   flex-direction: column;
-
-`
+`;
 export const IconBox = styled.div`
   display: flex;
   height: 50%;
@@ -57,8 +56,7 @@ export const IconBox = styled.div`
   align-items: flex-end;
   padding: 5px;
   flex-direction: column;
-
-`
+`;
 
 export const Main = styled.main`
   flex: 1;
@@ -75,63 +73,60 @@ export const ProfileCard = styled.div`
   height: 40%;
   border-radius: 30px;
   overflow: hidden;
-  background-color:#feefc6;
+  background-color: #feefc6;
   margin: 10px;
 
   &:hover {
     border: 2px solid #f0e68c;
-    cursor: pointer; 
+    cursor: pointer;
   }
-
 `;
 export const ProfileBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width:150px;
-  height:250px;
-  margin:10px 0px 10px 10px;
-
+  width: 150px;
+  height: 250px;
+  margin: 10px 0px 10px 10px;
 `;
 
 export const DetailBox = styled.div`
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   justify-content: center;
-  width:150px;
-  height:40px;
-  margin:15px;
+  width: 150px;
+  height: 40px;
+  margin: 15px;
 
-  span{
+  span {
     font-size: 14px;
     font-weight: 500;
   }
-
-`
+`;
 export const PlantImg = styled.img`
   width: 100px;
   height: 100px;
 `;
 
 export const CharacterName = styled.span`
-  margin:5px 5px 0px 5px;
+  margin: 5px 5px 0px 5px;
   font-weight: 500;
 `;
 
 export const Level = styled.span`
   font-weight: 400;
   font-size: 12px;
-`
+`;
 
 export const BtnContainer = styled.div`
   width: 100%;
-  height: 30%; 
+  height: 30%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const BtnBox = styled.div`
   flex: 1;
@@ -139,27 +134,26 @@ export const BtnBox = styled.div`
   flex-direction: column;
   height: 90%;
   border-radius: 30px;
-  background-color:#feefc6;
+  background-color: #feefc6;
   margin: 10px;
 
   &:hover {
     border: 2px solid #f0e68c;
-    cursor: pointer; 
+    cursor: pointer;
   }
-`
+`;
 
 export const QuestBox = styled.div`
   display: flex;
   height: 22%;
   border-radius: 30px;
-  background-color:#feefc6;
+  background-color: #feefc6;
   margin: 10px;
   justify-content: center;
   padding: 10px;
 
   &:hover {
     border: 2px solid #f0e68c;
-    cursor: pointer; 
+    cursor: pointer;
   }
 `;
-
