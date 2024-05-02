@@ -110,7 +110,6 @@ export const SubText = styled.p`
 
 export const SelectPlant = styled.div`
     width: 100%;
-    height: 40%; 
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -169,7 +168,7 @@ export const Input = styled.input`
 export const BtnContainer = styled.div`
     display: flex;
     justify-content: center;
-    padding: 2px;
+    padding: 12px;
 `;
 
 export const Button = styled.button`
