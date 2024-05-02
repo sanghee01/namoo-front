@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 // DaumPostcodeData 인터페이스 정의
