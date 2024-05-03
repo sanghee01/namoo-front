@@ -77,7 +77,7 @@ const Profile = () => {
                 <Text>명예의 전당</Text>
               </TextBox>
               <IconBox>
-                <IoIosTrophy color="#ffc400" size="80" />
+                <IoIosTrophy color="#ffc400" size="80"  />
               </IconBox>
             </Link>
           </BtnBox>

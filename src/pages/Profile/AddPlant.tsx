@@ -2,19 +2,19 @@ import { useState } from 'react';
 import styled from "styled-components";
 import Postcode from "../../components/Postcode";
 
-
 const AddPlant = () => {
       // 상태 선언: 주소, 우편번호, 상세주소
-      const [address, setAddress] = useState('');
-      const [postcode, setPostcode] = useState('');
-      const [detailAddress, setDetailAddress] = useState('');
-  
+        const [address, setAddress] = useState('');
+        const [postcode, setPostcode] = useState('');
+        const [detailAddress, setDetailAddress] = useState('');
+
       // 주소와 우편번호를 설정하는 함수
-      const handleSelectAddress = (fullAddress: string, zonecode: string) => {
-          setAddress(fullAddress);
-          setPostcode(zonecode);
-      };
-  
+        const handleSelectAddress = (fullAddress: string, zonecode: string) => {
+        console.log(zonecode); 
+        console.log(fullAddress); // 콘솔에 선택된 주소 출력
+            setPostcode(zonecode);
+            setAddress(fullAddress); 
+        };
 
     return(
         <AddPlantBackGround>
@@ -205,8 +205,8 @@ export const Button = styled.button`
 `;
 
 const PostcodeContainer = styled.div`
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 `;
 
 const ShortInput = styled(Input)`
