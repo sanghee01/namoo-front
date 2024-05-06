@@ -9,11 +9,15 @@ const Encyclopedia = () => {
 };
 
 export const EncyclopediaBackGround = styled.div`
-  flex: 1;
-  position: relative;
+  background-image: url("/assets/images/bookshelf.png");
+  background-repeat: no-repeat;
   background-color: #fffaed;
-  background-size: cover;
+  background-size: 550px;
   height: 100%;
+
+  @media screen and (max-width: 600px){
+    background-size: 400px 600px;
+  } 
 `;
 
 export const Header = styled.div`
