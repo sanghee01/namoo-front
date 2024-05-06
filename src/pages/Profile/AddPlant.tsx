@@ -7,6 +7,7 @@ const AddPlant = () => {
         const [address, setAddress] = useState('');
         const [postcode, setPostcode] = useState('');
         const [detailAddress, setDetailAddress] = useState('');
+        const [userName, setUserName] = useState('');
 
       // 주소와 우편번호를 설정하는 함수
         const handleSelectAddress = (fullAddress: string, zonecode: string) => {
@@ -39,9 +40,22 @@ const AddPlant = () => {
                     </ImgBox>
                 </PlantCard>
             </SelectPlant>
-            <SubText>02 식물 이름</SubText>  
-                <Input type="name" id="name" placeholder="이름" />
-            <SubText>03 배송지 주소</SubText>
+                <NameContainer>
+                    <NameBox>
+                    <SubText>02 식물 이름</SubText>  
+                        <ShortInput type="name" id="name" placeholder="이름" />
+                    </NameBox>
+                    <NameBox>
+                    <SubText>03 사용자 이름</SubText>
+                    <ShortInput 
+                    type="text" 
+                    placeholder="사용자 이름"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)} // 사용자 이름 상태 업데이트
+                    />
+                    </NameBox>
+                </NameContainer>
+            <SubText>04 배송지 주소</SubText>
             <PostcodeContainer>
                 <ShortInput 
                     type="text"
@@ -75,7 +89,6 @@ const AddPlant = () => {
 
 
 export const AddPlantBackGround = styled.div`
-
     flex: 1;
     position: relative;
     background-color: #fffaed;
@@ -94,7 +107,6 @@ export const Header = styled.div`
 export const Container = styled.div`
     display: flex;
     align-items: center;
-
 `
 
 export const Text = styled.div`
@@ -105,7 +117,12 @@ export const Text = styled.div`
 export const SubText = styled.p`
     font-size: 15px;
     font-weight: medium;
+    display: flex;
     padding: 0px 0px 0px 25px;
+
+    @media screen and (max-width:600px){
+        padding: 0px 0px 0px 25px;
+    }
 `
 
 export const SelectPlant = styled.div`
@@ -137,7 +154,11 @@ export const ImgBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height:250px;
+    height:180px;
+
+    @media screen and (max-width:600px){
+        height:250px;
+    }
 
 `;
 
@@ -145,30 +166,70 @@ export const PlantImg = styled.img`
     width: 120px;
     height: 120px;
     margin: 10px;
+
+    @media screen and (max-width: 600px) {
+        width: 120px;
+        height: 120px;
+        margin: 10px;
+    }
 `;
 
 export const StrawberryImg = styled.img`
     height: 150px;
     margin: 10px;
+
+    @media screen and (max-width: 600px){
+        height: 150px;
+        margin: 10px;
+    }
 `
+export const NameBox= styled.div`
+    
+`;
+
+export const NameContainer= styled.div`
+    display: flex;
+    justify-content: start;
+
+    @media screen and (max-width: 600px){
+        display: flex;
+    }
+`;
+
 export const Name = styled.span`
     margin:5px 5px 0px 5px;
     font-weight: 500;
+
+    @media screen and (max-width: 600px){
+        margin:5px 5px 0px 5px;
+    }
 `;
 
 export const Input = styled.input`
     padding: 15px;
     margin: 10px 5px 10px 25px;
     height: 45px;
-    width: 340px;
+    width: 490px;
     border-radius: 15px;
     border: 2px solid gray;
+
+    @media screen and (max-width: 600px) {
+        padding: 15px;
+        margin: 10px 5px 10px 25px;
+        height: 45px;
+        width: 340px;
+      }
 `;
 
 export const BtnContainer = styled.div`
     display: flex;
     justify-content: center;
-    padding: 12px;
+
+    @media screen and (max-width:600px){
+        display: flex;
+        justify-content: center;
+        padding: 12px;
+    }
 `;
 
 export const Button = styled.button`
@@ -210,8 +271,13 @@ const PostcodeContainer = styled.div`
 `;
 
 const ShortInput = styled(Input)`
-  width: 200px; // 기존 Input 컴포넌트의 스타일을 상속받되, 가로 길이만 조정
-  margin-right: 10px; // 우편번호 입력란과 주소 찾기 버튼 사이에 간격을 줍니다.
+    width: 230px;
+    margin-right: 10px;
+
+    @media screen and (max-width:600px){
+        width: 150px;
+        margin-right: 10px;
+    }
 `;
 
 
