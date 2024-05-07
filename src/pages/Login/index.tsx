@@ -1,9 +1,5 @@
 import { useNavigate } from "react-router";
 import { useCallback, useEffect, useState, useRef } from "react";
-import axios from "axios";
-import { useSetRecoilState } from "recoil";
-import { userState } from "../../state/atoms";
-import { useLocation } from "react-router";
 import React from "react";
 import {
   Container,
@@ -18,6 +14,10 @@ import {
   KakaoLogin,
   EasyLoginBox,
 } from "./style";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../state/authState";
+import { useLocation } from "react-router";
+import { login } from "../../services/authApi";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -56,15 +56,10 @@ const SignIn = () => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/login`, {
-          email,
-          password,
-        });
-        console.log("성공", response);
-        setUser(response.data.content.username);
+        const response = await login(email, password); // authApi에서 login 함수 사용
+        setUser({ username: response.username, email: response.email, token: response.token }); // 사용자 상태 업데이트
         navigate("/home");
       } catch (error: any) {
-        console.log(error.response);
         alert(error.response.data.message);
         const errorMessage = error.response.data.content;
         if (errorMessage.email) alert(`아이디는 ${errorMessage.email}`);

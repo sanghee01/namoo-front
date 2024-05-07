@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../SignIn/style";
+import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -48,7 +48,6 @@ const SignUp = () => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!mismatchError) {
-        console.log(email, username, password, passwordCheck);
         setEmailError("");
         setUsernameError("");
         setPasswordError("");
@@ -58,7 +57,6 @@ const SignUp = () => {
             username,
             password,
           });
-          console.log("성공", response);
           alert(response.data.message);
           navigate("/login");
         } catch (error: any) {
