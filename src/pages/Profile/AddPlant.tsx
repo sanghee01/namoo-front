@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from "styled-components";
 import Postcode from "../../components/Postcode";
+import axios from "axios";
+
 
 const AddPlant = () => {
       // 상태 선언: 주소, 우편번호, 상세주소
@@ -8,13 +10,33 @@ const AddPlant = () => {
         const [postcode, setPostcode] = useState('');
         const [detailAddress, setDetailAddress] = useState('');
         const [userName, setUserName] = useState('');
+        const [selectedPlant, setSelectedPlant] = useState('');
+        const [plantName, setPlantName] = useState('');
 
       // 주소와 우편번호를 설정하는 함수
         const handleSelectAddress = (fullAddress: string, zonecode: string) => {
-        console.log(zonecode); 
-        console.log(fullAddress); // 콘솔에 선택된 주소 출력
             setPostcode(zonecode);
             setAddress(fullAddress); 
+        };
+
+        const handleSubmit = async () => {
+            try {
+                const addPlant = {
+                    item_id: selectedPlant,
+                    plantName: plantName,
+                    userName: userName,
+                    street: address,
+                    zipcode: postcode,
+                    specify: detailAddress,
+                    count:1
+                };
+    
+                const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/orders`, addPlant);
+                console.log(response.data); // 성공 응답 처리
+                // 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
+            } catch (error) {
+                console.error(error); // 에러 처리 로직
+            }
         };
 
     return(
@@ -26,14 +48,13 @@ const AddPlant = () => {
             </Header>   
             <SubText>01 식물 선택</SubText>         
             <SelectPlant>
-                <PlantCard>
+                <PlantCard onClick={() => setSelectedPlant('1')}>
                     <ImgBox>
                         <PlantImg src="/assets/images/plant.png" alt="plant" />
                         <Name>상추</Name>
-                    </ImgBox>
-                    
+                    </ImgBox>   
                 </PlantCard> 
-                <PlantCard>
+                <PlantCard onClick={() => setSelectedPlant('2')}>
                     <ImgBox>
                         <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
                         <Name>딸기</Name>
@@ -43,7 +64,10 @@ const AddPlant = () => {
                 <NameContainer>
                     <NameBox>
                     <SubText>02 식물 이름</SubText>  
-                        <ShortInput type="name" id="name" placeholder="이름" />
+                        <ShortInput type="text"
+                                    value={plantName}
+                                    onChange={(e) => setPlantName(e.target.value)}
+                                    placeholder="식물 이름" />
                     </NameBox>
                     <NameBox>
                     <SubText>03 사용자 이름</SubText>
@@ -51,7 +75,7 @@ const AddPlant = () => {
                     type="text" 
                     placeholder="사용자 이름"
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value)} // 사용자 이름 상태 업데이트
+                    onChange={(e) => setUserName(e.target.value)}
                     />
                     </NameBox>
                 </NameContainer>
@@ -79,7 +103,7 @@ const AddPlant = () => {
             />
             
             <BtnContainer>
-                <Button>동의합니다</Button>
+                <Button onClick={handleSubmit}>동의합니다</Button>
             </BtnContainer>
         
 

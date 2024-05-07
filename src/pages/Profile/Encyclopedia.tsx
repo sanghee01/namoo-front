@@ -14,6 +14,14 @@ const Encyclopedia = () => {
             식물 도감
           </Text>
       </Header>
+      <Container>
+        <BookOne>
+          <BookImg src="/assets/images/LettuceBook.png"/>
+        </BookOne>
+        <BookTwo>
+        <BookImg src="/assets/images/StrawberryBook.png"/>
+        </BookTwo>
+      </Container>
     </EncyclopediaBackGround>
   );
 };
@@ -39,6 +47,57 @@ export const Header = styled.div`
   svg:hover {
     cursor: pointer;
   }
+`;
+
+export const Container = styled.div`
+    width: 100%;
+    height: 90%; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+`;
+
+export const BookOne = styled.div`
+    width: 100%;
+    height: 45%; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 5px;
+
+      @media screen and (max-width:600px){
+        height:35%
+    }
+
+`;
+
+export const BookTwo = styled.div`
+    width: 100%;
+    height: 45%; 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+
+      @media screen and (max-width:600px){
+        height:60%
+    }
+`;
+
+export const BookImg = styled.img`
+    width: 150px;
+    height: 150px;
+
+    &:hover {
+        cursor: pointer; 
+
+        @media screen and (max-width:600px){
+          width: 100px;
+          height: 100px;
+        }
 `;
 
 export default Encyclopedia;
