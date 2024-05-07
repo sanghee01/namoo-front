@@ -25,9 +25,10 @@ const AddPlant = () => {
                     item_id: selectedPlant,
                     plantName: plantName,
                     userName: userName,
-                    street: address,
-                    zipcode: postcode,
-                    specify: detailAddress,
+                    address:{   
+                        street: address,
+                        zipcode: postcode,
+                        specify: detailAddress},
                     count:1
                 };
     
