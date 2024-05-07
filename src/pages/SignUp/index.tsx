@@ -60,10 +60,13 @@ const SignUp = () => {
           alert(response.data.message);
           navigate("/login");
         } catch (error: any) {
-          const errorMessage = error.response.data.content;
-          if (errorMessage.email) setEmailError(errorMessage.email);
-          if (errorMessage.password) setPasswordError(errorMessage.password);
-          if (errorMessage.username) setUsernameError(errorMessage.username);
+          const errorMessage = error.response.data.message;
+          if (errorMessage) alert(errorMessage);
+
+          const errorContent = error.response.data.content;
+          if (errorContent.email) setEmailError(errorContent.email);
+          if (errorContent.password) setPasswordError(errorContent.password);
+          if (errorContent.username) setUsernameError(errorContent.username);
         }
       }
     },
