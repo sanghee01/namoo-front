@@ -6,8 +6,11 @@ import { FaUserLock } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import { HiOutlineTrash } from "react-icons/hi";
 import { RiFeedbackLine } from "react-icons/ri";
+import useLogout from "../../hooks/useLogout";
 
 const Setting = () => {
+  const logout = useLogout(); // 로그아웃 함수 볼러오기
+
   return (
     <SettingBackGround>
       <Header>
@@ -22,7 +25,7 @@ const Setting = () => {
         </IconBox>
         계정
       </ListItem>
-      <ListItem>
+      <ListItem onClick={logout}>
         <IconBox>
           <LuLogOut size="30" />
         </IconBox>
