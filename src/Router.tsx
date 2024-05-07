@@ -5,9 +5,9 @@ import History from "./pages/History";
 import Profile from "./pages/Profile";
 import Nav from "./layouts/Nav";
 import styled from "styled-components";
-import SignIn from "./pages/SignIn";
-import FindId from "./pages/SignIn/FindId";
-import FindPassword from "./pages/SignIn/FindPassword";
+import Login from "./pages/Login";
+import FindId from "./pages/Login/FindId";
+import FindPassword from "./pages/Login/FindPassword";
 import NeedActivate from "./pages/Profile/NeedActivate";
 import RePassword from "./pages/Profile/RePassword";
 import SignUp from "./pages/SignUp";
@@ -18,7 +18,7 @@ import Setting from "./pages/Profile/Setting";
 import Achievement from "./pages/Profile/Achievement";
 import Encyclopedia from "./pages/Profile/Encyclopedia";
 import { useRecoilValue } from "recoil";
-import { userState } from "./state/atoms";
+import { userState } from "./state/authState";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -47,10 +47,11 @@ const Router = () => {
             ) : (
               <>
                 <Route path="/" element={<Start />} />
-                <Route path="/login" element={<SignIn />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
               </>
             )}
+            <Route path="*" element={<p>존재하지 않는 페이지입니다.</p>} />
           </Routes>
         </Main>
         {/* 로그인 상태에만 Nav bar 보이도록 */}
