@@ -10,6 +10,11 @@ import useLogout from "../../hooks/useLogout";
 
 const Setting = () => {
   const logout = useLogout(); // 로그아웃 함수 볼러오기
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    alert("로그아웃 되었습니다.");
+  };
 
   return (
     <SettingBackGround>
@@ -25,7 +30,7 @@ const Setting = () => {
         </IconBox>
         계정
       </ListItem>
-      <ListItem onClick={logout}>
+      <ListItem onClick={handleLogout}>
         <IconBox>
           <LuLogOut size="30" />
         </IconBox>

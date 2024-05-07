@@ -15,7 +15,6 @@ const useLogout = () => {
   const [, setUser] = useRecoilState(userState);
 
   const logout = () => {
-    alert("로그아웃 되었습니다.");
     // 1. Recoil 상태 초기화
     setUser(null); // userState를 null로 설정하여 사용자 정보 초기화
 

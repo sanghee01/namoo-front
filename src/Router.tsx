@@ -19,6 +19,7 @@ import Achievement from "./pages/Profile/Achievement";
 import Encyclopedia from "./pages/Profile/Encyclopedia";
 import { useRecoilValue } from "recoil";
 import { userState } from "./state/authState";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -51,7 +52,7 @@ const Router = () => {
                 <Route path="/signup" element={<SignUp />} />
               </>
             )}
-            <Route path="*" element={<p>존재하지 않는 페이지입니다.</p>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
         {/* 로그인 상태에만 Nav bar 보이도록 */}
