@@ -13,7 +13,7 @@ const Namoo = ({ txt1, txt2, navUrl, btnTxt }: INammoInfo) => {
   const navigate = useNavigate();
   const logout = useLogout(); // 로그아웃 함수 볼러오기
 
-  const handleClickBtn = (e) => {
+  const handleClickBtn = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     logout();
     navigate(navUrl);
