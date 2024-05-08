@@ -19,6 +19,7 @@ import Encyclopedia from "./pages/Profile/Encyclopedia";
 import { useRecoilValue } from "recoil";
 import { userState } from "./state/authState";
 import NotFoundPage from "./pages/NotFoundPage";
+import ChangePassword from "./pages/FindPassword/ChangePassword";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -48,6 +49,7 @@ const Router = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/findpassword" element={<FindPassword />} />
+                <Route path="password/reset" element={<ChangePassword />} />
               </>
             )}
             <Route path="*" element={<NotFoundPage />} />

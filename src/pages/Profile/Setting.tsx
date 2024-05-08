@@ -10,7 +10,7 @@ import useLogout from "../../hooks/useLogout";
 
 const Setting = () => {
   const logout = useLogout(); // 로그아웃 함수 볼러오기
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     logout();
     alert("로그아웃 되었습니다.");
