@@ -2,6 +2,8 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
+import { join } from "../../services/authJoinApi";
+
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -52,12 +54,8 @@ const SignUp = () => {
         setUsernameError("");
         setPasswordError("");
         try {
-          const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/join`, {
-            email,
-            username,
-            password,
-          });
-          alert(response.data.message);
+          const response = await join(email, username, password);
+          alert(response);
           navigate("/login");
         } catch (error: any) {
           const errorMessage = error.response.data.message;
