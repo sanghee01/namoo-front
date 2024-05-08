@@ -2,7 +2,8 @@ import axios from "axios";
 
 interface LoginResponse {
   username: string;
-  // 필요한 추가적인 응답 타입 정의
+  email: string;
+  token: string;
 }
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
