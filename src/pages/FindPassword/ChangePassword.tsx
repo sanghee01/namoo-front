@@ -34,20 +34,21 @@ const ChangePassword = () => {
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      setErrorTxt("");
       e.preventDefault();
-      try {
-        console.log(password);
-
-        const response = await changePassword(password, passwordConfirm, email, uuid);
-        setMessageTxt(response);
-        navigate("/login");
-      } catch (error: any) {
-        const errorMessage = error.response.data.message;
-        const errorContent = error.response.data.content;
-        if (errorMessage) alert(errorMessage);
-        if (errorContent.password) alert(errorContent.password);
-        if (errorContent.passwordConfirm) setErrorTxt(errorContent.passwordConfirm);
+      if (!mismatchError) {
+        setErrorTxt("");
+        try {
+          console.log(password);
+          const response = await changePassword(password, passwordConfirm, email, uuid);
+          setMessageTxt(response);
+          navigate("/login");
+        } catch (error: any) {
+          const errorMessage = error.response.data.message;
+          const errorContent = error.response.data.content;
+          if (errorMessage) alert(errorMessage);
+          if (errorContent.password) alert(errorContent.password);
+          if (errorContent.passwordConfirm) setErrorTxt(errorContent.passwordConfirm);
+        }
       }
     },
     [email],
@@ -79,7 +80,7 @@ const ChangePassword = () => {
         />
         <p>* 8자 이상, 알파벳, 숫자를 이용하여 조합</p>
         <button type="submit">비밀번호 재설정</button>
-        {mismatchError && <ErrorTxt>{mismatchError}</ErrorTxt>}
+        {mismatchError && <ErrorTxt>비밀번호가 일치하지 않습니다.</ErrorTxt>}
         {messageTxt && <MessageTxt>{messageTxt}</MessageTxt>}
         {errorTxt && <ErrorTxt>{errorTxt}</ErrorTxt>}
       </SubmitForm>
