@@ -50,13 +50,13 @@ const AddPlant = () => {
             </Header>   
             <SubText>01 식물 선택</SubText>         
             <SelectPlant>
-                <PlantCard onClick={() => setSelectedPlant('1')} isSelected={selectedPlant === '1'}>
+                <PlantCard onClick={() => setSelectedPlant('1')} $isSelected={selectedPlant === '1'}>
                     <ImgBox>
                         <PlantImg src="/assets/images/plant.png" alt="plant" />
                         <Name>상추</Name>
                     </ImgBox>   
                 </PlantCard> 
-                <PlantCard onClick={() => setSelectedPlant('2')} isSelected={selectedPlant === '2'}>
+                <PlantCard onClick={() => setSelectedPlant('2')} $isSelected={selectedPlant === '2'}>
                     <ImgBox>
                         <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
                         <Name>딸기</Name>
@@ -160,7 +160,7 @@ export const SelectPlant = styled.div`
     padding: 5px;
 `;
 
-export const PlantCard = styled.div<{ isSelected: boolean }>`
+export const PlantCard = styled.div<{ $isSelected: boolean }>`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -168,7 +168,7 @@ export const PlantCard = styled.div<{ isSelected: boolean }>`
     border-radius: 30px;
     background-color:#feefc6;
     margin: 10px;
-    border: ${({ isSelected }) => isSelected ? '2px solid #f0e68c' : 'none'};
+    border: ${({ $isSelected }) => $isSelected ? '2px solid #f0e68c' : 'none'};
 
     &:hover {
     border: 2px solid #f0e68c;
