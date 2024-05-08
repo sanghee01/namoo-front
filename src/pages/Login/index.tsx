@@ -1,9 +1,5 @@
 import { useNavigate } from "react-router";
 import { useCallback, useEffect, useState, useRef } from "react";
-import axios from "axios";
-import { useSetRecoilState } from "recoil";
-import { userState } from "../../state/atoms";
-import { useLocation } from "react-router";
 import React from "react";
 import {
   Container,
@@ -18,6 +14,10 @@ import {
   KakaoLogin,
   EasyLoginBox,
 } from "./style";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../state/authState";
+import { useLocation } from "react-router";
+import { login } from "../../services/authApi";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -38,33 +38,28 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onChangeEmail = useCallback(
+  const handleChangeEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
     },
     [email],
   );
 
-  const onChangePassword = useCallback(
+  const handleChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
     },
     [password],
   );
 
-  const onSubmit = useCallback(
+  const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/login`, {
-          email,
-          password,
-        });
-        console.log("성공", response);
-        setUser(response.data.content.username);
+        const response = await login(email, password); // authApi에서 login 함수 사용
+        setUser({ username: response.username, email: response.email, token: response.token }); // 사용자 상태 업데이트
         navigate("/home");
       } catch (error: any) {
-        console.log(error.response);
         alert(error.response.data.message);
         const errorMessage = error.response.data.content;
         if (errorMessage.email) alert(`아이디는 ${errorMessage.email}`);
@@ -80,10 +75,10 @@ const SignIn = () => {
         <Logo src="/assets/images/logo2.png"></Logo>
         <p>나만의 무럭이 키우기를 시작해주세용!</p>
       </Header>
-      <SubmitForm onSubmit={onSubmit}>
+      <SubmitForm onSubmit={handleSubmit}>
         <InputBox>
-          <Input type="email" id="email" name="email" onChange={onChangeEmail} placeholder="이메일" />
-          <Input type="password" id="password" name="password" onChange={onChangePassword} placeholder="비밀번호" />
+          <Input type="email" id="email" name="email" onChange={handleChangeEmail} placeholder="이메일" />
+          <Input type="password" id="password" name="password" onChange={handleChangePassword} placeholder="비밀번호" />
           <LoginCheckBox>
             <input type="checkbox" id="keeplogin" name="keeplogin" placeholder="로그인 상태 유지" />
             <span>로그인 상태 유지</span>

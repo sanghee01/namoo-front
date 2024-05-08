@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../SignIn/style";
+import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -14,21 +14,21 @@ const SignUp = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const onChangeEmail = useCallback(
+  const handleChangeEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
     },
     [email],
   );
 
-  const onChangeName = useCallback(
+  const handleChangeName = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
     },
     [username],
   );
 
-  const onChangePassword = useCallback(
+  const handleChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPassword(e.target.value);
       setMismatchError(e.target.value !== passwordCheck);
@@ -36,7 +36,7 @@ const SignUp = () => {
     [passwordCheck],
   );
 
-  const onChangePasswordCheck = useCallback(
+  const handleChangePasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPasswordCheck(e.target.value);
       setMismatchError(e.target.value !== password);
@@ -44,11 +44,10 @@ const SignUp = () => {
     [password],
   );
 
-  const onSubmit = useCallback(
+  const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!mismatchError) {
-        console.log(email, username, password, passwordCheck);
         setEmailError("");
         setUsernameError("");
         setPasswordError("");
@@ -58,14 +57,16 @@ const SignUp = () => {
             username,
             password,
           });
-          console.log("성공", response);
           alert(response.data.message);
           navigate("/login");
         } catch (error: any) {
-          const errorMessage = error.response.data.content;
-          if (errorMessage.email) setEmailError(errorMessage.email);
-          if (errorMessage.password) setPasswordError(errorMessage.password);
-          if (errorMessage.username) setUsernameError(errorMessage.username);
+          const errorMessage = error.response.data.message;
+          if (errorMessage) alert(errorMessage);
+
+          const errorContent = error.response.data.content;
+          if (errorContent.email) setEmailError(errorContent.email);
+          if (errorContent.password) setPasswordError(errorContent.password);
+          if (errorContent.username) setUsernameError(errorContent.username);
         }
       }
     },
@@ -78,14 +79,14 @@ const SignUp = () => {
         <Logo src="/assets/images/logo2.png"></Logo>
         <p>가입을 통해 똑똑한 나만의 무럭이를 키워보세요!</p>
       </Header>
-      <SubmitForm onSubmit={onSubmit}>
+      <SubmitForm onSubmit={handleSubmit}>
         <InputBox>
           <Input
             type="text"
             id="username"
             name="username"
             value={username}
-            onChange={onChangeName}
+            onChange={handleChangeName}
             placeholder="닉네임 입력"
           />
           {usernameError && <Error>{usernameError}</Error>}
@@ -94,7 +95,7 @@ const SignUp = () => {
             id="email"
             name="email"
             value={email}
-            onChange={onChangeEmail}
+            onChange={handleChangeEmail}
             placeholder="이메일 입력"
           />
           {emailError && <Error>{emailError}</Error>}
@@ -103,7 +104,7 @@ const SignUp = () => {
             id="password"
             name="password"
             value={password}
-            onChange={onChangePassword}
+            onChange={handleChangePassword}
             placeholder="비밀번호 입력"
           />
           <p>* 8자 이상, 알파벳, 숫자를 이용하여 조합</p>
@@ -112,7 +113,7 @@ const SignUp = () => {
             id="passwordCheck"
             name="passwordCheck"
             value={passwordCheck}
-            onChange={onChangePasswordCheck}
+            onChange={handleChangePasswordCheck}
             placeholder="비밀번호 재입력"
           />
           {passwordError && <Error>{passwordError}</Error>}
