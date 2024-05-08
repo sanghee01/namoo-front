@@ -41,7 +41,7 @@ const Router = () => {
                 <Route path="/myplant" element={<MyPlant />} />
                 <Route path="/addplant" element={<AddPlant />} />
                 <Route path="/setting" element={<Setting />} />
-                <Route path="/achievesment" element={<Achievement />} />
+                <Route path="/achievement" element={<Achievement />} />
                 <Route path="/encyclopedia" element={<Encyclopedia />} />
               </>
             ) : (

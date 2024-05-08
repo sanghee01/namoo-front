@@ -16,26 +16,26 @@ const Achievement = () => {
             </Header>
             <Container>
                 <Badge>
-                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                    <BadgeImg src="/assets/images/lock.png" alt="lock" />
                 </Badge>
                 <Badge>
-                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
-                </Badge>
-            </Container>
-            <Container>
-                <Badge>
-                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
-                </Badge>
-                <Badge>
-                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                    <BadgeImg src="/assets/images/lock.png" alt="lock" />
                 </Badge>
             </Container>
             <Container>
                 <Badge>
-                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                    <BadgeImg src="/assets/images/lock.png" alt="lock" />
                 </Badge>
                 <Badge>
-                    <BadgeImg src="/assets/image/lock.png" alt="lock" />
+                    <BadgeImg src="/assets/images/lock.png" alt="lock" />
+                </Badge>
+            </Container>
+            <Container>
+                <Badge>
+                    <BadgeImg src="/assets/images/lock.png" alt="lock" />
+                </Badge>
+                <Badge>
+                    <BadgeImg src="/assets/images/lock.png" alt="lock" />
                 </Badge>
             </Container>
         </AchievementBackGround>
