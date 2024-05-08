@@ -20,6 +20,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "./state/authState";
 import NotFoundPage from "./pages/NotFoundPage";
 import ChangePassword from "./pages/FindPassword/ChangePassword";
+import ReAuthMail from "./pages/ResendMail";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -50,6 +51,7 @@ const Router = () => {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/findpassword" element={<FindPassword />} />
                 <Route path="password/reset" element={<ChangePassword />} />
+                <Route path="resend-mail" element={<ReAuthMail />} />
               </>
             )}
             <Route path="*" element={<NotFoundPage />} />

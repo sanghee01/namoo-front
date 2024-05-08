@@ -86,9 +86,9 @@ const SignIn = () => {
           <SubmitBtn type="submit">로그인</SubmitBtn>
         </InputBox>
         <FindBox>
-          <span onClick={() => navigate("/findid")}>아이디 찾기</span>
-          <span>|</span>
           <span onClick={() => navigate("/findpassword")}>비밀번호 찾기</span>
+          <span>|</span>
+          <span onClick={() => navigate("/resend-mail")}>이메일 재인증</span>
           <span>|</span>
           <span onClick={() => navigate("/signup")}> 회원가입</span>
         </FindBox>
