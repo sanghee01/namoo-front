@@ -97,7 +97,14 @@ const SignIn = () => {
           <p>간편 로그인</p>
           <KakaoLogin>
             <img src="/assets/images/kakaoLogo.png" />
-            <button onClick={() => console.log("카카오로그인")}>카카오 로그인</button>
+            {/* <button onClick={handleKakaoLogin}>카카오 로그인</button> */}
+            <a
+              href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c32c867533ca7a7d9039737157709aaa&redirect_uri=${
+                import.meta.env.VITE_SERVER_APIADDRESS
+              }/user/kakao/callback`}
+            >
+              카카오 로그인
+            </a>
           </KakaoLogin>
         </EasyLoginBox>
       </SubmitForm>

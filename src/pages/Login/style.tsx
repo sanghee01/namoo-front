@@ -171,7 +171,7 @@ export const KakaoLogin = styled.div`
     width: 30px;
     margin-left: 5px;
   }
-  & button {
+  & a {
     width: 100%;
     text-align: center;
     font-size: 1rem;
@@ -191,7 +191,7 @@ export const KakaoLogin = styled.div`
       width: 23px;
       margin-left: 5px;
     }
-    & button {
+    & a {
       font-weight: 600;
       font-size: 0.85rem;
       margin-left: -24.66px;
