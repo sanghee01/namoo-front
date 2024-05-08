@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import Postcode from "../../components/Postcode";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state/authState";
 
 
 const AddPlant = () => {
@@ -12,18 +15,30 @@ const AddPlant = () => {
         const [userName, setUserName] = useState('');
         const [selectedPlant, setSelectedPlant] = useState('');
         const [plantName, setPlantName] = useState('');
+        const [token, setToken] = useState('');
+        const navigate = useNavigate();
 
-       
-      // 주소와 우편번호를 설정하는 함수
+        // Recoil을 통해 userState에서 사용자 정보 가져오기
+        const user = useRecoilValue(userState);
+
+        useEffect(() => {
+            if (user) {
+                setUserName(user.username); // username 설정
+                setToken(user.token); // token 설정
+            }
+        }, [user]); // user 상태가 변경될 때마다 실행
+
+         // 주소와 우편번호를 설정하는 함수
         const handleSelectAddress = (fullAddress: string, zonecode: string) => {
             setPostcode(zonecode);
             setAddress(fullAddress); 
         };
 
         const handleSubmit = async () => {
-            try {
+            try {  
+                
                 const addPlant = {
-                    item_id: selectedPlant,
+                    itemId: selectedPlant,
                     plantName: plantName,
                     userName: userName,
                     address:{   
@@ -32,10 +47,15 @@ const AddPlant = () => {
                         specify: detailAddress},
                     count:1
                 };
-    
-                const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/orders`, addPlant);
+                
+                const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/orders`, addPlant, {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // 토큰을 헤더에 추가
+                    }
+                });
+                
                 console.log(response.data); // 성공 응답 처리
-                // 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
+                navigate("/myplant");// 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
             } catch (error) {
                 console.error(error); // 에러 처리 로직
             }
@@ -72,10 +92,10 @@ const AddPlant = () => {
                                     placeholder="식물 이름" />
                     </NameBox>
                     <NameBox>
-                    <SubText>03 사용자 이름</SubText>
+                    <SubText>03 받으실 분</SubText>
                     <ShortInput 
                     type="text" 
-                    placeholder="사용자 이름"
+                    placeholder="받으실 분"
                     value={userName}
                     onChange={(e) => setUserName(e.target.value)}
                     />
