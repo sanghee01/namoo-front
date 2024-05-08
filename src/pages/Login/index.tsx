@@ -17,7 +17,7 @@ import {
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../state/authState";
 import { useLocation } from "react-router";
-import { login } from "../../services/authApi";
+import { login } from "../../services/loginApi";
 
 const SignIn = () => {
   const navigate = useNavigate();

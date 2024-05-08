@@ -1,8 +1,7 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
-import { join } from "../../services/authJoinApi";
+import { join } from "../../services/signupApi";
 
 const SignUp = () => {
   const navigate = useNavigate();

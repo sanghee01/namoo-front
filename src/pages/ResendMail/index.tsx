@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useCallback, useState } from "react";
-import { resendMail } from "../../services/resendMail";
+import { resendMail } from "../../services/resendMailApi";
 
 const ReAuthMail = () => {
   const [email, setEmail] = useState("");
