@@ -46,6 +46,12 @@ export const SubmitForm = styled.form`
   }
 `;
 
+export const Label = styled.label`
+  font-size: 0.85rem;
+  margin-top: 6px;
+  margin-bottom: -2px;
+`;
+
 export const InputBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,12 +69,11 @@ export const InputBox = styled.div`
 
 export const Input = styled.input`
   padding: 15px;
-  margin: 8px 0;
   border-radius: 5px;
   border: 1px solid gray;
+  margin: 6px 0;
 
   @media screen and (max-width: 450px) {
-    margin: 6px 0;
     padding: 10px;
     font-size: 0.85rem;
   }
