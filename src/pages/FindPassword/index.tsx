@@ -7,12 +7,9 @@ const FindPassword = () => {
   const [messageTxt, setMessageTxt] = useState("");
   const [errorTxt, setErrorTxt] = useState("");
 
-  const handleChangeEmail = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(e.target.value);
-    },
-    [email],
-  );
+  const handleChangeEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {

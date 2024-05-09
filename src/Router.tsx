@@ -7,7 +7,6 @@ import Nav from "./layouts/Nav";
 import styled from "styled-components";
 import Login from "./pages/Login";
 import FindPassword from "./pages/FindPassword";
-import NeedActivate from "./pages/Profile/NeedActivate";
 import RePassword from "./pages/Profile/RePassword";
 import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
@@ -35,7 +34,6 @@ const Router = () => {
           <Routes>
             {user ? (
               <>
-                <Route path="/needactivate" element={<NeedActivate />} />
                 <Route path="/repassword" element={<RePassword />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/chat" element={<Chat />} />

@@ -33,24 +33,18 @@ const SignIn = () => {
       didMountRef.current = true;
       alert("메일 인증 성공! 로그인을 해주세요.");
     }
-  }, []);
+  }, [activate]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleChangeEmail = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(e.target.value);
-    },
-    [email],
-  );
+  const handleChangeEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
 
-  const handleChangePassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPassword(e.target.value);
-    },
-    [password],
-  );
+  const handleChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +60,7 @@ const SignIn = () => {
         if (errorMessage.password) alert(`비밀번호는 ${errorMessage.password}`);
       }
     },
-    [email, password],
+    [email, navigate, password, setUser],
   );
 
   return (

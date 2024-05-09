@@ -20,7 +20,7 @@ const ChangePassword = () => {
       setPassword(e.target.value);
       setMismatchError(e.target.value !== passwordConfirm);
     },
-    [password],
+    [passwordConfirm],
   );
 
   const handleChangePasswordCheck = useCallback(
@@ -28,7 +28,7 @@ const ChangePassword = () => {
       setPasswordConfirm(e.target.value);
       setMismatchError(e.target.value !== password);
     },
-    [passwordConfirm],
+    [password],
   );
 
   const handleSubmit = useCallback(
