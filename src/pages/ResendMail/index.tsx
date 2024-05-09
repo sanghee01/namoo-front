@@ -1,11 +1,24 @@
 import styled from "styled-components";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 import { resendMail } from "../../services/resendMailApi";
+import { useLocation } from "react-router";
 
 const ReAuthMail = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const expired = searchParams.get("expired");
+  const didMountRef = useRef(false);
+
   const [email, setEmail] = useState("");
   const [messageTxt, setMessageTxt] = useState("");
   const [errorTxt, setErrorTxt] = useState("");
+
+  useEffect(() => {
+    if (!didMountRef.current && expired === "true") {
+      didMountRef.current = true;
+      alert("요청이 만료된 이메일입니다. 다시 이메일 재인증 요청을 해주세요.");
+    }
+  }, [expired]);
 
   const handleChangeEmail = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
