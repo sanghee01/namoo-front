@@ -9,7 +9,6 @@ const ChangePassword = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [mismatchError, setMismatchError] = useState(false);
-  const [messageTxt, setMessageTxt] = useState("");
   const [errorTxt, setErrorTxt] = useState("");
 
   const searchParams = new URLSearchParams(location.search);
@@ -38,9 +37,8 @@ const ChangePassword = () => {
       if (!mismatchError) {
         setErrorTxt("");
         try {
-          console.log(password);
           const response = await changePassword(password, passwordConfirm, email, uuid);
-          setMessageTxt(response);
+          alert(response);
           navigate("/login");
         } catch (error: any) {
           const errorMessage = error.response.data.message;
@@ -51,7 +49,7 @@ const ChangePassword = () => {
         }
       }
     },
-    [email],
+    [password, passwordConfirm, email, uuid, mismatchError, navigate],
   );
 
   return (
@@ -81,7 +79,6 @@ const ChangePassword = () => {
         <p>* 8자 이상, 알파벳, 숫자를 이용하여 조합</p>
         <button type="submit">비밀번호 재설정</button>
         {mismatchError && <ErrorTxt>비밀번호가 일치하지 않습니다.</ErrorTxt>}
-        {messageTxt && <MessageTxt>{messageTxt}</MessageTxt>}
         {errorTxt && <ErrorTxt>{errorTxt}</ErrorTxt>}
       </SubmitForm>
     </Container>
