@@ -7,9 +7,12 @@ import { LuLogOut } from "react-icons/lu";
 import { HiOutlineTrash } from "react-icons/hi";
 import { RiFeedbackLine } from "react-icons/ri";
 import useLogout from "../../hooks/useLogout";
+import { useNavigate } from "react-router";
 
 const Setting = () => {
   const logout = useLogout(); // 로그아웃 함수 볼러오기
+  const navigate = useNavigate();
+
   const handleLogout = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     logout();
@@ -36,7 +39,7 @@ const Setting = () => {
         </IconBox>
         로그아웃
       </ListItem>
-      <ListItem>
+      <ListItem onClick={() => navigate("/delete-member")}>
         <IconBox>
           <HiOutlineTrash size="30" />
         </IconBox>

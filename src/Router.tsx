@@ -23,6 +23,7 @@ import ChangePassword from "./pages/FindPassword/ChangePassword";
 import ReAuthMail from "./pages/ResendMail";
 import LoginSuccess from "./pages/Login/LoginSuccess";
 import ErrorPage from "./pages/Login/ErrorPage";
+import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -45,6 +46,7 @@ const Router = () => {
                 <Route path="/setting" element={<Setting />} />
                 <Route path="/achievement" element={<Achievement />} />
                 <Route path="/encyclopedia" element={<Encyclopedia />} />
+                <Route path="/delete-member" element={<DeleteMemeberPage />} />
               </>
             ) : (
               <>
