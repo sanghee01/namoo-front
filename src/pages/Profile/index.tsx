@@ -1,13 +1,14 @@
-import { IoMdSettings } from "react-icons/io";
 import { IoMdBookmarks } from "react-icons/io";
 import { IoIosTrophy } from "react-icons/io";
 import { MdArrowBackIos } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Demo from "../../components/Heatmap";
 import {
   ProfileBackGround,
   Header,
   Text,
+  SettingBox,
   Main,
   ProfileCard,
   ProfileBox,
@@ -70,6 +71,11 @@ const Profile: React.FC<ProfileProps> = ({ plantId }) => {
           </Link>
           <Text>식물이야기</Text>
         </Container>
+        <SettingBox>
+          <Link to="/setting">
+            <MdDeleteForever size="40" />
+          </Link>
+        </SettingBox>
       </Header>
       <Main>
         <ProfileCard>
