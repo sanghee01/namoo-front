@@ -8,7 +8,6 @@ import {
   ProfileBackGround,
   Header,
   Text,
-  SettingBox,
   Main,
   ProfileCard,
   ProfileBox,
@@ -41,7 +40,7 @@ const Profile: React.FC<ProfileProps> = ({ plantId }) => {
       try {
         // user가 있을 경우에만 요청 실행
         if (user && user.token) {
-          const response = await axios.get(`/plant/${plantId}`, {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
               'Authorization': `Bearer ${user.token}`, // 토큰을 헤더에 추가
             },
@@ -71,11 +70,6 @@ const Profile: React.FC<ProfileProps> = ({ plantId }) => {
           </Link>
           <Text>식물이야기</Text>
         </Container>
-        <SettingBox>
-          <Link to="/setting">
-            <IoMdSettings size="40" />
-          </Link>
-        </SettingBox>
       </Header>
       <Main>
         <ProfileCard>

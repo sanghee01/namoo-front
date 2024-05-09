@@ -28,14 +28,6 @@ export const Container = styled.div`
   padding: 5px;
 `;
 
-export const SettingBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 100%;
-`;
-
 export const Text = styled.div`
   font-size: 20px;
   font-weight: bold;
