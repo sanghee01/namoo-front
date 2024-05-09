@@ -27,14 +27,17 @@ import React,{ useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/authState";
+import { useLocation } from 'react-router-dom';
 
-// Props 타입 정의
-interface ProfileProps {
-  plantId: string;
-}
-const Profile: React.FC<ProfileProps> = ({ plantId }) => {
+const Profile: React.FC = () => {
   const [characterName, setCharacterName] = useState('');
-  const user = useRecoilValue(userState); // Recoil을 통해 userState에서 사용자 정보 가져오기
+  const [characterDate, setCharacterDate] = useState('');
+  const user = useRecoilValue(userState);
+  const location = useLocation();
+
+  // URL에서 plantId 쿼리 파라미터 읽기
+  const queryParams = new URLSearchParams(location.search);
+  const plantId = queryParams.get('plantId');
 
   useEffect(() => {
     const fetchPlantData = async () => {
@@ -43,10 +46,11 @@ const Profile: React.FC<ProfileProps> = ({ plantId }) => {
         if (user && user.token) {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
-              'Authorization': `Bearer ${user.token}`, // 토큰을 헤더에 추가
+              'Authorization': `Bearer ${user.token}`,
             },
           });
-          setCharacterName(response.data.content.name); // 식물 이름을 상태에 저장
+          setCharacterName(response.data.content.name);
+          setCharacterDate(response.data.content.createDate);
         }
       } catch (error) {
         console.error('식물 데이터를 가져오는 중 에러가 발생했습니다:', error);
@@ -57,10 +61,6 @@ const Profile: React.FC<ProfileProps> = ({ plantId }) => {
       fetchPlantData();
     }
   }, [plantId, user]); 
-
-  useEffect(() => {
-    console.log(characterName); // characterName 상태가 변경될 때마다 콘솔에 출력
-  }, [characterName]); // characterName이 변경될 때만 이 useEffect를 실행합니다.
 
   return (
     <ProfileBackGround>
@@ -85,7 +85,7 @@ const Profile: React.FC<ProfileProps> = ({ plantId }) => {
             <Level>Lv.1</Level>
           </ProfileBox>
           <DetailBox>
-            <Text>2024.04.06</Text>
+            <Text>{characterDate}</Text>
             <span>생년월일</span>
           </DetailBox>
           <DetailBox>

@@ -31,13 +31,13 @@ const MyPlant = () => {
   }, [user]);
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
-  const renderPlantOrAddLink = (index) => {
+  const renderPlantOrAddLink = (index: any) => {
     // 식물 데이터가 있는 경우
     if (plants.length > index) {
       const plant = plants[index];
       return (
         <PlantCard key={index}>
-          <Link to="/profile">
+          <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
               <PlantImg src="/assets/images/plant.png" alt="plant" />
               <CharacterName>{plant.name}</CharacterName>
