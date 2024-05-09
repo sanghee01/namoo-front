@@ -22,7 +22,7 @@ const Setting = () => {
   return (
     <SettingBackGround>
       <Header>
-        <Link to="/profile">
+        <Link to="/myplant">
           <MdArrowBackIos size="30" />
         </Link>
         <Text>설정</Text>
