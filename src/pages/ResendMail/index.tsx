@@ -1,11 +1,24 @@
 import styled from "styled-components";
-import { resetPassword } from "../../services/resetPasswordApi";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
+import { resendMail } from "../../services/resendMailApi";
+import { useLocation } from "react-router";
 
-const FindPassword = () => {
+const ReAuthMail = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const expired = searchParams.get("expired");
+  const didMountRef = useRef(false);
+
   const [email, setEmail] = useState("");
   const [messageTxt, setMessageTxt] = useState("");
   const [errorTxt, setErrorTxt] = useState("");
+
+  useEffect(() => {
+    if (!didMountRef.current && expired === "true") {
+      didMountRef.current = true;
+      alert("요청이 만료된 이메일입니다. 다시 이메일 재인증 요청을 해주세요.");
+    }
+  }, [expired]);
 
   const handleChangeEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -16,13 +29,13 @@ const FindPassword = () => {
       setErrorTxt("");
       e.preventDefault();
       try {
-        const response = await resetPassword(email);
+        const response = await resendMail(email);
         setMessageTxt(response);
       } catch (error: any) {
         const errorMessage = error.response.data.message;
         const errorContent = error.response.data.content;
         if (errorMessage) alert(errorMessage);
-        if (errorContent.email) setErrorTxt(errorContent.email);
+        if (errorContent) setErrorTxt(errorContent);
       }
     },
     [email],
@@ -31,14 +44,14 @@ const FindPassword = () => {
     <Container>
       <Header>
         <Logo src="/assets/images/logo2.png"></Logo>
-        <Title>비밀번호 찾기</Title>
-        <p>비밀번호를 잊어버리셨나요?</p>
-        <p>기존에 가입한 이메일을 통해</p>
-        <p>새로운 비밀번호를 설정할 수 있어요.</p>
+        <Title>이메일 재인증</Title>
+        <p>이메일을 인증하지 못한 경우 </p>
+        <p>가입하신 이메일을 입력하고</p>
+        <p>재인증 요청을 해서 활성화 시켜주세요!</p>
       </Header>
       <SubmitForm onSubmit={handleSubmit}>
         <input type="email" id="email" placeholder="이메일" onChange={handleChangeEmail} />
-        <button type="submit">비밀번호 재설정 메일 보내기</button>
+        <button type="submit">이메일 재인증 요청하기</button>
         {messageTxt && <MessageTxt>{messageTxt}</MessageTxt>}
         {errorTxt && <ErrorTxt>{errorTxt}</ErrorTxt>}
       </SubmitForm>
@@ -109,4 +122,4 @@ const ErrorTxt = styled(MessageTxt)`
   color: #e01e5a;
 `;
 
-export default FindPassword;
+export default ReAuthMail;

@@ -1,45 +1,54 @@
 import styled from "styled-components";
-import { resetPassword } from "../../services/resetPasswordApi";
 import { useCallback, useState } from "react";
+import useLogout from "../../hooks/useLogout";
+import { useDeleteMember } from "../../hooks/useDeleteMember";
 
-const FindPassword = () => {
-  const [email, setEmail] = useState("");
-  const [messageTxt, setMessageTxt] = useState("");
+const DeleteMemeberPage = () => {
   const [errorTxt, setErrorTxt] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChangeEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+  const deleteMember = useDeleteMember(); // 커스텀 Hook 사용
+  const logout = useLogout(); // 로그아웃 함수 볼러오기
+
+  const handleChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   }, []);
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      setErrorTxt("");
+  const handleDeleteMember = useCallback(
+    async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
       e.preventDefault();
       try {
-        const response = await resetPassword(email);
-        setMessageTxt(response);
+        const response = await deleteMember(password);
+        alert(response);
+        logout();
       } catch (error: any) {
         const errorMessage = error.response.data.message;
         const errorContent = error.response.data.content;
-        if (errorMessage) alert(errorMessage);
-        if (errorContent.email) setErrorTxt(errorContent.email);
+        if (errorMessage) setErrorTxt(errorMessage);
+        if (errorContent) alert(errorContent);
       }
     },
-    [email],
+    [deleteMember, logout, password],
   );
+
   return (
     <Container>
       <Header>
         <Logo src="/assets/images/logo2.png"></Logo>
-        <Title>비밀번호 찾기</Title>
-        <p>비밀번호를 잊어버리셨나요?</p>
-        <p>기존에 가입한 이메일을 통해</p>
-        <p>새로운 비밀번호를 설정할 수 있어요.</p>
+        <Title>회원탈퇴</Title>
+        <p>회원탈퇴를 원하시면</p>
+        <p>비밀번호를 입력해주세요.</p>
       </Header>
-      <SubmitForm onSubmit={handleSubmit}>
-        <input type="email" id="email" placeholder="이메일" onChange={handleChangeEmail} />
-        <button type="submit">비밀번호 재설정 메일 보내기</button>
-        {messageTxt && <MessageTxt>{messageTxt}</MessageTxt>}
+      <SubmitForm>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={password}
+          onChange={handleChangePassword}
+          placeholder="비밀번호 입력"
+        />
+        <button onClick={handleDeleteMember}>탈퇴하기</button>
         {errorTxt && <ErrorTxt>{errorTxt}</ErrorTxt>}
       </SubmitForm>
     </Container>
@@ -109,4 +118,4 @@ const ErrorTxt = styled(MessageTxt)`
   color: #e01e5a;
 `;
 
-export default FindPassword;
+export default DeleteMemeberPage;

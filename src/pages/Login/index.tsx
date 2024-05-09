@@ -17,7 +17,7 @@ import {
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../state/authState";
 import { useLocation } from "react-router";
-import { login } from "../../services/authApi";
+import { login } from "../../services/loginApi";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -33,24 +33,18 @@ const SignIn = () => {
       didMountRef.current = true;
       alert("메일 인증 성공! 로그인을 해주세요.");
     }
-  }, []);
+  }, [activate]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleChangeEmail = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(e.target.value);
-    },
-    [email],
-  );
+  const handleChangeEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
 
-  const handleChangePassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPassword(e.target.value);
-    },
-    [password],
-  );
+  const handleChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +60,7 @@ const SignIn = () => {
         if (errorMessage.password) alert(`비밀번호는 ${errorMessage.password}`);
       }
     },
-    [email, password],
+    [email, navigate, password, setUser],
   );
 
   return (
@@ -86,9 +80,9 @@ const SignIn = () => {
           <SubmitBtn type="submit">로그인</SubmitBtn>
         </InputBox>
         <FindBox>
-          <span onClick={() => navigate("/findid")}>아이디 찾기</span>
-          <span>|</span>
           <span onClick={() => navigate("/findpassword")}>비밀번호 찾기</span>
+          <span>|</span>
+          <span onClick={() => navigate("/resend-mail")}>이메일 재인증</span>
           <span>|</span>
           <span onClick={() => navigate("/signup")}> 회원가입</span>
         </FindBox>
@@ -97,7 +91,14 @@ const SignIn = () => {
           <p>간편 로그인</p>
           <KakaoLogin>
             <img src="/assets/images/kakaoLogo.png" />
-            <button onClick={() => console.log("카카오로그인")}>카카오 로그인</button>
+            {/* <button onClick={handleKakaoLogin}>카카오 로그인</button> */}
+            <a
+              href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=c32c867533ca7a7d9039737157709aaa&redirect_uri=${
+                import.meta.env.VITE_SERVER_APIADDRESS
+              }/user/kakao/callback`}
+            >
+              카카오 로그인
+            </a>
           </KakaoLogin>
         </EasyLoginBox>
       </SubmitForm>
