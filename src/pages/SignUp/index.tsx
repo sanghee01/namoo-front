@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router";
-import { Container, Header, Logo, InputBox, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
+import { Container, Header, Logo, InputBox, Label, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
+import { join } from "../../services/signupApi";
+
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -14,19 +15,13 @@ const SignUp = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const handleChangeEmail = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(e.target.value);
-    },
-    [email],
-  );
+  const handleChangeEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
 
-  const handleChangeName = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUsername(e.target.value);
-    },
-    [username],
-  );
+  const handleChangeName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  }, []);
 
   const handleChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,25 +47,20 @@ const SignUp = () => {
         setUsernameError("");
         setPasswordError("");
         try {
-          const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/join`, {
-            email,
-            username,
-            password,
-          });
-          alert(response.data.message);
+          const response = await join(email, username, password);
+          alert(response);
           navigate("/login");
         } catch (error: any) {
           const errorMessage = error.response.data.message;
-          if (errorMessage) alert(errorMessage);
-
           const errorContent = error.response.data.content;
+          if (errorMessage) alert(errorMessage);
           if (errorContent.email) setEmailError(errorContent.email);
           if (errorContent.password) setPasswordError(errorContent.password);
           if (errorContent.username) setUsernameError(errorContent.username);
         }
       }
     },
-    [email, username, password, passwordCheck, mismatchError],
+    [mismatchError, email, username, password, navigate],
   );
 
   return (
@@ -81,6 +71,7 @@ const SignUp = () => {
       </Header>
       <SubmitForm onSubmit={handleSubmit}>
         <InputBox>
+          <Label htmlFor="username">닉네임</Label>
           <Input
             type="text"
             id="username"
@@ -90,6 +81,7 @@ const SignUp = () => {
             placeholder="닉네임 입력"
           />
           {usernameError && <Error>{usernameError}</Error>}
+          <Label htmlFor="email">이메일</Label>
           <Input
             type="email"
             id="email"
@@ -99,6 +91,7 @@ const SignUp = () => {
             placeholder="이메일 입력"
           />
           {emailError && <Error>{emailError}</Error>}
+          <Label htmlFor="password">비밀번호</Label>
           <Input
             type="password"
             id="password"
@@ -108,6 +101,7 @@ const SignUp = () => {
             placeholder="비밀번호 입력"
           />
           <p>* 8자 이상, 알파벳, 숫자를 이용하여 조합</p>
+          <Label htmlFor="passwordCheck">비밀번호 확인</Label>
           <Input
             type="password"
             id="passwordCheck"

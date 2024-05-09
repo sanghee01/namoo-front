@@ -9,7 +9,6 @@ const ChangePassword = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [mismatchError, setMismatchError] = useState(false);
-  const [messageTxt, setMessageTxt] = useState("");
   const [errorTxt, setErrorTxt] = useState("");
 
   const searchParams = new URLSearchParams(location.search);
@@ -21,7 +20,7 @@ const ChangePassword = () => {
       setPassword(e.target.value);
       setMismatchError(e.target.value !== passwordConfirm);
     },
-    [password],
+    [passwordConfirm],
   );
 
   const handleChangePasswordCheck = useCallback(
@@ -29,28 +28,28 @@ const ChangePassword = () => {
       setPasswordConfirm(e.target.value);
       setMismatchError(e.target.value !== password);
     },
-    [passwordConfirm],
+    [password],
   );
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      setErrorTxt("");
       e.preventDefault();
-      try {
-        console.log(password);
-
-        const response = await changePassword(password, passwordConfirm, email, uuid);
-        setMessageTxt(response);
-        navigate("/login");
-      } catch (error: any) {
-        const errorMessage = error.response.data.message;
-        const errorContent = error.response.data.content;
-        if (errorMessage) alert(errorMessage);
-        if (errorContent.password) alert(errorContent.password);
-        if (errorContent.passwordConfirm) setErrorTxt(errorContent.passwordConfirm);
+      if (!mismatchError) {
+        setErrorTxt("");
+        try {
+          const response = await changePassword(password, passwordConfirm, email, uuid);
+          alert(response);
+          navigate("/login");
+        } catch (error: any) {
+          const errorMessage = error.response.data.message;
+          const errorContent = error.response.data.content;
+          if (errorMessage) alert(errorMessage);
+          if (errorContent.password) alert(errorContent.password);
+          if (errorContent.passwordConfirm) setErrorTxt(errorContent.passwordConfirm);
+        }
       }
     },
-    [email],
+    [password, passwordConfirm, email, uuid, mismatchError, navigate],
   );
 
   return (
@@ -79,8 +78,7 @@ const ChangePassword = () => {
         />
         <p>* 8자 이상, 알파벳, 숫자를 이용하여 조합</p>
         <button type="submit">비밀번호 재설정</button>
-        {mismatchError && <ErrorTxt>{mismatchError}</ErrorTxt>}
-        {messageTxt && <MessageTxt>{messageTxt}</MessageTxt>}
+        {mismatchError && <ErrorTxt>비밀번호가 일치하지 않습니다.</ErrorTxt>}
         {errorTxt && <ErrorTxt>{errorTxt}</ErrorTxt>}
       </SubmitForm>
     </Container>

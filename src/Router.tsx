@@ -7,7 +7,6 @@ import Nav from "./layouts/Nav";
 import styled from "styled-components";
 import Login from "./pages/Login";
 import FindPassword from "./pages/FindPassword";
-import NeedActivate from "./pages/Profile/NeedActivate";
 import RePassword from "./pages/Profile/RePassword";
 import SignUp from "./pages/SignUp";
 import Start from "./pages/Start";
@@ -20,6 +19,10 @@ import { useRecoilValue } from "recoil";
 import { userState } from "./state/authState";
 import NotFoundPage from "./pages/NotFoundPage";
 import ChangePassword from "./pages/FindPassword/ChangePassword";
+import ReAuthMail from "./pages/ResendMail";
+import LoginSuccess from "./pages/Login/LoginSuccess";
+import ErrorPage from "./pages/Login/ErrorPage";
+import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
 
 const Router = () => {
   const user = useRecoilValue(userState);
@@ -31,7 +34,6 @@ const Router = () => {
           <Routes>
             {user ? (
               <>
-                <Route path="/needactivate" element={<NeedActivate />} />
                 <Route path="/repassword" element={<RePassword />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/chat" element={<Chat />} />
@@ -42,6 +44,7 @@ const Router = () => {
                 <Route path="/setting" element={<Setting />} />
                 <Route path="/achievement" element={<Achievement />} />
                 <Route path="/encyclopedia" element={<Encyclopedia />} />
+                <Route path="/delete-member" element={<DeleteMemeberPage />} />
               </>
             ) : (
               <>
@@ -49,7 +52,10 @@ const Router = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/findpassword" element={<FindPassword />} />
-                <Route path="password/reset" element={<ChangePassword />} />
+                <Route path="/password/reset" element={<ChangePassword />} />
+                <Route path="/resend-mail" element={<ReAuthMail />} />
+                <Route path="/login-success" element={<LoginSuccess />} />
+                <Route path="/error-page" element={<ErrorPage />} />
               </>
             )}
             <Route path="*" element={<NotFoundPage />} />
