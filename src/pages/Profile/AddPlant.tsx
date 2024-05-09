@@ -56,8 +56,8 @@ const AddPlant = () => {
                 
                 console.log(response.data); // 성공 응답 처리
                 navigate("/myplant");// 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
-            } catch (error) {
-                console.error(error); // 에러 처리 로직
+            } catch (error: any) {
+                alert(error.response.data.message);
             }
         };
 
