@@ -65,7 +65,7 @@ const SignUp = () => {
 
   return (
     <Container>
-      <Header onClick={() => navigate("/signin")}>
+      <Header onClick={() => navigate("/login")}>
         <Logo src="/assets/images/logo2.png"></Logo>
         <p>가입을 통해 똑똑한 나만의 무럭이를 키워보세요!</p>
       </Header>

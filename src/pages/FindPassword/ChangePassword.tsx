@@ -54,7 +54,7 @@ const ChangePassword = () => {
 
   return (
     <Container>
-      <Header>
+      <Header onClick={() => navigate("/login")}>
         <Logo src="/assets/images/logo2.png"></Logo>
         <Title>비밀번호 재설정</Title>
         <p>새로운 비밀번호를 입력해주세요!</p>
