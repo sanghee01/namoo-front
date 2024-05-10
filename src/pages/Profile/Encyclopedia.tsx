@@ -16,26 +16,21 @@ const Encyclopedia = () => {
       </Header>
       <Container>
         <BookOne>
-          <BookImg src="/assets/images/LettuceBook.png"/>
+          <BookImg src="/assets/images/LettuceBookShelf.png"/>
         </BookOne>
-        <BookTwo>
-        <BookImg src="/assets/images/StrawberryBook.png"/>
-        </BookTwo>
+        <BookOne>
+        <BookImg src="/assets/images/StrawberryBookShelf.png"/>
+        </BookOne>
       </Container>
     </EncyclopediaBackGround>
   );
 };
 
 export const EncyclopediaBackGround = styled.div`
-  background-image: url("/assets/images/bookshelf.png");
   background-repeat: no-repeat;
   background-color: #fffaed;
   background-size: 550px 700px;
   height: 100%;
-
-  @media screen and (max-width: 600px){
-    background-size: 400px 650px;
-  } 
 `;
 
 export const Header = styled.div`
@@ -74,30 +69,12 @@ export const BookOne = styled.div`
 
 `;
 
-export const BookTwo = styled.div`
-    width: 100%;
-    height: 45%; 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 5px;
-
-      @media screen and (max-width:600px){
-        height:60%
-    }
-`;
-
 export const BookImg = styled.img`
-    width: 150px;
-    height: 150px;
+
 
     &:hover {
         cursor: pointer; 
 
-        @media screen and (max-width:600px){
-          width: 100px;
-          height: 100px;
-        }
 `;
 
 export default Encyclopedia;

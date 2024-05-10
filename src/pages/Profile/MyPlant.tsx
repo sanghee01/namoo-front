@@ -1,31 +1,88 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state/authState";
+import { IoMdSettings } from "react-icons/io";
+
+interface Plant {
+  id: string;
+  name: string;
+  plantType: string;
+}
 
 const MyPlant = () => {
-  return (
-    <MyPlantBackGround>
-      <Header>
-        <Text>내 식물들</Text>
-        <Link to="/addplant">
-          <FcPlus size="30" />
-        </Link>
-      </Header>
-      <Container>
-        <PlantCard>
-          <Link to="/profile">
+  const [plants, setPlants] = useState<Plant[]>([]);
+  const user = useRecoilValue(userState); // Recoil을 통해 userState에서 사용자 정보 가져오기
+
+  useEffect(() => {
+    const fetchPlants = async () => {
+      try {
+        if (user && user.token) {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant`, {
+            headers: {
+              'Authorization': `Bearer ${user.token}`,
+            },
+          });
+          setPlants(response.data.content.slice(0, 4)); // 최대 4개의 식물 정보만 가져옴
+        }
+      } catch (error) {
+        console.error('식물 정보를 불러오는 중 에러 발생:', error);
+      }
+    };
+
+    fetchPlants();
+  }, [user]);
+
+  // 식물 카드 또는 추가 링크를 렌더링하는 함수
+  const renderPlantOrAddLink = (index: number) => {
+    // 식물 데이터가 있는 경우
+    if (plants.length > index) {
+      const plant = plants[index];
+      let imageSrc = '/assets/images/logoimg1.png'; // 기본 이미지
+      if (plant.plantType === '상추') {
+        imageSrc = '/assets/images/plant.png';
+      } else if (plant.plantType === '딸기') {
+        imageSrc = '/assets/images/strawberry.png';
+      }
+      return (
+        <PlantCard key={index}>
+          <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
-              <PlantImg src="/assets/images/plant.png" alt="plant" />
-              <CharacterName>귀염뽀짝상추</CharacterName>
+              <PlantImg src={imageSrc} alt="plant" />
+              <CharacterName>{plant.name}</CharacterName>
               <Level>Lv.1</Level>
             </ImgBox>
           </Link>
         </PlantCard>
-        <PlantCard></PlantCard>
+      );
+    } else { // 식물 데이터가 없는 경우
+      return (
+        <PlantCard key={index}>
+          <Link to="/addplant">
+            <FcPlus size="60" />
+          </Link>
+        </PlantCard>
+      );
+    }
+  };
+
+
+  return (
+    <MyPlantBackGround>
+      <Header>
+        <Text>내 식물들</Text>
+        <Link to="/setting">
+            <IoMdSettings size="40" />
+          </Link>
+      </Header>
+      <Container>
+        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
       </Container>
       <Container>
-        <PlantCard></PlantCard>
-        <PlantCard></PlantCard>
+        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
       </Container>
     </MyPlantBackGround>
   );
@@ -69,6 +126,8 @@ export const Container = styled.div`
 export const PlantCard = styled.div`
   flex: 1;
   display: flex;
+  justify-content: center; /* 중앙 정렬을 위해 추가 */
+  align-items: center; /* 중앙 정렬을 위해 추가 */
   flex-direction: column;
   height: 90%;
   border-radius: 30px;
@@ -80,6 +139,7 @@ export const PlantCard = styled.div`
     cursor: pointer;
   }
 `;
+
 
 export const ImgBox = styled.div`
   display: flex;

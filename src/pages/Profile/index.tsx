@@ -1,7 +1,7 @@
-import { IoMdSettings } from "react-icons/io";
 import { IoMdBookmarks } from "react-icons/io";
 import { IoIosTrophy } from "react-icons/io";
 import { MdArrowBackIos } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Demo from "../../components/Heatmap";
 import {
@@ -23,8 +23,56 @@ import {
   QuestBox,
   Container,
 } from "./styles";
+import React,{ useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state/authState";
+import { useLocation } from 'react-router-dom';
 
-const Profile = () => {
+const Profile: React.FC = () => {
+  const [characterName, setCharacterName] = useState('');
+  const [characterDate, setCharacterDate] = useState('');
+  const [characterImage, setCharacterImage] = useState('');
+  const user = useRecoilValue(userState);
+  const location = useLocation();
+
+  // URL에서 plantId 쿼리 파라미터 읽기
+  const queryParams = new URLSearchParams(location.search);
+  const plantId = queryParams.get('plantId');
+
+  useEffect(() => {
+    const fetchPlantData = async () => {
+      // user가 있을 경우에만 요청 실행
+      if (user && user.token) {
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
+            headers: {
+              'Authorization': `Bearer ${user.token}`,
+            },
+          });
+          setCharacterName(response.data.content.name);
+          setCharacterDate(response.data.content.createDate);
+          // plantType에 따라 characterImage 설정
+          const plantType = response.data.content.plantType;
+          if (plantType === '상추') {
+            setCharacterImage('/assets/images/plant.png');
+          } else if (plantType === '딸기') {
+            setCharacterImage('/assets/images/strawberry.png');
+          } else {
+            // 기본 이미지 또는 다른 타입의 식물 이미지 설정
+            setCharacterImage('/assets/images/logoimg1.png'); 
+          }
+        } catch (error) {
+          console.error('식물 데이터를 가져오는 중 에러가 발생했습니다:', error);
+        }
+      }
+    };
+  
+    if (plantId) {
+      fetchPlantData();
+    }
+  }, [plantId, user]);
+  
   return (
     <ProfileBackGround>
       <Header>
@@ -36,19 +84,19 @@ const Profile = () => {
         </Container>
         <SettingBox>
           <Link to="/setting">
-            <IoMdSettings size="40" />
+            <MdDeleteForever size="40" />
           </Link>
         </SettingBox>
       </Header>
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src="/assets/images/plant.png" alt="plant" />
-            <CharacterName>귀염뽀짝상추</CharacterName>
+            <PlantImg src={characterImage} alt="plant" />
+            <CharacterName>{characterName}</CharacterName>
             <Level>Lv.1</Level>
           </ProfileBox>
           <DetailBox>
-            <Text>2024.04.06</Text>
+            <Text>{characterDate}</Text>
             <span>생년월일</span>
           </DetailBox>
           <DetailBox>
