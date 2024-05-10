@@ -25,7 +25,7 @@ const Namoo = ({ txt1, txt2, navUrl, btnTxt }: INammoInfo) => {
         <p>{txt1}</p>
         <p>{txt2}</p>
       </Explain>
-      <ImgBox>
+      <ImgBox onClick={() => navigate("/login")}>
         <LogoImg src="/assets/images/logoimg1.png"></LogoImg>
         <Logo src="/assets/images/logo2.png"></Logo>
       </ImgBox>

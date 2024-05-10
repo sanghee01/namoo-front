@@ -2,8 +2,14 @@ import styled from "styled-components";
 import { useCallback, useState, useRef, useEffect } from "react";
 import { resendMail } from "../../services/resendMailApi";
 import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
+import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
 
 const ReAuthMail = () => {
+  useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
+
+  const navigate = useNavigate();
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const expired = searchParams.get("expired");
@@ -42,7 +48,7 @@ const ReAuthMail = () => {
   );
   return (
     <Container>
-      <Header>
+      <Header onClick={() => navigate("/login")}>
         <Logo src="/assets/images/logo2.png"></Logo>
         <Title>이메일 재인증</Title>
         <p>이메일을 인증하지 못한 경우 </p>

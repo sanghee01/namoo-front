@@ -2,8 +2,11 @@ import styled from "styled-components";
 import { useCallback, useState } from "react";
 import { changePassword } from "../../services/changePasswordApi";
 import { useNavigate } from "react-router";
+import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
 
 const ChangePassword = () => {
+  useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
+
   const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
@@ -54,7 +57,7 @@ const ChangePassword = () => {
 
   return (
     <Container>
-      <Header>
+      <Header onClick={() => navigate("/login")}>
         <Logo src="/assets/images/logo2.png"></Logo>
         <Title>비밀번호 재설정</Title>
         <p>새로운 비밀번호를 입력해주세요!</p>

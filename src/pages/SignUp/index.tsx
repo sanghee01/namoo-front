@@ -2,8 +2,11 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import { Container, Header, Logo, InputBox, Label, Input, SubmitForm, SubmitBtn, Error } from "../Login/style";
 import { join } from "../../services/signupApi";
+import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
 
 const SignUp = () => {
+  useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
+
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -65,7 +68,7 @@ const SignUp = () => {
 
   return (
     <Container>
-      <Header onClick={() => navigate("/signin")}>
+      <Header onClick={() => navigate("/login")}>
         <Logo src="/assets/images/logo2.png"></Logo>
         <p>가입을 통해 똑똑한 나만의 무럭이를 키워보세요!</p>
       </Header>
