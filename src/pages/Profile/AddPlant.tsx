@@ -76,7 +76,7 @@ const AddPlant = () => {
                         <Name>상추</Name>
                     </ImgBox>   
                 </PlantCard> 
-                <PlantCard onClick={() => setSelectedPlant('2')} $isSelected={selectedPlant === '2'}>
+                <PlantCard onClick={() => setSelectedPlant('4')} $isSelected={selectedPlant === '4'}>
                     <ImgBox>
                         <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
                         <Name>딸기</Name>

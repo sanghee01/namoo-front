@@ -32,6 +32,7 @@ import { useLocation } from 'react-router-dom';
 const Profile: React.FC = () => {
   const [characterName, setCharacterName] = useState('');
   const [characterDate, setCharacterDate] = useState('');
+  const [characterImage, setCharacterImage] = useState('');
   const user = useRecoilValue(userState);
   const location = useLocation();
 
@@ -41,9 +42,9 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     const fetchPlantData = async () => {
-      try {
-        // user가 있을 경우에만 요청 실행
-        if (user && user.token) {
+      // user가 있을 경우에만 요청 실행
+      if (user && user.token) {
+        try {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
               'Authorization': `Bearer ${user.token}`,
@@ -51,17 +52,27 @@ const Profile: React.FC = () => {
           });
           setCharacterName(response.data.content.name);
           setCharacterDate(response.data.content.createDate);
+          // plantType에 따라 characterImage 설정
+          const plantType = response.data.content.plantType;
+          if (plantType === '상추') {
+            setCharacterImage('/assets/images/plant.png');
+          } else if (plantType === '딸기') {
+            setCharacterImage('/assets/images/strawberry.png');
+          } else {
+            // 기본 이미지 또는 다른 타입의 식물 이미지 설정
+            setCharacterImage('/assets/images/logoimg1.png'); 
+          }
+        } catch (error) {
+          console.error('식물 데이터를 가져오는 중 에러가 발생했습니다:', error);
         }
-      } catch (error) {
-        console.error('식물 데이터를 가져오는 중 에러가 발생했습니다:', error);
       }
     };
-
+  
     if (plantId) {
       fetchPlantData();
     }
-  }, [plantId, user]); 
-
+  }, [plantId, user]);
+  
   return (
     <ProfileBackGround>
       <Header>
@@ -80,7 +91,7 @@ const Profile: React.FC = () => {
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src="/assets/images/plant.png" alt="plant" />
+            <PlantImg src={characterImage} alt="plant" />
             <CharacterName>{characterName}</CharacterName>
             <Level>Lv.1</Level>
           </ProfileBox>

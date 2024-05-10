@@ -7,8 +7,14 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../../state/authState";
 import { IoMdSettings } from "react-icons/io";
 
+interface Plant {
+  id: string;
+  name: string;
+  plantType: string;
+}
+
 const MyPlant = () => {
-  const [plants, setPlants] = useState([]);
+  const [plants, setPlants] = useState<Plant[]>([]);
   const user = useRecoilValue(userState); // Recoil을 통해 userState에서 사용자 정보 가져오기
 
   useEffect(() => {
@@ -31,15 +37,21 @@ const MyPlant = () => {
   }, [user]);
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
-  const renderPlantOrAddLink = (index: any) => {
+  const renderPlantOrAddLink = (index: number) => {
     // 식물 데이터가 있는 경우
     if (plants.length > index) {
       const plant = plants[index];
+      let imageSrc = '/assets/images/logoimg1.png'; // 기본 이미지
+      if (plant.plantType === '상추') {
+        imageSrc = '/assets/images/plant.png';
+      } else if (plant.plantType === '딸기') {
+        imageSrc = '/assets/images/strawberry.png';
+      }
       return (
         <PlantCard key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
-              <PlantImg src="/assets/images/plant.png" alt="plant" />
+              <PlantImg src={imageSrc} alt="plant" />
               <CharacterName>{plant.name}</CharacterName>
               <Level>Lv.1</Level>
             </ImgBox>
