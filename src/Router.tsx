@@ -32,32 +32,30 @@ const Router = () => {
       <Container>
         <Main>
           <Routes>
-            {user ? (
-              <>
-                <Route path="/repassword" element={<RePassword />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/history" element={<History />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/myplant" element={<MyPlant />} />
-                <Route path="/addplant" element={<AddPlant />} />
-                <Route path="/setting" element={<Setting />} />
-                <Route path="/achievement" element={<Achievement />} />
-                <Route path="/encyclopedia" element={<Encyclopedia />} />
-                <Route path="/delete-member" element={<DeleteMemeberPage />} />
-              </>
-            ) : (
-              <>
-                <Route path="/" element={<Start />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/findpassword" element={<FindPassword />} />
-                <Route path="/password/reset" element={<ChangePassword />} />
-                <Route path="/resend-mail" element={<ReAuthMail />} />
-                <Route path="/login-success" element={<LoginSuccess />} />
-                <Route path="/error-page" element={<ErrorPage />} />
-              </>
-            )}
+            {/* 로그인 상태여야 접속할 수 있는 페이지 */}
+            <Route path="/repassword" element={<RePassword />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/myplant" element={<MyPlant />} />
+            <Route path="/addplant" element={<AddPlant />} />
+            <Route path="/setting" element={<Setting />} />
+            <Route path="/achievement" element={<Achievement />} />
+            <Route path="/encyclopedia" element={<Encyclopedia />} />
+            <Route path="/delete-member" element={<DeleteMemeberPage />} />
+
+            {/* 로그인 상태가 아니어야 접속할 수 있는 페이지 */}
+            <Route path="/" element={<Start />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/findpassword" element={<FindPassword />} />
+            <Route path="/password/reset" element={<ChangePassword />} />
+            <Route path="/resend-mail" element={<ReAuthMail />} />
+            <Route path="/login-success" element={<LoginSuccess />} />
+            <Route path="/error-page" element={<ErrorPage />} />
+
+            {/* 존재하지 않는 페이지 */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>

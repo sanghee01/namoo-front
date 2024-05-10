@@ -18,8 +18,11 @@ import { useSetRecoilState } from "recoil";
 import { userState } from "../../state/authState";
 import { useLocation } from "react-router";
 import { login } from "../../services/loginApi";
+import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
 
 const SignIn = () => {
+  useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
+
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userState);
 

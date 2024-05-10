@@ -3,8 +3,11 @@ import { useCallback, useState, useRef, useEffect } from "react";
 import { resendMail } from "../../services/resendMailApi";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
+import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
 
 const ReAuthMail = () => {
+  useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
+
   const navigate = useNavigate();
 
   const location = useLocation();
