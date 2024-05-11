@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../state/authState";
+import { userState } from "../state/userState";
 
 export function useDeleteMember() {
   const user = useRecoilValue(userState);

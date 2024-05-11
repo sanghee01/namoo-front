@@ -15,7 +15,7 @@ import {
   EasyLoginBox,
 } from "./style";
 import { useSetRecoilState } from "recoil";
-import { userState } from "../../state/authState";
+import { userState } from "../../state/userState";
 import { useLocation } from "react-router";
 import { login } from "../../services/loginApi";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";

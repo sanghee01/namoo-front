@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
-import { userState } from "../state/authState";
+import { userState } from "../state/userState";
 
 const LOCAL_STORAGE_KEY = "userLocal";
 

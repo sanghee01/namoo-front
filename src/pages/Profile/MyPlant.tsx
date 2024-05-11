@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../state/authState";
+import { userState } from "../../state/userState";
 import { IoMdSettings } from "react-icons/io";
 
 interface Plant {
@@ -23,13 +23,13 @@ const MyPlant = () => {
         if (user && user.token) {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant`, {
             headers: {
-              'Authorization': `Bearer ${user.token}`,
+              Authorization: `Bearer ${user.token}`,
             },
           });
           setPlants(response.data.content.slice(0, 4)); // 최대 4개의 식물 정보만 가져옴
         }
       } catch (error) {
-        console.error('식물 정보를 불러오는 중 에러 발생:', error);
+        console.error("식물 정보를 불러오는 중 에러 발생:", error);
       }
     };
 
@@ -41,11 +41,11 @@ const MyPlant = () => {
     // 식물 데이터가 있는 경우
     if (plants.length > index) {
       const plant = plants[index];
-      let imageSrc = '/assets/images/logoimg1.png'; // 기본 이미지
-      if (plant.plantType === '상추') {
-        imageSrc = '/assets/images/plant.png';
-      } else if (plant.plantType === '딸기') {
-        imageSrc = '/assets/images/strawberry.png';
+      let imageSrc = "/assets/images/logoimg1.png"; // 기본 이미지
+      if (plant.plantType === "상추") {
+        imageSrc = "/assets/images/plant.png";
+      } else if (plant.plantType === "딸기") {
+        imageSrc = "/assets/images/strawberry.png";
       }
       return (
         <PlantCard key={index}>
@@ -58,7 +58,8 @@ const MyPlant = () => {
           </Link>
         </PlantCard>
       );
-    } else { // 식물 데이터가 없는 경우
+    } else {
+      // 식물 데이터가 없는 경우
       return (
         <PlantCard key={index}>
           <Link to="/addplant">
@@ -69,21 +70,16 @@ const MyPlant = () => {
     }
   };
 
-
   return (
     <MyPlantBackGround>
       <Header>
         <Text>내 식물들</Text>
         <Link to="/setting">
-            <IoMdSettings size="40" />
-          </Link>
+          <IoMdSettings size="40" />
+        </Link>
       </Header>
-      <Container>
-        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
-      </Container>
-      <Container>
-        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
-      </Container>
+      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
+      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
     </MyPlantBackGround>
   );
 };
@@ -139,7 +135,6 @@ export const PlantCard = styled.div`
     cursor: pointer;
   }
 `;
-
 
 export const ImgBox = styled.div`
   display: flex;

@@ -16,7 +16,7 @@ import Setting from "./pages/Profile/Setting";
 import Achievement from "./pages/Profile/Achievement";
 import Encyclopedia from "./pages/Profile/Encyclopedia";
 import { useRecoilValue } from "recoil";
-import { userState } from "./state/authState";
+import { userState } from "./state/userState";
 import NotFoundPage from "./pages/NotFoundPage";
 import ChangePassword from "./pages/FindPassword/ChangePassword";
 import ReAuthMail from "./pages/ResendMail";
