@@ -263,36 +263,36 @@ export const BtnContainer = styled.div`
 `;
 
 export const Button = styled.button`
-    /  * 공통 스타일 */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    color: white;
+  /* 공통 스타일 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  color: white;
 
-    cursor: pointer;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+  cursor: pointer;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 
-    /* 크기 */
-    height: 2.5rem;
-    font-size: 1rem;
+  /* 크기 */
+  height: 2.5rem;
+  font-size: 1rem;
 
-    /* 색상 */
-    background: #008a4c;
-    &:hover {
+  /* 색상 */
+  background: #008a4c;
+  &:hover {
     background: #006400;
-    }
-    &:active {
-    background: #2E8B57;
-    }
+  }
+  &:active {
+    background: #2e8b57;
+  }
 
-    /* 기타 */
-    & + & {
+  /* 기타 */
+  & + & {
     margin-left: 1rem;
-    }
+  }
 `;
 
 const PostcodeContainer = styled.div`

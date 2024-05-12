@@ -52,9 +52,12 @@ const SignIn = () => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      // 로그인 및 유저 정보 가져오기
       try {
         const response = await login(email, password); // authApi에서 login 함수 사용
         setUser({ username: response.username, email: response.email, token: response.token }); // 사용자 상태 업데이트
+
         navigate("/home");
       } catch (error: any) {
         alert(error.response.data.message);
@@ -63,7 +66,7 @@ const SignIn = () => {
         if (errorMessage.password) alert(`비밀번호는 ${errorMessage.password}`);
       }
     },
-    [email, navigate, password, setUser],
+    [email, password, setUser],
   );
 
   return (

@@ -1,40 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../state/userState";
 import { IoMdSettings } from "react-icons/io";
-
-interface Plant {
-  id: string;
-  name: string;
-  plantType: string;
-}
+import { plantState } from "../../state/plantState";
 
 const MyPlant = () => {
-  const [plants, setPlants] = useState<Plant[]>([]);
-  const user = useRecoilValue(userState); // Recoil을 통해 userState에서 사용자 정보 가져오기
-
-  useEffect(() => {
-    const fetchPlants = async () => {
-      try {
-        if (user && user.token) {
-          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant`, {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          });
-          setPlants(response.data.content.slice(0, 4)); // 최대 4개의 식물 정보만 가져옴
-        }
-      } catch (error) {
-        console.error("식물 정보를 불러오는 중 에러 발생:", error);
-      }
-    };
-
-    fetchPlants();
-  }, [user]);
+  const plants = useRecoilValue(plantState);
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
   const renderPlantOrAddLink = (index: number) => {
