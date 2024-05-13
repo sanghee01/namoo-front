@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { userState } from "../../state/authState";
+import { userState } from "../../state/userState";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
 
 function LoginSuccess() {

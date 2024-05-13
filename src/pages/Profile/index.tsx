@@ -23,22 +23,22 @@ import {
   QuestBox,
   Container,
 } from "./styles";
-import React,{ useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../state/authState";
-import { useLocation } from 'react-router-dom';
+import { userState } from "../../state/userState";
+import { useLocation } from "react-router-dom";
 
 const Profile: React.FC = () => {
-  const [characterName, setCharacterName] = useState('');
-  const [characterDate, setCharacterDate] = useState('');
-  const [characterImage, setCharacterImage] = useState('');
+  const [characterName, setCharacterName] = useState("");
+  const [characterDate, setCharacterDate] = useState("");
+  const [characterImage, setCharacterImage] = useState("");
   const user = useRecoilValue(userState);
   const location = useLocation();
 
   // URL에서 plantId 쿼리 파라미터 읽기
   const queryParams = new URLSearchParams(location.search);
-  const plantId = queryParams.get('plantId');
+  const plantId = queryParams.get("plantId");
 
   useEffect(() => {
     const fetchPlantData = async () => {
@@ -47,32 +47,32 @@ const Profile: React.FC = () => {
         try {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
-              'Authorization': `Bearer ${user.token}`,
+              Authorization: `Bearer ${user.token}`,
             },
           });
           setCharacterName(response.data.content.name);
           setCharacterDate(response.data.content.createDate);
           // plantType에 따라 characterImage 설정
           const plantType = response.data.content.plantType;
-          if (plantType === '상추') {
-            setCharacterImage('/assets/images/plant.png');
-          } else if (plantType === '딸기') {
-            setCharacterImage('/assets/images/strawberry.png');
+          if (plantType === "상추") {
+            setCharacterImage("/assets/images/plant.png");
+          } else if (plantType === "딸기") {
+            setCharacterImage("/assets/images/strawberry.png");
           } else {
             // 기본 이미지 또는 다른 타입의 식물 이미지 설정
-            setCharacterImage('/assets/images/logoimg1.png'); 
+            setCharacterImage("/assets/images/logoimg1.png");
           }
         } catch (error) {
-          console.error('식물 데이터를 가져오는 중 에러가 발생했습니다:', error);
+          console.error("식물 데이터를 가져오는 중 에러가 발생했습니다:", error);
         }
       }
     };
-  
+
     if (plantId) {
       fetchPlantData();
     }
   }, [plantId, user]);
-  
+
   return (
     <ProfileBackGround>
       <Header>
@@ -125,7 +125,7 @@ const Profile: React.FC = () => {
                 <Text>명예의 전당</Text>
               </TextBox>
               <IconBox>
-                <IoIosTrophy color="#ffc400" size="80"  />
+                <IoIosTrophy color="#ffc400" size="80" />
               </IconBox>
             </Link>
           </BtnBox>

@@ -1,54 +1,55 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useRecoilValue } from "recoil";
-import { userState } from "../../state/authState";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
-
-interface Plant {
-  id: string;
-  name: string;
-  plantType: string;
-}
+import { plantListState } from "../../state/plantState";
+import { plantState } from "../../state/plantState";
+import { useEffect } from "react";
+import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
-  const [plants, setPlants] = useState<Plant[]>([]);
-  const user = useRecoilValue(userState); // Recoil을 통해 userState에서 사용자 정보 가져오기
+  const getPlantList = usePlantList(); // usePlantList 훅 사용
+  const plantList = useRecoilValue(plantListState);
+  const [, setPlant] = useRecoilState(plantState);
 
   useEffect(() => {
-    const fetchPlants = async () => {
-      try {
-        if (user && user.token) {
-          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant`, {
-            headers: {
-              'Authorization': `Bearer ${user.token}`,
-            },
-          });
-          setPlants(response.data.content.slice(0, 4)); // 최대 4개의 식물 정보만 가져옴
-        }
-      } catch (error) {
-        console.error('식물 정보를 불러오는 중 에러 발생:', error);
-      }
-    };
+    async function fetchPlantList() {
+      await getPlantList(); // 식물 리스트 가져오기
+    }
+    if (!plantList || plantList.length === 0) {
+      fetchPlantList();
+    }
+    console.log("식물리스트", plantList);
+  }, [getPlantList, plantList]);
 
-    fetchPlants();
-  }, [user]);
+  const handlePickPlant = (index: number) => {
+    const plant = plantList[index];
+    console.log("pick", plant);
+    setPlant({
+      id: plant.id,
+      name: plant.name,
+      exp: plant.exp,
+      plantType: plant.plantType,
+      uuid: plant.uuid,
+      giveWater: plant.giveWater,
+      createDate: plant.createDate,
+    });
+  };
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
   const renderPlantOrAddLink = (index: number) => {
     // 식물 데이터가 있는 경우
-    if (plants.length > index) {
-      const plant = plants[index];
-      let imageSrc = '/assets/images/logoimg1.png'; // 기본 이미지
-      if (plant.plantType === '상추') {
-        imageSrc = '/assets/images/plant.png';
-      } else if (plant.plantType === '딸기') {
-        imageSrc = '/assets/images/strawberry.png';
+    if (plantList.length > index) {
+      const plant = plantList[index];
+      let imageSrc = "/assets/images/logoimg1.png"; // 기본 이미지
+      if (plant.plantType === "상추") {
+        imageSrc = "/assets/images/plant.png";
+      } else if (plant.plantType === "딸기") {
+        imageSrc = "/assets/images/strawberry.png";
       }
       return (
-        <PlantCard key={index}>
+        <PlantCard onClick={() => handlePickPlant(index)} key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
               <PlantImg src={imageSrc} alt="plant" />
@@ -58,7 +59,8 @@ const MyPlant = () => {
           </Link>
         </PlantCard>
       );
-    } else { // 식물 데이터가 없는 경우
+    } else {
+      // 식물 데이터가 없는 경우
       return (
         <PlantCard key={index}>
           <Link to="/addplant">
@@ -69,21 +71,16 @@ const MyPlant = () => {
     }
   };
 
-
   return (
     <MyPlantBackGround>
       <Header>
         <Text>내 식물들</Text>
         <Link to="/setting">
-            <IoMdSettings size="40" />
-          </Link>
+          <IoMdSettings size="40" />
+        </Link>
       </Header>
-      <Container>
-        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
-      </Container>
-      <Container>
-        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
-      </Container>
+      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
+      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
     </MyPlantBackGround>
   );
 };
@@ -139,7 +136,6 @@ export const PlantCard = styled.div`
     cursor: pointer;
   }
 `;
-
 
 export const ImgBox = styled.div`
   display: flex;

@@ -16,17 +16,19 @@ import Setting from "./pages/Profile/Setting";
 import Achievement from "./pages/Profile/Achievement";
 import Encyclopedia from "./pages/Profile/Encyclopedia";
 import { useRecoilValue } from "recoil";
-import { userState } from "./state/authState";
+import { userState } from "./state/userState";
 import NotFoundPage from "./pages/NotFoundPage";
 import ChangePassword from "./pages/FindPassword/ChangePassword";
 import ReAuthMail from "./pages/ResendMail";
 import LoginSuccess from "./pages/Login/LoginSuccess";
 import ErrorPage from "./pages/Login/ErrorPage";
 import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
+import { plantState } from "./state/plantState";
 
 const Router = () => {
   const user = useRecoilValue(userState);
-
+  const plant = useRecoilValue(plantState);
+  console.log("planthi", plant);
   return (
     <BrowserRouter>
       <Container>
@@ -59,8 +61,9 @@ const Router = () => {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
-        {/* 로그인 상태에만 Nav bar 보이도록 */}
-        {user && (
+
+        {/* 로그인 상태, 식물 데이터가 있을 시에만 Nav bar 보이도록 */}
+        {user && plant.name && (
           <Footer>
             <Nav />
           </Footer>
