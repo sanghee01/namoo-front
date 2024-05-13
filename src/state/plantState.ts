@@ -17,6 +17,7 @@ const { persistAtom } = recoilPersist();
 export const plantListState = atom<Plant[]>({
   key: "plantListState",
   default: [], // 초기값
+  effects_UNSTABLE: [persistAtom],
 });
 
 // plantState 정의
