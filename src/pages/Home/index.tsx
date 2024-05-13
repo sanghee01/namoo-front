@@ -17,29 +17,8 @@ import {
   SideBar,
   CharacterName,
 } from "./styles";
-import { useEffect } from "react";
-import { usePlantList } from "../../hooks/useGetPlantList";
-import { plantState } from "../../state/plantState";
-import { useRecoilValue } from "recoil";
-import { useNavigate } from "react-router";
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  const getPlantList = usePlantList(); // usePlantList 훅 사용
-  const plantList = useRecoilValue(plantState);
-
-  useEffect(() => {
-    async function fetchPlantList() {
-      await getPlantList(); // 식물 리스트 가져오기
-      console.log("식물리스트", plantList);
-      if (!plantList || plantList.length === 0) {
-        navigate("/addplant");
-      }
-    }
-    fetchPlantList();
-  }, []);
-
   return (
     <HomeBackGround>
       <Header>

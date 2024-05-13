@@ -3,10 +3,24 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
-import { plantState } from "../../state/plantState";
+import { plantListState } from "../../state/plantState";
+import { useEffect } from "react";
+import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
-  const plants = useRecoilValue(plantState);
+  const plants = useRecoilValue(plantListState);
+  const getPlantList = usePlantList(); // usePlantList 훅 사용
+  const plantList = useRecoilValue(plantListState);
+
+  useEffect(() => {
+    async function fetchPlantList() {
+      await getPlantList(); // 식물 리스트 가져오기
+    }
+    if (!plantList || plantList.length === 0) {
+      fetchPlantList();
+    }
+    console.log("식물리스트", plantList);
+  }, [getPlantList, plantList]);
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
   const renderPlantOrAddLink = (index: number) => {

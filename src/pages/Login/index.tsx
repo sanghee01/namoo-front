@@ -58,7 +58,7 @@ const SignIn = () => {
         const response = await login(email, password); // authApi에서 login 함수 사용
         setUser({ username: response.username, email: response.email, token: response.token }); // 사용자 상태 업데이트
 
-        navigate("/home");
+        navigate("/myplant");
       } catch (error: any) {
         alert(error.response.data.message);
         const errorMessage = error.response.data.content;

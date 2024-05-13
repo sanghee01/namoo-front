@@ -23,11 +23,11 @@ import ReAuthMail from "./pages/ResendMail";
 import LoginSuccess from "./pages/Login/LoginSuccess";
 import ErrorPage from "./pages/Login/ErrorPage";
 import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
-import { plantState } from "./state/plantState";
+import { plantListState } from "./state/plantState";
 
 const Router = () => {
   const user = useRecoilValue(userState);
-  const plantList = useRecoilValue(plantState);
+  const plantList = useRecoilValue(plantListState);
 
   return (
     <BrowserRouter>

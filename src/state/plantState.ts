@@ -10,7 +10,13 @@ interface Plant {
 }
 
 // plantListState 정의
-export const plantState = atom<Plant[]>({
+export const plantListState = atom<Plant[]>({
   key: "plantListState",
   default: [], // 초기값
+});
+
+// plantState 정의
+export const plantState = atom<Plant>({
+  key: "plantState",
+  default: undefined, // 초기값
 });

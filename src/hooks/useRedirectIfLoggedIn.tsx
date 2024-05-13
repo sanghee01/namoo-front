@@ -11,7 +11,7 @@ export function useRedirectIfLoggedIn() {
   useEffect(() => {
     // 사용자가 로그인 상태이면 홈 페이지로 리다이렉트
     if (user) {
-      navigate("/home");
+      navigate("/myplant");
     }
   }, [navigate, user]);
 }

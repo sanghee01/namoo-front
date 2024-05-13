@@ -2,12 +2,13 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../state/userState";
 import { useSetRecoilState } from "recoil";
-import { plantState } from "../state/plantState";
+import { plantListState } from "../state/plantState";
 
 export function usePlantList() {
   const user = useRecoilValue(userState);
   const token = user?.token;
-  const setPlant = useSetRecoilState(plantState);
+  const setPlant = useSetRecoilState(plantListState);
+  const plantValue = useRecoilValue(plantListState);
 
   const plantList = async () => {
     try {

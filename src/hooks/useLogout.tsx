@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { useRecoilState } from "recoil";
 import { userState } from "../state/userState";
-import { plantState } from "../state/plantState";
+import { plantListState } from "../state/plantState";
 
 const LOCAL_STORAGE_KEY = "userLocal";
 
@@ -14,7 +14,7 @@ const removeFromStorage = (key: string) => {
 const useLogout = () => {
   const navigate = useNavigate();
   const [, setUser] = useRecoilState(userState);
-  const [, setPlant] = useRecoilState(plantState);
+  const [, setPlant] = useRecoilState(plantListState);
   const logout = () => {
     // 1. Recoil 상태 초기화
     setUser(null); // userState를 null로 설정하여 사용자 정보 초기화
