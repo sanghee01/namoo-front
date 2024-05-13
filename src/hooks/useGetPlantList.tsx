@@ -8,7 +8,6 @@ export function usePlantList() {
   const user = useRecoilValue(userState);
   const token = user?.token;
   const setPlant = useSetRecoilState(plantListState);
-  const plantValue = useRecoilValue(plantListState);
 
   const plantList = async () => {
     try {

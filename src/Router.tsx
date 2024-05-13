@@ -23,12 +23,10 @@ import ReAuthMail from "./pages/ResendMail";
 import LoginSuccess from "./pages/Login/LoginSuccess";
 import ErrorPage from "./pages/Login/ErrorPage";
 import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
-import { plantListState } from "./state/plantState";
 import { plantState } from "./state/plantState";
 
 const Router = () => {
   const user = useRecoilValue(userState);
-  const plantList = useRecoilValue(plantListState);
   const plant = useRecoilValue(plantState);
   console.log("planthi", plant);
   return (
