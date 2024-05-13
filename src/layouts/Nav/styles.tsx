@@ -46,3 +46,11 @@ export const Tab = styled.span`
     }
   }
 `;
+
+export const Footer = styled(Tabs)`
+  background-color: #caebc3;
+
+  img {
+    height: 55px;
+  }
+`;

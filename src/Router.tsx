@@ -61,13 +61,9 @@ const Router = () => {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
-
-        {/* 로그인 상태, 식물 데이터가 있을 시에만 Nav bar 보이도록 */}
-        {user && plant.name && (
-          <Footer>
-            <Nav />
-          </Footer>
-        )}
+        <Footer>
+          <Nav />
+        </Footer>
       </Container>
     </BrowserRouter>
   );
