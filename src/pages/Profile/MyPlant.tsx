@@ -1,16 +1,17 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
 import { plantListState } from "../../state/plantState";
+import { plantState } from "../../state/plantState";
 import { useEffect } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
-  const plants = useRecoilValue(plantListState);
   const getPlantList = usePlantList(); // usePlantList 훅 사용
   const plantList = useRecoilValue(plantListState);
+  const [, setPlant] = useRecoilState(plantState);
 
   useEffect(() => {
     async function fetchPlantList() {
@@ -22,11 +23,25 @@ const MyPlant = () => {
     console.log("식물리스트", plantList);
   }, [getPlantList, plantList]);
 
+  const handlePickPlant = (index: number) => {
+    const plant = plantList[index];
+    console.log("pick", plant);
+    setPlant({
+      id: plant.id,
+      name: plant.name,
+      exp: plant.exp,
+      plantType: plant.plantType,
+      uuid: plant.uuid,
+      giveWater: plant.giveWater,
+      createDate: plant.createDate,
+    });
+  };
+
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
   const renderPlantOrAddLink = (index: number) => {
     // 식물 데이터가 있는 경우
-    if (plants.length > index) {
-      const plant = plants[index];
+    if (plantList.length > index) {
+      const plant = plantList[index];
       let imageSrc = "/assets/images/logoimg1.png"; // 기본 이미지
       if (plant.plantType === "상추") {
         imageSrc = "/assets/images/plant.png";
@@ -34,7 +49,7 @@ const MyPlant = () => {
         imageSrc = "/assets/images/strawberry.png";
       }
       return (
-        <PlantCard key={index}>
+        <PlantCard onClick={() => handlePickPlant(index)} key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
               <PlantImg src={imageSrc} alt="plant" />

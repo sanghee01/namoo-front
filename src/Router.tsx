@@ -24,11 +24,13 @@ import LoginSuccess from "./pages/Login/LoginSuccess";
 import ErrorPage from "./pages/Login/ErrorPage";
 import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
 import { plantListState } from "./state/plantState";
+import { plantState } from "./state/plantState";
 
 const Router = () => {
   const user = useRecoilValue(userState);
   const plantList = useRecoilValue(plantListState);
-
+  const plant = useRecoilValue(plantState);
+  console.log("planthi", plant);
   return (
     <BrowserRouter>
       <Container>
@@ -63,7 +65,7 @@ const Router = () => {
         </Main>
 
         {/* 로그인 상태, 식물 데이터가 있을 시에만 Nav bar 보이도록 */}
-        {user && plantList && plantList.length !== 0 && (
+        {user && plant.name && (
           <Footer>
             <Nav />
           </Footer>

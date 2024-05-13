@@ -17,8 +17,12 @@ import {
   SideBar,
   CharacterName,
 } from "./styles";
+import { plantState } from "../../state/plantState";
+import { useRecoilValue } from "recoil";
 
 const Home = () => {
+  const plant = useRecoilValue(plantState);
+
   return (
     <HomeBackGround>
       <Header>
@@ -35,7 +39,7 @@ const Home = () => {
             <PlantImg src="/assets/images/plant.png" alt="plant" />
             <div>
               <LevelImg src="/assets/images/level5.png" alt="level" />
-              <CharacterName>귀염뽀짝상추</CharacterName>
+              <CharacterName>{plant.name}</CharacterName>
             </div>
           </Character>
         </CharacterBox>

@@ -1,4 +1,6 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
 interface Plant {
   id: number;
   name: string;
@@ -9,6 +11,8 @@ interface Plant {
   createDate: string;
 }
 
+const { persistAtom } = recoilPersist();
+
 // plantListState 정의
 export const plantListState = atom<Plant[]>({
   key: "plantListState",
@@ -18,5 +22,14 @@ export const plantListState = atom<Plant[]>({
 // plantState 정의
 export const plantState = atom<Plant>({
   key: "plantState",
-  default: undefined, // 초기값
+  default: {
+    id: 0,
+    name: "",
+    exp: 0,
+    plantType: "",
+    uuid: "",
+    giveWater: false,
+    createDate: "",
+  }, // 초기값
+  effects_UNSTABLE: [persistAtom],
 });
