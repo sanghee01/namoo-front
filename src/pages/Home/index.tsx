@@ -18,16 +18,18 @@ import {
 } from "./styles";
 import { plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
+import { plantImgState } from "../../state/plantState";
 
 const Home = () => {
   const plant = useRecoilValue(plantState);
+  const plantImg = useRecoilValue(plantImgState);
 
   return (
     <HomeBackGround>
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
-          <progress value="80" max="100"></progress>
+          <progress value={plant.exp} max="100"></progress>
         </FriendshipBar>
         <BiSolidBell color="#ffc400" size="40" />
       </Header>
@@ -35,9 +37,9 @@ const Home = () => {
         <CharacterBox>
           <TableImg src="/assets/images/table.png" alt="plant" />
           <Character>
-            <PlantImg src="/assets/images/lettuce1.png" alt="plant" />
+            <PlantImg src={plantImg} alt="plant" />
             <div>
-              <LevelImg src="/assets/images/level5.png" alt="level" />
+              <LevelImg src={`/assets/images/level${1}.png`} alt="level" />
               <CharacterName>{plant.name}</CharacterName>
             </div>
           </Character>
