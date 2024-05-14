@@ -2,29 +2,45 @@ import styled from "styled-components";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Text }from "./styles";
+import { useState } from 'react';
+import Modal from "../../components/Modal";
 
 const Encyclopedia = () => {
+  const [selectedImage, setSelectedImage] = useState('');
+
+  // 상태 업데이트 시 콘솔 로그 추가
+  const handleImageSelect = (image : any) => {
+    console.log(`Selected image: ${image}`);
+    setSelectedImage(image);
+  };
+
   return (
     <EncyclopediaBackGround>
       <Header>
         <Link to="/profile">
           <MdArrowBackIos size="30"/>
         </Link>
-          <Text>
-            식물 도감
-          </Text>
+        <Text>식물 도감</Text>
       </Header>
       <Container>
-        <BookOne>
-          <BookImg src="/assets/images/LettuceBookShelf.png"/>
+        <BookOne onClick={() => handleImageSelect('lettuce')}>
+          <BookImg src="/assets/images/LettuceBookShelf.png" alt="lettuce"/>
         </BookOne>
-        <BookOne>
-        <BookImg src="/assets/images/StrawberryBookShelf.png"/>
+        <BookOne onClick={() => handleImageSelect('strawberry')}>
+          <BookImg src="/assets/images/StrawberryBookShelf.png" alt="strawberry"/>
         </BookOne>
       </Container>
+      <Modal isOpen={selectedImage !== ''} onClose={() => setSelectedImage('')}>
+      {selectedImage === 'lettuce' && (
+        <img src="/assets/images/LettuceDetail.png" alt="Lettuce"/>
+      )}
+      {selectedImage === 'strawberry' && (
+        <img src="/assets/images/StrawberryDetail.png" alt="Strawberry"/>
+      )}
+      </Modal>
     </EncyclopediaBackGround>
-  );
-};
+    );
+  };
 
 export const EncyclopediaBackGround = styled.div`
   background-repeat: no-repeat;
@@ -70,11 +86,9 @@ export const BookOne = styled.div`
 `;
 
 export const BookImg = styled.img`
-
-
     &:hover {
         cursor: pointer; 
-
+    }
 `;
 
 export default Encyclopedia;
