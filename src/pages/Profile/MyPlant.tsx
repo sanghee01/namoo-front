@@ -7,11 +7,13 @@ import { plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { useEffect } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
+import { plantImgState } from "../../state/plantState";
 
 const MyPlant = () => {
   const getPlantList = usePlantList(); // usePlantList 훅 사용
   const plantList = useRecoilValue(plantListState);
   const [, setPlant] = useRecoilState(plantState);
+  const [plantImg, setPlantImg] = useRecoilState(plantImgState);
 
   useEffect(() => {
     async function fetchPlantList() {
@@ -42,17 +44,16 @@ const MyPlant = () => {
     // 식물 데이터가 있는 경우
     if (plantList.length > index) {
       const plant = plantList[index];
-      let imageSrc = "/assets/images/logoimg1.png"; // 기본 이미지
       if (plant.plantType === "상추") {
-        imageSrc = "/assets/images/plant.png";
+        setPlantImg("/assets/images/lettuce1.png");
       } else if (plant.plantType === "딸기") {
-        imageSrc = "/assets/images/strawberry.png";
+        setPlantImg("/assets/images/strawberry.png");
       }
       return (
         <PlantCard onClick={() => handlePickPlant(index)} key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
-              <PlantImg src={imageSrc} alt="plant" />
+              <PlantImg src={plantImg} alt="plant" />
               <CharacterName>{plant.name}</CharacterName>
               <Level>Lv.1</Level>
             </ImgBox>
@@ -146,8 +147,7 @@ export const ImgBox = styled.div`
 `;
 
 export const PlantImg = styled.img`
-  width: 120px;
-  height: 120px;
+  height: 180px;
   margin: 10px;
 `;
 

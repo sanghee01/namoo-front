@@ -55,12 +55,12 @@ const Profile: React.FC = () => {
           // plantType에 따라 characterImage 설정
           const plantType = response.data.content.plantType;
           if (plantType === "상추") {
-            setCharacterImage("/assets/images/plant.png");
+            setCharacterImage("/assets/images/lettuce1.png");
           } else if (plantType === "딸기") {
             setCharacterImage("/assets/images/strawberry.png");
           } else {
             // 기본 이미지 또는 다른 타입의 식물 이미지 설정
-            setCharacterImage("/assets/images/logoimg1.png");
+            setCharacterImage("/assets/images/lettuce1.png");
           }
         } catch (error) {
           console.error("식물 데이터를 가져오는 중 에러가 발생했습니다:", error);

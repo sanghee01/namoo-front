@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const HomeBackGround = styled.div`
-  background-image: url("/assets/images/background.png");
+  background-image: url("/assets/images/background2.png");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 0% 60%;
+  background-position: 60%;
   height: 100%;
 `;
 
@@ -20,11 +20,8 @@ export const Header = styled.div`
   }
 
   @media screen and (max-width: 600px) {
-    svg:first-child {
-      width: 24px;
-    }
     svg {
-      width: 30px;
+      width: 40px;
     }
   }
 `;
@@ -85,24 +82,24 @@ export const CharacterBox = styled.div`
 
 export const Character = styled.div`
   position: relative;
-  top: -175px;
+  top: -310px;
   div {
-    margin-top: 10px;
+    margin-top: -40px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5px;
   }
   @media screen and (max-width: 600px) {
-    top: -128px;
+    top: -215px;
   }
 `;
 
 export const PlantImg = styled.img`
-  width: 200px;
+  width: 300px;
 
   @media screen and (max-width: 600px) {
-    width: 140px;
+    width: 230px;
   }
 `;
 
@@ -112,8 +109,8 @@ export const TableImg = styled.img`
   width: 360px;
 
   @media screen and (max-width: 600px) {
-    bottom: -245px;
-    width: 250px;
+    bottom: -300px;
+    width: 280px;
   }
 `;
 
@@ -121,25 +118,22 @@ export const LevelImg = styled.img`
   height: 25px;
   width: 25px;
   @media screen and (max-width: 600px) {
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
   }
 `;
 
 export const CharacterName = styled.span`
   font-weight: 500;
   font-size: 1rem;
-  transform: translateY(15%);
-
-  @media screen and (max-width: 600px) {
-    font-size: 0.85rem;
-  }
+  margin-left: 5px;
+  transform: translateY(10%);
 `;
 
 export const SideBar = styled.aside`
   position: absolute;
   right: 0;
-  bottom: 170px;
+  bottom: 400px;
   width: 20%;
 
   div {
@@ -147,12 +141,17 @@ export const SideBar = styled.aside`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 13px 0px;
+    padding: 10px 0px;
+    margin: 7px 0px;
+  }
 
-    span {
-      margin-top: 5px;
-      font-size: 0.9rem;
-    }
+  span {
+    margin-top: 10px;
+    font-size: 0.9rem;
+  }
+
+  svg {
+    width: 40px;
   }
 
   div:hover {
@@ -160,17 +159,6 @@ export const SideBar = styled.aside`
   }
 
   @media screen and (max-width: 600px) {
-    bottom: 110px;
-
-    svg {
-      width: 30px;
-    }
-    div {
-      padding: 7px 0px;
-      span {
-        margin-top: 3%;
-        font-size: 0.8rem;
-      }
-    }
+    bottom: 300px;
   }
 `;

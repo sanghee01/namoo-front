@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "../state/userState";
 import { plantListState } from "../state/plantState";
 import { plantState } from "../state/plantState";
+import { plantImgState } from "../state/plantState";
 
 const LOCAL_STORAGE_KEY = "userLocal";
 
@@ -17,6 +18,8 @@ const useLogout = () => {
   const [, setUser] = useRecoilState(userState);
   const [, setPlantList] = useRecoilState(plantListState);
   const [, setPlant] = useRecoilState(plantState);
+  const [, setPlantImg] = useRecoilState(plantImgState);
+
   const logout = () => {
     // 1. Recoil 상태 초기화
     setUser(null); // userState를 null로 설정하여 사용자 정보 초기화
@@ -30,6 +33,8 @@ const useLogout = () => {
       giveWater: false,
       createDate: "",
     });
+    setPlantImg("");
+
     // 2. 로컬 스토리지에서 사용자 정보 제거
     removeFromStorage(LOCAL_STORAGE_KEY);
 
