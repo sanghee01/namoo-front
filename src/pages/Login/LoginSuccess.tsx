@@ -15,10 +15,10 @@ function LoginSuccess() {
     const searchParams = new URLSearchParams(location.search);
     const username = searchParams.get("username");
     const email = searchParams.get("email");
-    const token = searchParams.get("token");
+    const accessToken = searchParams.get("accessToken");
 
-    if (token && username && email) {
-      setUser({ username, email, token });
+    if (accessToken && username && email) {
+      setUser({ username, email, accessToken });
       navigate("/home");
     }
   }, [location, navigate, setUser]);

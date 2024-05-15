@@ -3,7 +3,7 @@ import axios from "axios";
 interface LoginResponse {
   username: string;
   email: string;
-  token: string;
+  accessToken: string;
 }
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
