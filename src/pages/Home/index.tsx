@@ -25,12 +25,13 @@ import { useCallback, useState } from "react";
 import { getQuest } from "../../services/questApi";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
+import { giveWaterToPlant } from "../../services/plantApi";
 
 const Home = () => {
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
   const plantLevel = useRecoilValue(plantLevelState);
-
+  console.log("식물", plant);
   const [questList, setQuestList] = useRecoilState(questState);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -57,6 +58,16 @@ const Home = () => {
     setIsOpenModal(false);
   };
 
+  // 원격 물 주기
+  const handleGiveWater = useCallback(async () => {
+    try {
+      await giveWaterToPlant(plant.id);
+      alert("물 주기 성공!");
+    } catch (error: any) {
+      alert(error.response.data.message);
+    }
+  }, [plant.id]);
+
   return (
     <HomeBackGround>
       <Header>
@@ -82,7 +93,7 @@ const Home = () => {
             <FaBook onClick={() => handleOpenModal()} color="#a8511c" size="40" />
             <span>퀘스트</span>
           </div>
-          <div>
+          <div onClick={handleGiveWater}>
             <IoIosWater color="#13b5d6" size="40" />
             <span>물주기</span>
           </div>
