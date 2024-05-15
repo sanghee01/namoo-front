@@ -18,10 +18,10 @@ import {
   Modal,
   ModalCloseBtn,
 } from "./styles";
-import { plantState } from "../../state/plantState";
+import { plantLevelState, plantState } from "../../state/plantState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { plantImgState } from "../../state/plantState";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getQuest } from "../../services/questApi";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
@@ -29,8 +29,14 @@ import QuestModal from "../../components/QuestModal";
 const Home = () => {
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
+
   const [questList, setQuestList] = useRecoilState(questState);
+  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
   console.log("questList", questList);
+
+  // 퀘스트 리스트 가져오기
   const handleGetQuest = useCallback(async () => {
     try {
       const response = await getQuest();
@@ -38,15 +44,26 @@ const Home = () => {
     } catch (error: any) {
       alert(error.response.data.message);
     }
-  }, []);
+  }, [setQuestList]);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  // 경험치에 따른 식물 레벨 적용
+  useEffect(() => {
+    if (plant.exp >= 100) {
+      setPlantLevel(2);
+    } else if (plant.exp >= 200) {
+      setPlantLevel(3);
+    } else if (plant.exp >= 300) {
+      setPlantLevel(4);
+    }
+  }, [plant.exp, setPlantLevel]);
 
+  // 퀘스트 모달 열기
   const handleOpenModal = () => {
     setIsOpenModal(true);
     handleGetQuest();
   };
 
+  // 퀘스트 모달 닫기
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
@@ -56,7 +73,7 @@ const Home = () => {
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
-          <progress value={plant.exp} max="100"></progress>
+          <progress value={plant.exp} max="400"></progress>
         </FriendshipBar>
         <BiSolidBell color="#ffc400" size="40" />
       </Header>
@@ -66,7 +83,7 @@ const Home = () => {
           <Character>
             <PlantImg src={plantImg} alt="plant" />
             <div>
-              <LevelImg src={`/assets/images/level${3}.png`} alt="level" />
+              <LevelImg src={`/assets/images/level${plantLevel}.png`} alt="level" />
               <CharacterName>{plant.name}</CharacterName>
             </div>
           </Character>
