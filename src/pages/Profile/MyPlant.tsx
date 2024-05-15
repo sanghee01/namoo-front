@@ -3,15 +3,18 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
-import { plantListState } from "../../state/plantState";
+import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { useEffect } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
+import { plantImgState } from "../../state/plantState";
 
 const MyPlant = () => {
   const getPlantList = usePlantList(); // usePlantList 훅 사용
   const plantList = useRecoilValue(plantListState);
-  const [, setPlant] = useRecoilState(plantState);
+  const [plant, setPlant] = useRecoilState(plantState);
+  const [plantImg, setPlantImg] = useRecoilState(plantImgState);
+  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
 
   useEffect(() => {
     async function fetchPlantList() {
@@ -36,25 +39,34 @@ const MyPlant = () => {
       createDate: plant.createDate,
     });
   };
+  // 경험치에 따른 식물 레벨 적용
+  useEffect(() => {
+    if (plant.exp >= 400) {
+      setPlantLevel(4);
+    } else if (plant.exp >= 300) {
+      setPlantLevel(3);
+    } else if (plant.exp >= 200) {
+      setPlantLevel(2);
+    }
+  }, [plant.exp, setPlantLevel]);
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
   const renderPlantOrAddLink = (index: number) => {
     // 식물 데이터가 있는 경우
     if (plantList.length > index) {
       const plant = plantList[index];
-      let imageSrc = "/assets/images/logoimg1.png"; // 기본 이미지
       if (plant.plantType === "상추") {
-        imageSrc = "/assets/images/plant.png";
+        setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
       } else if (plant.plantType === "딸기") {
-        imageSrc = "/assets/images/strawberry.png";
+        setPlantImg("/assets/images/strawberry.png");
       }
       return (
         <PlantCard onClick={() => handlePickPlant(index)} key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
-              <PlantImg src={imageSrc} alt="plant" />
+              <PlantImg src={plantImg} alt="plant" />
               <CharacterName>{plant.name}</CharacterName>
-              <Level>Lv.1</Level>
+              <Level>Lv.{plantLevel}</Level>
             </ImgBox>
           </Link>
         </PlantCard>
@@ -146,8 +158,7 @@ export const ImgBox = styled.div`
 `;
 
 export const PlantImg = styled.img`
-  width: 120px;
-  height: 120px;
+  height: 180px;
   margin: 10px;
 `;
 

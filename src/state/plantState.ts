@@ -34,3 +34,13 @@ export const plantState = atom<Plant>({
   }, // 초기값
   effects_UNSTABLE: [persistAtom],
 });
+
+export const plantImgState = atom({
+  key: "plantImgState",
+  default: "/assets/images/lettuce1.png",
+});
+
+export const plantLevelState = atom({
+  key: "plantLevelState",
+  default: 1,
+});

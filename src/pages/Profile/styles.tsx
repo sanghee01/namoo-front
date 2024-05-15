@@ -49,10 +49,9 @@ export const TextBox = styled.div`
   padding: 15px 15px 15px 25px;
   flex-direction: column;
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     padding: 25px;
   }
-  
 `;
 export const IconBox = styled.div`
   display: flex;
@@ -62,7 +61,7 @@ export const IconBox = styled.div`
   padding: 10px;
   flex-direction: column;
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     padding: 5px;
   }
 `;
@@ -114,31 +113,24 @@ export const DetailBox = styled.div`
   }
 `;
 export const PlantImg = styled.img`
-  width: 120px;
-  height: 120px;
-
-  @media screen and (max-width: 600px){
-    width: 100px;
-    height: 100px;
-  }
+  height: 200px;
 `;
 
 export const CharacterName = styled.span`
   margin: 5px 5px 0px 5px;
   font-weight: 500;
-  font-size:18px;
+  font-size: 18px;
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     font-size: 15px;
   }
-  
 `;
 
 export const Level = styled.span`
   font-weight: 400;
   font-size: 14px;
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     font-size: 12px;
   }
 `;
@@ -180,7 +172,7 @@ export const QuestBox = styled.div`
     cursor: pointer;
   }
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     padding: 10px;
   }
 `;

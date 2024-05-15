@@ -26,7 +26,7 @@ const Namoo = ({ txt1, txt2, navUrl, btnTxt }: INammoInfo) => {
         <p>{txt2}</p>
       </Explain>
       <ImgBox onClick={() => navigate("/login")}>
-        <LogoImg src="/assets/images/logoimg1.png"></LogoImg>
+        <LogoImg src="/assets/images/lettuce1.png"></LogoImg>
         <Logo src="/assets/images/logo2.png"></Logo>
       </ImgBox>
       <StartBtn onClick={handleClickBtn}>{btnTxt}</StartBtn>
@@ -70,10 +70,11 @@ const ImgBox = styled.div`
 `;
 
 const LogoImg = styled.img`
-  width: 180px;
+  margin-top: -70px;
+  width: 280px;
 
   @media screen and (max-width: 450px) {
-    width: 140px;
+    width: 200px;
   }
 `;
 
