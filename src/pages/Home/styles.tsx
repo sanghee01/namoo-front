@@ -162,3 +162,37 @@ export const SideBar = styled.aside`
     bottom: 300px;
   }
 `;
+
+export const Modal = styled.div`
+  position: fixed;
+  padding: 1rem;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  height: 55%;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
+  border: 5px solid #eae5dc;
+
+  & h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #53390a;
+  }
+  @media screen and (max-width: 450px) {
+    left: 10%;
+    width: 80%;
+    height: 60%;
+  }
+`;
+
+export const ModalCloseBtn = styled.div`
+  text-align: center;
+  padding: 12px 0px;
+  border-radius: 10px;
+  background-color: #ffd6a1;
+  font-size: 0.9rem;
+  margin: auto;
+  margin-top: 15px;
+`;
