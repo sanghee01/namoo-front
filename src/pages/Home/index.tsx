@@ -26,8 +26,11 @@ import { getQuest } from "../../services/questApi";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
 import { giveWaterToPlant } from "../../services/plantApi";
+import { useNavigate } from "react-router";
 
 const Home = () => {
+  const navegate = useNavigate();
+
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
   const plantLevel = useRecoilValue(plantLevelState);
@@ -97,7 +100,7 @@ const Home = () => {
             <IoIosWater color="#13b5d6" size="40" />
             <span>물주기</span>
           </div>
-          <div>
+          <div onClick={() => navegate("/check-disease")}>
             <BsCameraFill color="#555555" size="40" />
             <span>질병확인</span>
           </div>
