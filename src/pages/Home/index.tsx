@@ -21,7 +21,7 @@ import {
 import { plantLevelState, plantState } from "../../state/plantState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { plantImgState } from "../../state/plantState";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { getQuest } from "../../services/questApi";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
@@ -29,9 +29,9 @@ import QuestModal from "../../components/QuestModal";
 const Home = () => {
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
+  const plantLevel = useRecoilValue(plantLevelState);
 
   const [questList, setQuestList] = useRecoilState(questState);
-  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   console.log("questList", questList);
@@ -45,17 +45,6 @@ const Home = () => {
       alert(error.response.data.message);
     }
   }, [setQuestList]);
-
-  // 경험치에 따른 식물 레벨 적용
-  useEffect(() => {
-    if (plant.exp >= 100) {
-      setPlantLevel(2);
-    } else if (plant.exp >= 200) {
-      setPlantLevel(3);
-    } else if (plant.exp >= 300) {
-      setPlantLevel(4);
-    }
-  }, [plant.exp, setPlantLevel]);
 
   // 퀘스트 모달 열기
   const handleOpenModal = () => {

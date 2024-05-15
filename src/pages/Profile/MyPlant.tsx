@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
-import { plantListState } from "../../state/plantState";
+import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { useEffect } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
@@ -12,8 +12,9 @@ import { plantImgState } from "../../state/plantState";
 const MyPlant = () => {
   const getPlantList = usePlantList(); // usePlantList 훅 사용
   const plantList = useRecoilValue(plantListState);
-  const [, setPlant] = useRecoilState(plantState);
+  const [plant, setPlant] = useRecoilState(plantState);
   const [plantImg, setPlantImg] = useRecoilState(plantImgState);
+  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
 
   useEffect(() => {
     async function fetchPlantList() {
@@ -38,6 +39,16 @@ const MyPlant = () => {
       createDate: plant.createDate,
     });
   };
+  // 경험치에 따른 식물 레벨 적용
+  useEffect(() => {
+    if (plant.exp >= 100) {
+      setPlantLevel(2);
+    } else if (plant.exp >= 200) {
+      setPlantLevel(3);
+    } else if (plant.exp >= 300) {
+      setPlantLevel(4);
+    }
+  }, [plant.exp, setPlantLevel]);
 
   // 식물 카드 또는 추가 링크를 렌더링하는 함수
   const renderPlantOrAddLink = (index: number) => {
@@ -45,7 +56,7 @@ const MyPlant = () => {
     if (plantList.length > index) {
       const plant = plantList[index];
       if (plant.plantType === "상추") {
-        setPlantImg("/assets/images/lettuce1.png");
+        setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
       } else if (plant.plantType === "딸기") {
         setPlantImg("/assets/images/strawberry.png");
       }
@@ -55,7 +66,7 @@ const MyPlant = () => {
             <ImgBox>
               <PlantImg src={plantImg} alt="plant" />
               <CharacterName>{plant.name}</CharacterName>
-              <Level>Lv.1</Level>
+              <Level>Lv.{plantLevel}</Level>
             </ImgBox>
           </Link>
         </PlantCard>
