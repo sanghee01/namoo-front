@@ -47,11 +47,11 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchPlantData = async () => {
       // user가 있을 경우에만 요청 실행
-      if (user && user.token) {
+      if (user && user.accessToken) {
         try {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
-              Authorization: `Bearer ${user.token}`,
+              Authorization: `Bearer ${user.accessToken}`,
             },
           });
           setCharacterName(response.data.content.name);
