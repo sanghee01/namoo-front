@@ -41,12 +41,12 @@ const MyPlant = () => {
   };
   // 경험치에 따른 식물 레벨 적용
   useEffect(() => {
-    if (plant.exp >= 100) {
-      setPlantLevel(2);
-    } else if (plant.exp >= 200) {
-      setPlantLevel(3);
-    } else if (plant.exp >= 300) {
+    if (plant.exp >= 400) {
       setPlantLevel(4);
+    } else if (plant.exp >= 300) {
+      setPlantLevel(3);
+    } else if (plant.exp >= 200) {
+      setPlantLevel(2);
     }
   }, [plant.exp, setPlantLevel]);
 

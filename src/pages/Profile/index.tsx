@@ -28,12 +28,16 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation } from "react-router-dom";
+import { plantLevelState } from "../../state/plantState";
 
 const Profile: React.FC = () => {
   const [characterName, setCharacterName] = useState("");
   const [characterDate, setCharacterDate] = useState("");
   const [characterImage, setCharacterImage] = useState("");
+
   const user = useRecoilValue(userState);
+  const plantLevel = useRecoilValue(plantLevelState);
+
   const location = useLocation();
 
   // URL에서 plantId 쿼리 파라미터 읽기
@@ -55,7 +59,7 @@ const Profile: React.FC = () => {
           // plantType에 따라 characterImage 설정
           const plantType = response.data.content.plantType;
           if (plantType === "상추") {
-            setCharacterImage("/assets/images/lettuce1.png");
+            setCharacterImage(`/assets/images/lettuce${plantLevel}.png`);
           } else if (plantType === "딸기") {
             setCharacterImage("/assets/images/strawberry.png");
           } else {
@@ -93,7 +97,7 @@ const Profile: React.FC = () => {
           <ProfileBox>
             <PlantImg src={characterImage} alt="plant" />
             <CharacterName>{characterName}</CharacterName>
-            <Level>Lv.1</Level>
+            <Level>Lv.{plantLevel}</Level>
           </ProfileBox>
           <DetailBox>
             <Text>{characterDate}</Text>
