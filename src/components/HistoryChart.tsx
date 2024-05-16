@@ -7,9 +7,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import faker from "faker";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -19,10 +19,12 @@ interface IHistoryData {
   max: number;
   borderColor: string;
   backgroundColor: string;
+  value: number[];
+  dataList: string[];
 }
 
-const HistoryChart = ({ dataName, min, max, borderColor, backgroundColor }: IHistoryData) => {
-  const options = {
+const HistoryChart = ({ dataName, min, max, value, dataList, borderColor, backgroundColor }: IHistoryData) => {
+  const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
@@ -33,17 +35,27 @@ const HistoryChart = ({ dataName, min, max, borderColor, backgroundColor }: IHis
         text: dataName,
       },
     },
+    scales: {
+      y: {
+        min,
+        max,
+      },
+    },
   };
 
+  const dates = dataList.map((date) => new Date(date));
+  const hours = dates.map((date) => date.getHours());
+  const minutes = dates.map((date) => date.getMinutes());
   const labels = [];
-  for (let i = 1; i <= 15; i++) labels.push(i);
+
+  for (let i = value.length - 1; i >= 0; i--) labels.push(`${hours[i]}:${minutes[i]}`);
 
   const data = {
     labels,
     datasets: [
       {
         label: dataName,
-        data: labels.map(() => faker.datatype.number({ min: min, max: max })),
+        data: value,
         borderColor,
         backgroundColor,
       },

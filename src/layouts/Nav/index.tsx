@@ -29,7 +29,7 @@ const Nav = () => {
             </Link>
           </Tab>
           <Tab>
-            <Link to="/history">
+            <Link to="/history?page=0?sort=temp">
               <BsBarChartFill size="40" />
               <span>기록</span>
             </Link>
