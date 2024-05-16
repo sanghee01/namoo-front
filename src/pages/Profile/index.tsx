@@ -24,7 +24,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
 
 const Profile: React.FC = () => {
@@ -36,6 +36,7 @@ const Profile: React.FC = () => {
 
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   // URL에서 plantId 쿼리 파라미터 읽기
   const queryParams = new URLSearchParams(location.search);
@@ -79,6 +80,24 @@ const Profile: React.FC = () => {
     fetchPlantData();
   }, [plantId, user]);
 
+  const handleDeletePlant = async () => {
+    if (user&& user.accessToken && plantId && window.confirm("정말로 식물을 삭제하시겠습니까?")) {
+      try {
+        await axios.delete(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
+        alert("식물이 삭제되었습니다.");
+        navigate('/myplant');
+      } catch (error) {
+        console.error("식물 삭제 중 에러가 발생했습니다:", error);
+        alert("식물을 삭제하는데 실패했습니다.");
+      }
+    }
+  };
+  
+
   return (
     <ProfileBackGround>
       <Header>
@@ -89,9 +108,7 @@ const Profile: React.FC = () => {
           <Text>식물이야기</Text>
         </Container>
         <SettingBox>
-          <Link to="/setting">
-            <MdDeleteForever size="40" />
-          </Link>
+            <MdDeleteForever size="40" onClick={handleDeletePlant} />
         </SettingBox>
       </Header>
       <Main>
