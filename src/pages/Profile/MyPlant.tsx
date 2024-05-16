@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
 import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 import { plantImgState } from "../../state/plantState";
 
@@ -19,27 +19,13 @@ const MyPlant = () => {
   useEffect(() => {
     async function fetchPlantList() {
       await getPlantList(); // 식물 리스트 가져오기
+      console.log("식물리스트", plantList);
     }
     if (!plantList || plantList.length === 0) {
       fetchPlantList();
     }
-    console.log("식물리스트", plantList);
   }, [getPlantList, plantList]);
 
-  const handlePickPlant = (index: number) => {
-    const plant = plantList[index];
-    console.log("pick", plant);
-    setPlant({
-      id: plant.id,
-      name: plant.name,
-      exp: plant.exp,
-      plantType: plant.plantType,
-      uuid: plant.uuid,
-      giveWater: plant.giveWater,
-      createDate: plant.createDate,
-    });
-  };
-  // 경험치에 따른 식물 레벨 적용
   useEffect(() => {
     if (plant.exp >= 400) {
       setPlantLevel(4);
@@ -50,16 +36,35 @@ const MyPlant = () => {
     }
   }, [plant.exp, setPlantLevel]);
 
-  // 식물 카드 또는 추가 링크를 렌더링하는 함수
-  const renderPlantOrAddLink = (index: number) => {
-    // 식물 데이터가 있는 경우
+  useEffect(() => {
+    if (plantList.length > 0 && plantLevel) {
+      plantList.forEach((plant) => {
+        if (plant.plantType === "상추") {
+          setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
+        } else if (plant.plantType === "딸기") {
+          setPlantImg("/assets/images/strawberry.png");
+        }
+      });
+    }
+  }, [plantList, plantLevel, setPlantImg]);
+
+  const handlePickPlant = useCallback((index : any) => {
+    const selectedPlant = plantList[index];
+    console.log("pick", selectedPlant);
+    setPlant({
+      id: selectedPlant.id,
+      name: selectedPlant.name,
+      exp: selectedPlant.exp,
+      plantType: selectedPlant.plantType,
+      uuid: selectedPlant.uuid,
+      giveWater: selectedPlant.giveWater,
+      createDate: selectedPlant.createDate,
+    });
+  }, [plantList, setPlant]);
+
+  const renderPlantOrAddLink = useCallback((index : any) => {
     if (plantList.length > index) {
       const plant = plantList[index];
-      if (plant.plantType === "상추") {
-        setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
-      } else if (plant.plantType === "딸기") {
-        setPlantImg("/assets/images/strawberry.png");
-      }
       return (
         <PlantCard onClick={() => handlePickPlant(index)} key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
@@ -72,7 +77,6 @@ const MyPlant = () => {
         </PlantCard>
       );
     } else {
-      // 식물 데이터가 없는 경우
       return (
         <PlantCard key={index}>
           <Link to="/addplant">
@@ -81,7 +85,7 @@ const MyPlant = () => {
         </PlantCard>
       );
     }
-  };
+  }, [plantList, plantImg, plantLevel, handlePickPlant]);
 
   return (
     <MyPlantBackGround>
