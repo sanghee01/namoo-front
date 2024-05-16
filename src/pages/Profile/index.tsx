@@ -1,7 +1,6 @@
 import { IoMdBookmarks, IoIosTrophy } from "react-icons/io";
 import { MdArrowBackIos, MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Demo from "../../components/Heatmap";
 import {
   ProfileBackGround,
   Header,
@@ -21,7 +20,7 @@ import {
   QuestBox,
   Container,
 } from "./styles";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
@@ -138,7 +137,7 @@ const Profile: React.FC = () => {
           </BtnBox>
         </BtnContainer>
         <QuestBox>
-          <Demo />
+
         </QuestBox>
       </Main>
     </ProfileBackGround>
