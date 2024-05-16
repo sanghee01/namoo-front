@@ -107,7 +107,7 @@ const Profile: React.FC = () => {
             <span>생년월일</span>
           </DetailBox>
           <DetailBox>
-            <Text>98%</Text>
+            <Text>{plant.exp}%</Text>
             <span>애정도</span>
           </DetailBox>
           <DetailBox>
