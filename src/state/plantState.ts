@@ -63,6 +63,7 @@ export const plantLevelState = atom({
 export const plantHistoryState = atom<PlantHistory[]>({
   key: "plantHistoryState",
   default: [],
+});
 
 // 식물 오늘의 한마디
 export const todayMessageState = atom({
