@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { acceptQuest, completeQuest } from "../services/questApi";
+import { useAcceptQuest, useCompleteQuest } from "../hooks/useQuest";
 import { useCallback, useEffect, useState } from "react";
 
 interface ModalProps {
@@ -24,6 +24,9 @@ const QuestModal: React.FC<ModalProps> = ({
   accepted,
 }) => {
   const [isComplete, setIsComplete] = useState(completed);
+  const acceptQuest = useAcceptQuest();
+  const completeQuest = useCompleteQuest();
+  const [isAccepted, setIsAccepted] = useState(false);
 
   useEffect(() => {
     if (progress === goal) {
@@ -31,28 +34,16 @@ const QuestModal: React.FC<ModalProps> = ({
     }
   }, [goal, isComplete, progress]);
 
-  const handleAcceptQuest = useCallback(async () => {
-    try {
-      const response = await acceptQuest(questId);
-      console.log("퀘스트 수락 요청", response);
-    } catch (error: any) {
-      alert(error.response.data.message);
-    }
-  }, [questId]);
+  const handleAcceptQuest = useCallback(() => {
+    acceptQuest(questId);
+    setIsAccepted(true);
+  }, [acceptQuest, questId]);
 
-  const handleCompleteQuest = useCallback(async () => {
-    if (isComplete) {
-      try {
-        const response = await completeQuest(questId);
-        console.log("퀘스트 완료 요청", response);
-      } catch (error: any) {
-        alert(error.response.data.message);
-      }
-    } else {
-      alert("아직 해결이 안 된 퀘스트입니다!");
-    }
-  }, [isComplete, questId]);
+  const handleCompleteQuest = useCallback(() => {
+    completeQuest(questId);
+  }, [completeQuest, questId]);
 
+  useEffect(() => {}, [accepted]);
   return (
     <QuestContainer key={questId}>
       <QuestContent>
@@ -61,15 +52,19 @@ const QuestModal: React.FC<ModalProps> = ({
         <span>보상: {reward} exp</span>
       </QuestContent>
       <ProgressBox>
-        {accepted ? (
+        {accepted || isAccepted ? (
           <>
             <span>
               {progress} / {goal}
             </span>
-            <AcceptBtn onClick={handleCompleteQuest}>완료</AcceptBtn>
+            <AcceptBtn color="#abdca1" onClick={handleCompleteQuest}>
+              완료
+            </AcceptBtn>
           </>
         ) : (
-          <AcceptBtn onClick={handleAcceptQuest}>수락</AcceptBtn>
+          <AcceptBtn color="#e1d9d4" onClick={handleAcceptQuest}>
+            수락
+          </AcceptBtn>
         )}
       </ProgressBox>
     </QuestContainer>
@@ -98,7 +93,7 @@ const QuestContent = styled.div`
 
 const AcceptBtn = styled.span`
   padding: 4px 6px;
-  background-color: #e1d9d4;
+  background-color: ${(props) => props.color};
   border-radius: 7px;
   &:hover {
     cursor: pointer;

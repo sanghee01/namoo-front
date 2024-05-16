@@ -22,38 +22,28 @@ import { plantLevelState, plantState } from "../../state/plantState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { plantImgState } from "../../state/plantState";
 import { useCallback, useState } from "react";
-import { getQuest } from "../../services/questApi";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
 import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
+import { useGetQuest } from "../../hooks/useQuest";
 
 const Home = () => {
   const navegate = useNavigate();
+  const getQuest = useGetQuest();
 
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
   const plantLevel = useRecoilValue(plantLevelState);
-  console.log("식물", plant);
-  const [questList, setQuestList] = useRecoilState(questState);
+  const questList = useRecoilValue(questState);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   console.log("questList", questList);
 
-  // 퀘스트 리스트 가져오기
-  const handleGetQuest = useCallback(async () => {
-    try {
-      const response = await getQuest();
-      setQuestList(response);
-    } catch (error: any) {
-      alert(error.response.data.message);
-    }
-  }, [setQuestList]);
-
   // 퀘스트 모달 열기
   const handleOpenModal = () => {
     setIsOpenModal(true);
-    handleGetQuest();
+    getQuest();
   };
 
   // 퀘스트 모달 닫기
@@ -93,7 +83,7 @@ const Home = () => {
         </CharacterBox>
         <SideBar>
           <div>
-            <FaBook onClick={() => handleOpenModal()} color="#a8511c" size="40" />
+            <FaBook onClick={handleOpenModal} color="#a8511c" size="40" />
             <span>퀘스트</span>
           </div>
           <div onClick={handleGiveWater}>
