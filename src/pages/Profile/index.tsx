@@ -25,18 +25,18 @@ import {
 } from "./styles";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue,useSetRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation } from "react-router-dom";
-import { plantLevelState } from "../../state/plantState";
+import { plantLevelState, plantImgState, plantState } from "../../state/plantState";
 
 const Profile: React.FC = () => {
-  const [characterName, setCharacterName] = useState("");
-  const [characterDate, setCharacterDate] = useState("");
   const [characterImage, setCharacterImage] = useState("");
 
   const user = useRecoilValue(userState);
   const plantLevel = useRecoilValue(plantLevelState);
+  const plantImg = useRecoilValue(plantImgState); 
+  const plant = useRecoilValue(plantState);
 
   const location = useLocation();
 
@@ -54,10 +54,9 @@ const Profile: React.FC = () => {
               Authorization: `Bearer ${user.accessToken}`,
             },
           });
-          setCharacterName(response.data.content.name);
-          setCharacterDate(response.data.content.createDate);
+
           // plantType에 따라 characterImage 설정
-          const plantType = response.data.content.plantType;
+          const plantType = plant.plantType;
           if (plantType === "상추") {
             setCharacterImage(`/assets/images/lettuce${plantLevel}.png`);
           } else if (plantType === "딸기") {
@@ -95,12 +94,12 @@ const Profile: React.FC = () => {
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src={characterImage} alt="plant" />
-            <CharacterName>{characterName}</CharacterName>
+            <PlantImg src={plantImg} alt="plant" />
+            <CharacterName>{plant.name}</CharacterName>
             <Level>Lv.{plantLevel}</Level>
           </ProfileBox>
           <DetailBox>
-            <Text>{characterDate}</Text>
+            <Text>{plant.createDate}</Text>
             <span>생년월일</span>
           </DetailBox>
           <DetailBox>
