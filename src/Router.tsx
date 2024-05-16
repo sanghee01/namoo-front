@@ -78,7 +78,13 @@ const Container = styled.div`
   width: 550px;
   height: 100dvh;
   margin: auto;
+  overflow-y: scroll;
   background-color: white;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media screen and (max-width: 600px) {
     width: 100%;
   }
