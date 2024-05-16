@@ -19,7 +19,7 @@ import {
   ModalCloseBtn,
 } from "./styles";
 import { plantLevelState, plantState } from "../../state/plantState";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { plantImgState } from "../../state/plantState";
 import { useCallback, useState } from "react";
 import { questState } from "../../state/questState";

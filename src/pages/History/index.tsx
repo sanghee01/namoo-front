@@ -26,7 +26,7 @@ const History = () => {
   const soilHumidityList = plantHistoryData.map((data) => data.soilHumidity);
   const lightList = plantHistoryData.map((data) => data.light);
   const remainingWaterList = plantHistoryData.map((data) => data.remainingWater);
-  const gaveWaterList = plantHistoryData.map((data) => data.gaveWater);
+  // const gaveWaterList = plantHistoryData.map((data) => data.gaveWater);
 
   return (
     <Container>
