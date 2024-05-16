@@ -47,7 +47,7 @@ const Profile: React.FC = () => {
       // user가 있을 경우에만 요청 실행
       if (user && user.accessToken && plantId) {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
+          await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
             },
