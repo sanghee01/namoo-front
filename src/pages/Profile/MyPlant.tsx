@@ -48,7 +48,7 @@ const MyPlant = () => {
     }
   }, [plantList, plantLevel, setPlantImg]);
 
-  const handlePickPlant = useCallback((index : any) => {
+  const handlePickPlant = useCallback((index : number) => {
     const selectedPlant = plantList[index];
     console.log("pick", selectedPlant);
     setPlant({
@@ -62,7 +62,7 @@ const MyPlant = () => {
     });
   }, [plantList, setPlant]);
 
-  const renderPlantOrAddLink = useCallback((index : any) => {
+  const renderPlantOrAddLink = useCallback((index : number) => {
     if (plantList.length > index) {
       const plant = plantList[index];
       return (

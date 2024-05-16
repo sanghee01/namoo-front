@@ -1,7 +1,5 @@
-import { IoMdBookmarks } from "react-icons/io";
-import { IoIosTrophy } from "react-icons/io";
-import { MdArrowBackIos } from "react-icons/md";
-import { MdDeleteForever } from "react-icons/md";
+import { IoMdBookmarks, IoIosTrophy } from "react-icons/io";
+import { MdArrowBackIos, MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Demo from "../../components/Heatmap";
 import {
@@ -25,18 +23,18 @@ import {
 } from "./styles";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useRecoilValue,useSetRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation } from "react-router-dom";
-import { plantLevelState, plantImgState, plantState } from "../../state/plantState";
+import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
 
 const Profile: React.FC = () => {
-  const [characterImage, setCharacterImage] = useState("");
-
   const user = useRecoilValue(userState);
   const plantLevel = useRecoilValue(plantLevelState);
   const plantImg = useRecoilValue(plantImgState); 
   const plant = useRecoilValue(plantState);
+  const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
+
 
   const location = useLocation();
 
@@ -47,7 +45,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchPlantData = async () => {
       // user가 있을 경우에만 요청 실행
-      if (user && user.accessToken) {
+      if (user && user.accessToken && plantId) {
         try {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
@@ -55,25 +53,31 @@ const Profile: React.FC = () => {
             },
           });
 
-          // plantType에 따라 characterImage 설정
-          const plantType = plant.plantType;
-          if (plantType === "상추") {
-            setCharacterImage(`/assets/images/lettuce${plantLevel}.png`);
-          } else if (plantType === "딸기") {
-            setCharacterImage("/assets/images/strawberry.png");
+	// 식물 데이터 가져오기
+      const historyResponse = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant-history/${plantId}`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      });
+      console.log(historyResponse.data);
+
+          
+          // soilHumidity에 따른 메시지 설정
+          const { soilHumidity } = historyResponse.data.content.content[0];
+          if (soilHumidity < 500) {
+            setTodayMessage("생명수가 필요해!");
+          } else if (soilHumidity >= 500 && soilHumidity < 1000) {
+            setTodayMessage("아이 촉촉해~");
           } else {
-            // 기본 이미지 또는 다른 타입의 식물 이미지 설정
-            setCharacterImage("/assets/images/lettuce1.png");
+            setTodayMessage("혹시 여기 수영장?");
           }
         } catch (error) {
-          console.error("식물 데이터를 가져오는 중 에러가 발생했습니다:", error);
+          console.error("데이터를 가져오는 중 에러가 발생했습니다:", error);
         }
       }
     };
 
-    if (plantId) {
-      fetchPlantData();
-    }
+    fetchPlantData();
   }, [plantId, user]);
 
   return (
@@ -107,7 +111,7 @@ const Profile: React.FC = () => {
             <span>애정도</span>
           </DetailBox>
           <DetailBox>
-            <Text>생명수가 필요해!</Text>
+            <Text>{todayMessage}</Text>
             <span>오늘의 한마디</span>
           </DetailBox>
         </ProfileCard>

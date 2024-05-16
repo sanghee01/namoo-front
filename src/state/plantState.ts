@@ -44,3 +44,9 @@ export const plantLevelState = atom({
   key: "plantLevelState",
   default: 1,
 });
+
+
+export const todayMessageState = atom({
+  key: 'todayMessageState',
+  default: "아이 촉촉해~",
+});
