@@ -10,22 +10,24 @@ import { usePlantList } from "../../hooks/useGetPlantList";
 import { plantImgState } from "../../state/plantState";
 
 const MyPlant = () => {
-  const getPlantList = usePlantList(); // usePlantList 훅 사용
+  const getPlantList = usePlantList(); 
   const plantList = useRecoilValue(plantListState);
   const [plant, setPlant] = useRecoilState(plantState);
   const [plantImg, setPlantImg] = useRecoilState(plantImgState);
   const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
 
+  // 식물 리스트 가져오기 및 상태 업데이트
   useEffect(() => {
-    async function fetchPlantList() {
-      await getPlantList(); // 식물 리스트 가져오기
-      console.log("식물리스트", plantList);
-    }
-    if (!plantList || plantList.length === 0) {
-      fetchPlantList();
-    }
+    const fetchPlantList = async () => {
+      if (!plantList || plantList.length === 0) {
+        await getPlantList();
+      }
+    };
+
+    fetchPlantList();
   }, [getPlantList, plantList]);
 
+  // 경험치에 따른 식물 레벨 설정
   useEffect(() => {
     if (plant.exp >= 400) {
       setPlantLevel(4);
@@ -36,6 +38,7 @@ const MyPlant = () => {
     }
   }, [plant.exp, setPlantLevel]);
 
+  // 식물 리스트와 레벨에 따른 이미지 설정
   useEffect(() => {
     if (plantList.length > 0 && plantLevel) {
       plantList.forEach((plant) => {
@@ -50,7 +53,6 @@ const MyPlant = () => {
 
   const handlePickPlant = useCallback((index : number) => {
     const selectedPlant = plantList[index];
-    console.log("pick", selectedPlant);
     setPlant({
       id: selectedPlant.id,
       name: selectedPlant.name,
@@ -100,6 +102,7 @@ const MyPlant = () => {
     </MyPlantBackGround>
   );
 };
+
 
 export const MyPlantBackGround = styled.div`
   flex: 1;
