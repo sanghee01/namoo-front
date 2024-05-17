@@ -24,12 +24,13 @@ import {
   CheckBox,
   CheckImg
 } from "./styles";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
+import { isCheckedInState  } from "../../state/checkState";
 import { errorAlert, successAlert, Confirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
@@ -42,6 +43,8 @@ const Profile: React.FC = () => {
   const plantImg = useRecoilValue(plantImgState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
+  const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -112,25 +115,20 @@ const Profile: React.FC = () => {
       }
     }
   };
-
-  const [isCheckedIn, setIsCheckedIn] = useState(false); // 출석체크 상태 관리
-
-  // 출석체크 이미지 클릭 시 실행될 함수
   const handleCheckIn = async () => {
-    const confirmCheckIn = window.confirm("출석체크하시겠습니까?"); // 사용자 확인
+    const confirmCheckIn = window.confirm("출석체크하시겠습니까?");
     if (user && user.accessToken && confirmCheckIn) {
       try {
-        // 출석체크 API 호출
         const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
           headers: {
-            Authorization: `Bearer ${user.accessToken}`, // 사용자 인증 토큰
+            Authorization: `Bearer ${user.accessToken}`,
           },
         });
 
-        // API 호출 성공 시, 출석체크 상태 변경
         if (response.status === 200) {
-          setIsCheckedIn(true); // 출석체크 상태를 true로 변경
-          alert("출석체크가 완료되었습니다."); // 사용자에게 출석체크 완료 알림
+          setIsCheckedIn(true); // Recoil 상태 업데이트
+          alert("출석체크가 완료되었습니다.");
+          console.log("출석체크 응답:", response);
         }
       } catch (error) {
         console.error("출석체크 중 에러가 발생했습니다:", error);
