@@ -21,6 +21,8 @@ import {
   IconBox,
   QuestBox,
   Container,
+  CheckBox,
+  CheckImg
 } from "./styles";
 import React, { useEffect } from "react";
 import axios from "axios";
@@ -118,7 +120,7 @@ const Profile: React.FC = () => {
           <Link to="/myplant">
             <IoChevronBackOutline size="30" />
           </Link>
-          <Text>식물이야기</Text>
+          <Text style={{ paddingLeft: '10px' }}>식물이야기</Text>
         </Container>
         <SettingBox>
             <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
@@ -166,7 +168,12 @@ const Profile: React.FC = () => {
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox></QuestBox>
+        <QuestBox>
+          <CheckBox>출석체크를 해주세요!</CheckBox>
+          <CheckBox>
+            <CheckImg src={"/assets/images/nonCheck.png"} />
+          </CheckBox>
+        </QuestBox>
       </Main>
     </ProfileBackGround>
   );
