@@ -102,6 +102,7 @@ const Profile: React.FC = () => {
           },
         });
         await successAlert("식물이 삭제되었습니다.");
+        await fetchPlantList(); // 식물 목록을 최신 상태로 업데이트
         navigate("/myplant");
       } catch (error) {
         console.error("식물 삭제 중 에러가 발생했습니다:", error);
