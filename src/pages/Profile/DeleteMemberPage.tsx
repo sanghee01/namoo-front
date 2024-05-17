@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useCallback, useState } from "react";
 import useLogout from "../../hooks/useLogout";
 import { useDeleteMember } from "../../hooks/useDeleteMember";
+import { successAlert, warningAlert } from "../../components/Alert";
 
 const DeleteMemeberPage = () => {
   const [errorTxt, setErrorTxt] = useState("");
@@ -19,13 +20,13 @@ const DeleteMemeberPage = () => {
       e.preventDefault();
       try {
         const response = await deleteMember(password);
-        alert(response);
+        await successAlert(response);
         logout();
       } catch (error: any) {
         const errorMessage = error.response.data.message;
         const errorContent = error.response.data.content;
         if (errorMessage) setErrorTxt(errorMessage);
-        if (errorContent) alert(errorContent);
+        if (errorContent) await warningAlert(errorContent);
       }
     },
     [deleteMember, logout, password],

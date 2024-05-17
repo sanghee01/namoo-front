@@ -3,6 +3,7 @@ import { resetPassword } from "../../services/resetPasswordApi";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
+import { warningAlert } from "../../components/Alert";
 
 const FindPassword = () => {
   useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
@@ -27,7 +28,7 @@ const FindPassword = () => {
       } catch (error: any) {
         const errorMessage = error.response.data.message;
         const errorContent = error.response.data.content;
-        if (errorMessage) alert(errorMessage);
+        if (errorMessage) await warningAlert(errorMessage);
         if (errorContent.email) setErrorTxt(errorContent.email);
       }
     },

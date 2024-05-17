@@ -5,6 +5,7 @@ import Postcode from "../../components/Postcode";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/userState";
+import { warningAlert } from "../../components/Alert";
 
 const AddPlant = () => {
   // 상태 선언: 주소, 우편번호, 상세주소
@@ -56,7 +57,7 @@ const AddPlant = () => {
       console.log(response.data); // 성공 응답 처리
       navigate("/myplant"); // 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
     } catch (error: any) {
-      alert(error.response.data.message);
+      await warningAlert(error.response.data.message);
     }
   };
 

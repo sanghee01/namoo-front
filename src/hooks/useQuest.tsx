@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../state/userState";
 import { useSetRecoilState } from "recoil";
 import { questState } from "../state/questState";
+import { successAlert, warningAlert } from "../components/Alert";
 
 export function useGetQuest() {
   const user = useRecoilValue(userState);
@@ -19,7 +20,7 @@ export function useGetQuest() {
       });
       setQuest(response.data.content);
     } catch (error: any) {
-      alert(error.response.data.message);
+      await warningAlert(error.response.data.message);
     }
   };
   return getQuest;
@@ -42,9 +43,9 @@ export function useAcceptQuest() {
           },
         },
       );
-      alert(response.data.message);
+      await successAlert(response.data.message);
     } catch (error: any) {
-      alert(error.response.data.message);
+      await warningAlert(error.response.data.message);
     }
   };
   return acceptQuest;
@@ -69,7 +70,7 @@ export function useCompleteQuest() {
       );
       console.log(response);
     } catch (error: any) {
-      alert(error.response.data.message);
+      await warningAlert(error.response.data.message);
     }
   };
   return completeQuest;
