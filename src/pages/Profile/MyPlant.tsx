@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
 import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 import { plantImgState } from "../../state/plantState";
 
@@ -15,18 +15,20 @@ const MyPlant = () => {
   const [plant, setPlant] = useRecoilState(plantState);
   const [plantImg, setPlantImg] = useRecoilState(plantImgState);
   const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const location = useLocation();
-  // 식물 리스트 가져오기 및 상태 업데이트
   useEffect(() => {
     const fetchPlantList = async () => {
-      if (!plantList || plantList.length === 0) {
-        await getPlantList();
-      }
+      await getPlantList();
+      setIsLoading(false); // 로딩 완료
     };
-
-    fetchPlantList();
-  }, [getPlantList, plantList, location]);
+  
+    if (!plantList || plantList.length === 0) {
+      fetchPlantList();
+    } else {
+      setIsLoading(false); // plantList가 존재하면 로딩 완료
+    }
+  }, []);
 
   // 경험치에 따른 식물 레벨 설정
   useEffect(() => {
@@ -71,6 +73,9 @@ const MyPlant = () => {
   }, [plantList, setPlant]);
 
   const renderPlantOrAddLink = useCallback((index : number) => {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
     if (plantList.length > index) {
       const plant = plantList[index];
       return (
@@ -103,8 +108,17 @@ const MyPlant = () => {
           <IoMdSettings size="40" />
         </Link>
       </Header>
-      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
-      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
+      {!isLoading && (
+      <>
+        <Container>
+          {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
+        </Container>
+        <Container>
+          {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
+        </Container>
+      </>
+    )}
+
     </MyPlantBackGround>
   );
 };
