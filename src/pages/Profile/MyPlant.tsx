@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { IoMdSettings } from "react-icons/io";
+import { AiFillSetting } from "react-icons/ai";
 import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { useEffect, useCallback, useState } from "react";
@@ -105,7 +105,7 @@ const MyPlant = () => {
       <Header>
         <Text>내 식물들</Text>
         <Link to="/setting">
-          <IoMdSettings size="40" />
+          <AiFillSetting size="40" />
         </Link>
       </Header>
       {!isLoading && (

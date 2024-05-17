@@ -1,5 +1,7 @@
-import { IoMdBookmarks, IoIosTrophy } from "react-icons/io";
-import { MdArrowBackIos, MdDeleteForever } from "react-icons/md";
+import { FaBookBookmark } from "react-icons/fa6";
+import { FaTrophy } from "react-icons/fa";
+import { IoChevronBackOutline } from "react-icons/io5";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import {
   ProfileBackGround,
@@ -109,12 +111,12 @@ const Profile: React.FC = () => {
       <Header>
         <Container>
           <Link to="/myplant">
-            <MdArrowBackIos size="30" />
+            <IoChevronBackOutline size="30" />
           </Link>
           <Text>식물이야기</Text>
         </Container>
         <SettingBox>
-            <MdDeleteForever size="40" onClick={handleDeletePlant} />
+            <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
         </SettingBox>
       </Header>
       <Main>
@@ -144,7 +146,7 @@ const Profile: React.FC = () => {
                 <Text>식물도감</Text>
               </TextBox>
               <IconBox>
-                <IoMdBookmarks color="#a8511c" size="80" />
+                <FaBookBookmark color="#a8511c" size="80" />
               </IconBox>
             </Link>
           </BtnBox>
@@ -154,7 +156,7 @@ const Profile: React.FC = () => {
                 <Text>명예의 전당</Text>
               </TextBox>
               <IconBox>
-                <IoIosTrophy color="#ffc400" size="80" />
+                <FaTrophy color="#ffc400" size="80" />
               </IconBox>
             </Link>
           </BtnBox>
