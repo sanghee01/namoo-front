@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
@@ -16,6 +16,7 @@ const MyPlant = () => {
   const [plantImg, setPlantImg] = useRecoilState(plantImgState);
   const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
 
+  const location = useLocation();
   // 식물 리스트 가져오기 및 상태 업데이트
   useEffect(() => {
     const fetchPlantList = async () => {
@@ -25,7 +26,7 @@ const MyPlant = () => {
     };
 
     fetchPlantList();
-  }, [getPlantList, plantList]);
+  }, [getPlantList, plantList, location]);
 
   // 경험치에 따른 식물 레벨 설정
   useEffect(() => {
@@ -50,6 +51,11 @@ const MyPlant = () => {
       });
     }
   }, [plantList, plantLevel, setPlantImg]);
+
+  // plantList 업데이트 확인
+  useEffect(() => {
+    console.log('Updated plantList:', plantList);
+  }, [plantList]);
 
   const handlePickPlant = useCallback((index : number) => {
     const selectedPlant = plantList[index];
