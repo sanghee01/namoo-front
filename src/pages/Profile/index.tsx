@@ -124,9 +124,10 @@ const Profile: React.FC = () => {
             Authorization: `Bearer ${user.accessToken}`,
           },
         });
-
+  
         if (response.status === 200) {
           setIsCheckedIn(true); // Recoil 상태 업데이트
+          sessionStorage.setItem('isCheckedIn', 'true'); // sessionStorage에 출석체크 상태 저장
           alert("출석체크가 완료되었습니다.");
           console.log("출석체크 응답:", response);
         }
@@ -136,6 +137,12 @@ const Profile: React.FC = () => {
       }
     }
   };
+  useEffect(() => {
+    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
+    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
+    setIsCheckedIn(storedIsCheckedIn);
+  }, []);
+    
 
   return (
     <ProfileBackGround>
