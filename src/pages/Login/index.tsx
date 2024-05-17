@@ -56,7 +56,7 @@ const SignIn = () => {
       // 로그인 및 유저 정보 가져오기
       try {
         const response = await login(email, password); // authApi에서 login 함수 사용
-        setUser({ username: response.username, email: response.email, token: response.token }); // 사용자 상태 업데이트
+        setUser({ username: response.username, email: response.email, accessToken: response.accessToken }); // 사용자 상태 업데이트
 
         navigate("/myplant");
       } catch (error: any) {
@@ -66,7 +66,7 @@ const SignIn = () => {
         if (errorMessage.password) alert(`비밀번호는 ${errorMessage.password}`);
       }
     },
-    [email, password, setUser],
+    [email, navigate, password, setUser],
   );
 
   return (

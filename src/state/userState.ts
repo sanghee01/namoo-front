@@ -4,7 +4,7 @@ import { atom, DefaultValue } from "recoil";
 interface User {
   username: string;
   email: string;
-  token: string;
+  accessToken: string;
 }
 
 // 로컬 스토리지에 저장할 키 이름

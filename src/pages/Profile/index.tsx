@@ -1,9 +1,6 @@
-import { IoMdBookmarks } from "react-icons/io";
-import { IoIosTrophy } from "react-icons/io";
-import { MdArrowBackIos } from "react-icons/md";
-import { MdDeleteForever } from "react-icons/md";
+import { IoMdBookmarks, IoIosTrophy } from "react-icons/io";
+import { MdArrowBackIos, MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Demo from "../../components/Heatmap";
 import {
   ProfileBackGround,
   Header,
@@ -23,18 +20,23 @@ import {
   QuestBox,
   Container,
 } from "./styles";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
 
 const Profile: React.FC = () => {
-  const [characterName, setCharacterName] = useState("");
-  const [characterDate, setCharacterDate] = useState("");
-  const [characterImage, setCharacterImage] = useState("");
   const user = useRecoilValue(userState);
+  const plantLevel = useRecoilValue(plantLevelState);
+  const plantImg = useRecoilValue(plantImgState); 
+  const plant = useRecoilValue(plantState);
+  const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
+
+
   const location = useLocation();
+  const navigate = useNavigate();
 
   // URL에서 plantId 쿼리 파라미터 읽기
   const queryParams = new URLSearchParams(location.search);
@@ -43,35 +45,58 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchPlantData = async () => {
       // user가 있을 경우에만 요청 실행
-      if (user && user.token) {
+      if (user && user.accessToken && plantId) {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
+          await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
             headers: {
-              Authorization: `Bearer ${user.token}`,
+              Authorization: `Bearer ${user.accessToken}`,
             },
           });
-          setCharacterName(response.data.content.name);
-          setCharacterDate(response.data.content.createDate);
-          // plantType에 따라 characterImage 설정
-          const plantType = response.data.content.plantType;
-          if (plantType === "상추") {
-            setCharacterImage("/assets/images/plant.png");
-          } else if (plantType === "딸기") {
-            setCharacterImage("/assets/images/strawberry.png");
+
+	// 식물 데이터 가져오기
+      const historyResponse = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant-history/${plantId}`, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      });
+      console.log(historyResponse.data);
+
+          
+          // soilHumidity에 따른 메시지 설정
+          const { soilHumidity } = historyResponse.data.content.content[0];
+          if (soilHumidity < 500) {
+            setTodayMessage("생명수가 필요해!");
+          } else if (soilHumidity >= 500 && soilHumidity < 1000) {
+            setTodayMessage("아이 촉촉해~");
           } else {
-            // 기본 이미지 또는 다른 타입의 식물 이미지 설정
-            setCharacterImage("/assets/images/logoimg1.png");
+            setTodayMessage("혹시 여기 수영장?");
           }
         } catch (error) {
-          console.error("식물 데이터를 가져오는 중 에러가 발생했습니다:", error);
+          console.error("데이터를 가져오는 중 에러가 발생했습니다:", error);
         }
       }
     };
 
-    if (plantId) {
-      fetchPlantData();
-    }
+    fetchPlantData();
   }, [plantId, user]);
+
+  const handleDeletePlant = async () => {
+    if (user&& user.accessToken && plantId && window.confirm("정말로 식물을 삭제하시겠습니까?")) {
+      try {
+        await axios.delete(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
+        alert("식물이 삭제되었습니다.");
+        navigate('/myplant');
+      } catch (error) {
+        console.error("식물 삭제 중 에러가 발생했습니다:", error);
+        alert("식물을 삭제하는데 실패했습니다.");
+      }
+    }
+  };
+  
 
   return (
     <ProfileBackGround>
@@ -83,28 +108,26 @@ const Profile: React.FC = () => {
           <Text>식물이야기</Text>
         </Container>
         <SettingBox>
-          <Link to="/setting">
-            <MdDeleteForever size="40" />
-          </Link>
+            <MdDeleteForever size="40" onClick={handleDeletePlant} />
         </SettingBox>
       </Header>
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src={characterImage} alt="plant" />
-            <CharacterName>{characterName}</CharacterName>
-            <Level>Lv.1</Level>
+            <PlantImg src={plantImg} alt="plant" />
+            <CharacterName>{plant.name}</CharacterName>
+            <Level>Lv.{plantLevel}</Level>
           </ProfileBox>
           <DetailBox>
-            <Text>{characterDate}</Text>
+            <Text>{plant.createDate}</Text>
             <span>생년월일</span>
           </DetailBox>
           <DetailBox>
-            <Text>98%</Text>
+            <Text>{plant.exp}%</Text>
             <span>애정도</span>
           </DetailBox>
           <DetailBox>
-            <Text>생명수가 필요해!</Text>
+            <Text>{todayMessage}</Text>
             <span>오늘의 한마디</span>
           </DetailBox>
         </ProfileCard>
@@ -131,7 +154,7 @@ const Profile: React.FC = () => {
           </BtnBox>
         </BtnContainer>
         <QuestBox>
-          <Demo />
+
         </QuestBox>
       </Main>
     </ProfileBackGround>

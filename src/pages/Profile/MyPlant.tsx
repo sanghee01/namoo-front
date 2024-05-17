@@ -3,64 +3,82 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { IoMdSettings } from "react-icons/io";
-import { plantListState } from "../../state/plantState";
+import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
+import { plantImgState } from "../../state/plantState";
 
 const MyPlant = () => {
-  const getPlantList = usePlantList(); // usePlantList 훅 사용
+  const getPlantList = usePlantList(); 
   const plantList = useRecoilValue(plantListState);
-  const [, setPlant] = useRecoilState(plantState);
+  const [plant, setPlant] = useRecoilState(plantState);
+  const [plantImg, setPlantImg] = useRecoilState(plantImgState);
+  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
 
+  // 식물 리스트 가져오기 및 상태 업데이트
   useEffect(() => {
-    async function fetchPlantList() {
-      await getPlantList(); // 식물 리스트 가져오기
-    }
-    if (!plantList || plantList.length === 0) {
-      fetchPlantList();
-    }
-    console.log("식물리스트", plantList);
+    const fetchPlantList = async () => {
+      if (!plantList || plantList.length === 0) {
+        await getPlantList();
+      }
+    };
+
+    fetchPlantList();
   }, [getPlantList, plantList]);
 
-  const handlePickPlant = (index: number) => {
-    const plant = plantList[index];
-    console.log("pick", plant);
-    setPlant({
-      id: plant.id,
-      name: plant.name,
-      exp: plant.exp,
-      plantType: plant.plantType,
-      uuid: plant.uuid,
-      giveWater: plant.giveWater,
-      createDate: plant.createDate,
-    });
-  };
+  // 경험치에 따른 식물 레벨 설정
+  useEffect(() => {
+    if (plant.exp >= 400) {
+      setPlantLevel(4);
+    } else if (plant.exp >= 300) {
+      setPlantLevel(3);
+    } else if (plant.exp >= 200) {
+      setPlantLevel(2);
+    }
+  }, [plant.exp, setPlantLevel]);
 
-  // 식물 카드 또는 추가 링크를 렌더링하는 함수
-  const renderPlantOrAddLink = (index: number) => {
-    // 식물 데이터가 있는 경우
+  // 식물 리스트와 레벨에 따른 이미지 설정
+  useEffect(() => {
+    if (plantList.length > 0 && plantLevel) {
+      plantList.forEach((plant) => {
+        if (plant.plantType === "상추") {
+          setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
+        } else if (plant.plantType === "딸기") {
+          setPlantImg("/assets/images/strawberry.png");
+        }
+      });
+    }
+  }, [plantList, plantLevel, setPlantImg]);
+
+  const handlePickPlant = useCallback((index : number) => {
+    const selectedPlant = plantList[index];
+    setPlant({
+      id: selectedPlant.id,
+      name: selectedPlant.name,
+      exp: selectedPlant.exp,
+      plantType: selectedPlant.plantType,
+      uuid: selectedPlant.uuid,
+      giveWater: selectedPlant.giveWater,
+      createDate: selectedPlant.createDate,
+    });
+  }, [plantList, setPlant]);
+
+  const renderPlantOrAddLink = useCallback((index : number) => {
     if (plantList.length > index) {
       const plant = plantList[index];
-      let imageSrc = "/assets/images/logoimg1.png"; // 기본 이미지
-      if (plant.plantType === "상추") {
-        imageSrc = "/assets/images/plant.png";
-      } else if (plant.plantType === "딸기") {
-        imageSrc = "/assets/images/strawberry.png";
-      }
       return (
         <PlantCard onClick={() => handlePickPlant(index)} key={index}>
           <Link to={`/profile?plantId=${plant.id}`}>
             <ImgBox>
-              <PlantImg src={imageSrc} alt="plant" />
+              <PlantImg src={plantImg} alt="plant" />
               <CharacterName>{plant.name}</CharacterName>
-              <Level>Lv.1</Level>
+              <Level>Lv.{plantLevel}</Level>
             </ImgBox>
           </Link>
         </PlantCard>
       );
     } else {
-      // 식물 데이터가 없는 경우
       return (
         <PlantCard key={index}>
           <Link to="/addplant">
@@ -69,7 +87,7 @@ const MyPlant = () => {
         </PlantCard>
       );
     }
-  };
+  }, [plantList, plantImg, plantLevel, handlePickPlant]);
 
   return (
     <MyPlantBackGround>
@@ -84,6 +102,7 @@ const MyPlant = () => {
     </MyPlantBackGround>
   );
 };
+
 
 export const MyPlantBackGround = styled.div`
   flex: 1;
@@ -146,8 +165,7 @@ export const ImgBox = styled.div`
 `;
 
 export const PlantImg = styled.img`
-  width: 120px;
-  height: 120px;
+  height: 180px;
   margin: 10px;
 `;
 

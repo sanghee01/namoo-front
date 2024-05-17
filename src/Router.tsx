@@ -23,6 +23,7 @@ import LoginSuccess from "./pages/Login/LoginSuccess";
 import ErrorPage from "./pages/Login/ErrorPage";
 import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
 import { plantState } from "./state/plantState";
+import CheckDisease from "./pages/Home/CheckDisease";
 
 const Router = () => {
   const plant = useRecoilValue(plantState);
@@ -44,6 +45,7 @@ const Router = () => {
             <Route path="/achievement" element={<Achievement />} />
             <Route path="/encyclopedia" element={<Encyclopedia />} />
             <Route path="/delete-member" element={<DeleteMemeberPage />} />
+            <Route path="/check-disease" element={<CheckDisease />} />
 
             {/* 로그인 상태가 아니어야 접속할 수 있는 페이지 */}
             <Route path="/" element={<Start />} />
@@ -76,7 +78,13 @@ const Container = styled.div`
   width: 550px;
   height: 100dvh;
   margin: auto;
+  overflow-y: scroll;
   background-color: white;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media screen and (max-width: 600px) {
     width: 100%;
   }

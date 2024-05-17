@@ -14,7 +14,7 @@ const AddPlant = () => {
   const [userName, setUserName] = useState("");
   const [selectedPlant, setSelectedPlant] = useState("");
   const [plantName, setPlantName] = useState("");
-  const [token, setToken] = useState("");
+  const [accessToken, setAccessToken] = useState("");
   const navigate = useNavigate();
 
   // Recoil을 통해 userState에서 사용자 정보 가져오기
@@ -23,7 +23,7 @@ const AddPlant = () => {
   useEffect(() => {
     if (user) {
       setUserName(user.username); // username 설정
-      setToken(user.token); // token 설정
+      setAccessToken(user.accessToken); // accessToken 설정
     }
   }, [user]); // user 상태가 변경될 때마다 실행
 
@@ -49,7 +49,7 @@ const AddPlant = () => {
 
       const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/orders`, addPlant, {
         headers: {
-          Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
+          Authorization: `Bearer ${accessToken}`, // 토큰을 헤더에 추가
         },
       });
 
