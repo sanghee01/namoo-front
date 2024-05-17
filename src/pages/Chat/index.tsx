@@ -21,7 +21,7 @@ const Chat = () => {
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSendMessage();
     }
@@ -46,7 +46,7 @@ const Chat = () => {
         <InputBox
           placeholder="메시지를 입력하여 대화를 해주세요"
           value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <SendButton onClick={handleSendMessage} style={{ fontSize: "auto" }}>
