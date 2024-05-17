@@ -54,7 +54,7 @@ const MyPlant = () => {
 
   // plantList 업데이트 확인
   useEffect(() => {
-    console.log('Updated plantList:', plantList);
+    console.log('plantList:', plantList);
   }, [plantList]);
 
   const handlePickPlant = useCallback((index : number) => {

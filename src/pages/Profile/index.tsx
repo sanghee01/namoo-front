@@ -26,6 +26,10 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
+import { usePlantList } from "../../hooks/useGetPlantList";
+
+
+
 
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
@@ -34,13 +38,14 @@ const Profile: React.FC = () => {
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
 
-
   const location = useLocation();
   const navigate = useNavigate();
 
   // URL에서 plantId 쿼리 파라미터 읽기
   const queryParams = new URLSearchParams(location.search);
   const plantId = queryParams.get("plantId");
+  const fetchPlantList = usePlantList(); // 식물 목록을 가져오는 훅
+
 
   useEffect(() => {
     const fetchPlantData = async () => {
@@ -89,6 +94,7 @@ const Profile: React.FC = () => {
           },
         });
         alert("식물이 삭제되었습니다.");
+        await fetchPlantList(); // 식물 목록을 최신 상태로 업데이트
         navigate('/myplant');
       } catch (error) {
         console.error("식물 삭제 중 에러가 발생했습니다:", error);
