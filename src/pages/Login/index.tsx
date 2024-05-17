@@ -19,6 +19,7 @@ import { userState } from "../../state/userState";
 import { useLocation } from "react-router";
 import { login } from "../../services/loginApi";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
+import { warningAlert, successAlert } from "../../components/Alert";
 
 const SignIn = () => {
   useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
@@ -34,7 +35,7 @@ const SignIn = () => {
   useEffect(() => {
     if (!didMountRef.current && activate === "true") {
       didMountRef.current = true;
-      alert("메일 인증 성공! 로그인을 해주세요.");
+      successAlert("메일 인증 성공! 로그인을 해주세요.");
     }
   }, [activate]);
 
@@ -60,10 +61,18 @@ const SignIn = () => {
 
         navigate("/myplant");
       } catch (error: any) {
-        alert(error.response.data.message);
         const errorMessage = error.response.data.content;
-        if (errorMessage.email) alert(`아이디는 ${errorMessage.email}`);
-        if (errorMessage.password) alert(`비밀번호는 ${errorMessage.password}`);
+
+        if (!errorMessage) {
+          await warningAlert(error.response.data.message);
+        }
+        if (errorMessage.email && errorMessage.password) {
+          await warningAlert(`아이디, 비밀번호는 ${errorMessage.email}.`);
+        } else if (errorMessage.email) {
+          await warningAlert(`아이디는 ${errorMessage.email}.`);
+        } else if (errorMessage.password) {
+          await warningAlert(`비밀번호는 ${errorMessage.password}.`);
+        }
       }
     },
     [email, navigate, password, setUser],

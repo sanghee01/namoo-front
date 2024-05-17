@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../state/userState";
 import { useSetRecoilState } from "recoil";
 import { plantHistoryState } from "../state/plantState";
+import { warningAlert } from "../components/Alert";
 
 export function useGetPlantHistoryData() {
   const user = useRecoilValue(userState);
@@ -21,7 +22,7 @@ export function useGetPlantHistoryData() {
       );
       setPlantHistory(response.data.content.content);
     } catch (error: any) {
-      alert(error.response.data.message);
+      await warningAlert(error.response.data.message);
     }
   };
   return getPlantHistoryData;

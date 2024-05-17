@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
+import { errorAlert } from "../../components/Alert";
 
 function ErrorPage() {
   useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
@@ -13,7 +14,7 @@ function ErrorPage() {
     const message = searchParams.get("message");
 
     if (message) {
-      alert("로그인에 실패했습니다");
+      errorAlert("로그인에 실패했습니다");
       navigate("/login");
     }
   }, [location, navigate]);

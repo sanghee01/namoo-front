@@ -4,6 +4,7 @@ import { resendMail } from "../../services/resendMailApi";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
+import { warningAlert } from "../../components/Alert";
 
 const ReAuthMail = () => {
   useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
@@ -22,7 +23,7 @@ const ReAuthMail = () => {
   useEffect(() => {
     if (!didMountRef.current && expired === "true") {
       didMountRef.current = true;
-      alert("요청이 만료된 이메일입니다. 다시 이메일 재인증 요청을 해주세요.");
+      warningAlert("요청이 만료된 이메일입니다. 다시 이메일 재인증 요청을 해주세요.");
     }
   }, [expired]);
 
@@ -40,7 +41,7 @@ const ReAuthMail = () => {
       } catch (error: any) {
         const errorMessage = error.response.data.message;
         const errorContent = error.response.data.content;
-        if (errorMessage) alert(errorMessage);
+        if (errorMessage) await warningAlert(errorMessage);
         if (errorContent) setErrorTxt(errorContent);
       }
     },

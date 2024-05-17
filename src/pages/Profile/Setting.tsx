@@ -8,15 +8,16 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { RiFeedbackLine } from "react-icons/ri";
 import useLogout from "../../hooks/useLogout";
 import { useNavigate } from "react-router";
+import { successAlert } from "../../components/Alert";
 
 const Setting = () => {
   const logout = useLogout(); // 로그아웃 함수 볼러오기
   const navigate = useNavigate();
 
-  const handleLogout = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const handleLogout = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
     logout();
-    alert("로그아웃 되었습니다.");
+    await successAlert("로그아웃 되었습니다.");
   };
 
   return (
