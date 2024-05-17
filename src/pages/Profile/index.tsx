@@ -193,7 +193,7 @@ const Profile: React.FC = () => {
           </BtnBox>
         </BtnContainer>
         <QuestBox>
-          <CheckBox>출석체크를 해주세요!</CheckBox>
+        {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
           <CheckBox onClick={handleCheckIn}>
             <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
           </CheckBox>
