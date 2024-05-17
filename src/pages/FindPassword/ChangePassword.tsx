@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { changePassword } from "../../services/changePasswordApi";
 import { useNavigate } from "react-router";
 import { useRedirectIfLoggedIn } from "../../hooks/useRedirectIfLoggedIn";
+import { warningAlert } from "../../components/Alert";
 
 const ChangePassword = () => {
   useRedirectIfLoggedIn(); // 로그인 상태면 /home으로 redirect 되도록 하는 함수
@@ -41,13 +42,13 @@ const ChangePassword = () => {
         setErrorTxt("");
         try {
           const response = await changePassword(password, passwordConfirm, email, uuid);
-          alert(response);
+          await warningAlert(response);
           navigate("/login");
         } catch (error: any) {
           const errorMessage = error.response.data.message;
           const errorContent = error.response.data.content;
-          if (errorMessage) alert(errorMessage);
-          if (errorContent.password) alert(errorContent.password);
+          if (errorMessage) await warningAlert(errorMessage);
+          if (errorContent.password) await warningAlert(errorContent.password);
           if (errorContent.passwordConfirm) setErrorTxt(errorContent.passwordConfirm);
         }
       }

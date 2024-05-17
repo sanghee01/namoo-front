@@ -23,7 +23,7 @@ interface IHistoryData {
   dataList: string[];
 }
 
-const HistoryChart = ({ dataName, min, max, value, dataList, borderColor, backgroundColor }: IHistoryData) => {
+const HistoryLineChart = ({ dataName, min, max, value, dataList, borderColor, backgroundColor }: IHistoryData) => {
   const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
@@ -64,4 +64,4 @@ const HistoryChart = ({ dataName, min, max, value, dataList, borderColor, backgr
   return <Line options={options} data={data} />;
 };
 
-export default HistoryChart;
+export default HistoryLineChart;

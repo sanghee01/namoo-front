@@ -28,6 +28,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
+import { errorAlert, successAlert, Confirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 
@@ -36,7 +37,7 @@ import { usePlantList } from "../../hooks/useGetPlantList";
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
   const plantLevel = useRecoilValue(plantLevelState);
-  const plantImg = useRecoilValue(plantImgState); 
+  const plantImg = useRecoilValue(plantImgState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
 
@@ -60,15 +61,17 @@ const Profile: React.FC = () => {
             },
           });
 
-	// 식물 데이터 가져오기
-      const historyResponse = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant-history/${plantId}`, {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      });
-      console.log(historyResponse.data);
+          // 식물 데이터 가져오기
+          const historyResponse = await axios.get(
+            `${import.meta.env.VITE_SERVER_APIADDRESS}/plant-history/${plantId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            },
+          );
+          console.log(historyResponse.data);
 
-          
           // soilHumidity에 따른 메시지 설정
           const { soilHumidity } = historyResponse.data.content.content[0];
           if (soilHumidity < 500) {
@@ -87,24 +90,25 @@ const Profile: React.FC = () => {
     fetchPlantData();
   }, [plantId, user]);
 
-  const handleDeletePlant = async () => {
-    if (user&& user.accessToken && plantId && window.confirm("정말로 식물을 삭제하시겠습니까?")) {
+  const handleDeletePlant = async (e: React.MouseEvent<EventTarget>) => {
+    e.preventDefault();
+
+    const isConfirmedDelete = await Confirm("정말로 식물을 삭제하시겠습니까?");
+    if (user && user.accessToken && plantId && isConfirmedDelete) {
       try {
         await axios.delete(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant/${plantId}`, {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
           },
         });
-        alert("식물이 삭제되었습니다.");
-        await fetchPlantList(); // 식물 목록을 최신 상태로 업데이트
-        navigate('/myplant');
+        await successAlert("식물이 삭제되었습니다.");
+        navigate("/myplant");
       } catch (error) {
         console.error("식물 삭제 중 에러가 발생했습니다:", error);
-        alert("식물을 삭제하는데 실패했습니다.");
+        await errorAlert("식물을 삭제하는데 실패했습니다.");
       }
     }
   };
-  
 
   return (
     <ProfileBackGround>
@@ -161,9 +165,7 @@ const Profile: React.FC = () => {
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox>
-
-        </QuestBox>
+        <QuestBox></QuestBox>
       </Main>
     </ProfileBackGround>
   );

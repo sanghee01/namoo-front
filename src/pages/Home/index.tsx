@@ -27,6 +27,7 @@ import QuestModal from "../../components/QuestModal";
 import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
+import { successAlert, warningAlert } from "../../components/Alert";
 
 const Home = () => {
   const navegate = useNavigate();
@@ -55,9 +56,9 @@ const Home = () => {
   const handleGiveWater = useCallback(async () => {
     try {
       await giveWaterToPlant(plant.id);
-      alert("물 주기 성공!");
+      await successAlert("물 주기 성공!");
     } catch (error: any) {
-      alert(error.response.data.message);
+      await warningAlert(error.response.data.message);
     }
   }, [plant.id]);
 
