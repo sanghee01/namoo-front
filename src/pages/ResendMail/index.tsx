@@ -56,7 +56,7 @@ const ReAuthMail = () => {
         <p>재인증 요청을 해서 활성화 시켜주세요!</p>
       </Header>
       <SubmitForm onSubmit={handleSubmit}>
-        <input type="email" id="email" placeholder="이메일" onChange={handleChangeEmail} />
+        <input type="email" id="email" placeholder="이메일" onChange={handleChangeEmail} required />
         <button type="submit">이메일 재인증 요청하기</button>
         {messageTxt && <MessageTxt>{messageTxt}</MessageTxt>}
         {errorTxt && <ErrorTxt>{errorTxt}</ErrorTxt>}
