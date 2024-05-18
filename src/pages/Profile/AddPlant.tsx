@@ -5,7 +5,7 @@ import Postcode from "../../components/Postcode";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/userState";
-import { warningAlert } from "../../components/Alert";
+import { warningAlert, successAlert } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 
@@ -61,6 +61,7 @@ const AddPlant = () => {
 
       console.log(response.data); // 성공 응답 처리
       await fetchPlantList(); // 식물 리스트를 최신 상태로 업데이트
+      await successAlert("식물 입양 완료!");
       navigate("/myplant"); // 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
     } catch (error: any) {
       await warningAlert(error.response.data.message);

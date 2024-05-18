@@ -163,12 +163,12 @@ const Profile: React.FC = () => {
         if (response.status === 200) {
           setIsCheckedIn(true); // Recoil 상태 업데이트
           sessionStorage.setItem('isCheckedIn', 'true'); // sessionStorage에 출석체크 상태 저장
-          alert("출석체크가 완료되었습니다.");
+          await successAlert("출석체크가 완료되었습니다.");
           console.log("출석체크 응답:", response);
         }
       } catch (error) {
         console.error("출석체크 중 에러가 발생했습니다:", error);
-        alert("출석체크에 실패했습니다.");
+        await errorAlert("출석체크에 실패했습니다.");
       }
     }
   };
@@ -230,7 +230,7 @@ const Profile: React.FC = () => {
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox isCheckedIn={isCheckedIn}>
+        <QuestBox $isCheckedIn={isCheckedIn}>
     {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
     <CheckBox onClick={!isCheckedIn ? handleCheckIn : undefined}>
         <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />

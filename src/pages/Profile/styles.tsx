@@ -161,7 +161,7 @@ export const BtnBox = styled.div`
 
 // isCheckedIn prop의 타입을 정의합니다.
 export interface QuestBoxProps {
-  isCheckedIn: boolean;
+  $isCheckedIn: boolean;
 }
 
 // QuestBox 컴포넌트에 QuestBoxProps 인터페이스를 사용하여 타입을 지정합니다.
@@ -174,8 +174,8 @@ export const QuestBox = styled.div<QuestBoxProps>`
   margin: 10px;
   justify-content: space-around;
 
-  ${({ isCheckedIn }) =>
-    isCheckedIn &&
+  ${({ $isCheckedIn }) =>
+    $isCheckedIn &&
     `
     cursor: not-allowed; /* 마우스 커서 변경 */
     pointer-events: none; /* 모든 클릭 이벤트 무시 */
