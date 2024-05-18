@@ -29,7 +29,7 @@ import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
-import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
+import { plantLevelState, plantState, todayMessageState } from "../../state/plantState";
 import { isCheckedInState  } from "../../state/checkState";
 import { errorAlert, successAlert, Confirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
@@ -94,6 +94,41 @@ const Profile: React.FC = () => {
     fetchPlantData();
   }, [plantId, user]);
 
+  useEffect(() => {
+    const checkInStatus = async () => {
+      if (user && user.accessToken) { // 로그인 상태 확인
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`, // 사용자 인증 토큰
+            },
+            validateStatus: function (status) {
+              return status === 406 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
+            },
+          });
+  
+          // API 응답으로부터 출석체크 상태를 확인합니다.
+          if (response.status === 406) {
+            setIsCheckedIn(true); // 이미 출석체크를 했다면 상태를 true로 변경
+          } else {
+            setIsCheckedIn(false); // 그렇지 않으면 false로 설정
+          }
+        } catch (error) {
+          console.error("출석체크 상태 확인 중 에러가 발생했습니다:", error);
+        }
+      }
+    };
+  
+    checkInStatus();
+  }, [user]);
+  
+
+  useEffect(() => {
+    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
+    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
+    setIsCheckedIn(storedIsCheckedIn);
+  }, []);
+
   const handleDeletePlant = async (e: React.MouseEvent<EventTarget>) => {
     e.preventDefault();
 
@@ -114,6 +149,7 @@ const Profile: React.FC = () => {
       }
     }
   };
+
   const handleCheckIn = async () => {
     const confirmCheckIn = window.confirm("출석체크하시겠습니까?");
     if (user && user.accessToken && confirmCheckIn) {
@@ -136,11 +172,7 @@ const Profile: React.FC = () => {
       }
     }
   };
-  useEffect(() => {
-    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
-    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
-    setIsCheckedIn(storedIsCheckedIn);
-  }, []);
+  
     
 
   return (
