@@ -31,7 +31,7 @@ import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plantLevelState, plantState, todayMessageState } from "../../state/plantState";
 import { isCheckedInState  } from "../../state/checkState";
-import { errorAlert, successAlert, Confirm } from "../../components/Alert";
+import { errorAlert, successAlert, Confirm, CheckConfirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 
@@ -151,14 +151,15 @@ const Profile: React.FC = () => {
   };
 
   const handleCheckIn = async () => {
-    const confirmCheckIn = window.confirm("출석체크하시겠습니까?");
+    const confirmCheckIn = await CheckConfirm("출석체크하시겠습니까?");
     if (user && user.accessToken && confirmCheckIn) {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
+        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {}, {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
           },
         });
+        
   
         if (response.status === 200) {
           setIsCheckedIn(true); // Recoil 상태 업데이트
