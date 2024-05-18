@@ -40,7 +40,6 @@ import { usePlantList } from "../../hooks/useGetPlantList";
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
   const plantLevel = useRecoilValue(plantLevelState);
-  const plantImg = useRecoilValue(plantImgState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
   const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
@@ -160,7 +159,7 @@ const Profile: React.FC = () => {
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src={plantImg} alt="plant" />
+            <PlantImg src={plant.imgPath} alt="plant" />
             <CharacterName>{plant.name}</CharacterName>
             <Level>Lv.{plantLevel}</Level>
           </ProfileBox>

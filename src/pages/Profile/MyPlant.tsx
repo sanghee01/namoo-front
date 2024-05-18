@@ -7,13 +7,11 @@ import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { useEffect, useCallback, useState } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
-import { plantImgState } from "../../state/plantState";
 
 const MyPlant = () => {
   const getPlantList = usePlantList(); 
   const plantList = useRecoilValue(plantListState);
   const [plant, setPlant] = useRecoilState(plantState);
-  const [plantImg, setPlantImg] = useRecoilState(plantImgState);
   const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,18 +39,6 @@ const MyPlant = () => {
     }
   }, [plant.exp, setPlantLevel]);
 
-  // 식물 리스트와 레벨에 따른 이미지 설정
-  useEffect(() => {
-    if (plantList.length > 0 && plantLevel) {
-      plantList.forEach((plant) => {
-        if (plant.plantType === "상추") {
-          setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
-        } else if (plant.plantType === "딸기") {
-          setPlantImg("/assets/images/strawberry.png");
-        }
-      });
-    }
-  }, [plantList, plantLevel, setPlantImg]);
 
   // plantList 업데이트 확인
   useEffect(() => {
@@ -69,26 +55,30 @@ const MyPlant = () => {
       uuid: selectedPlant.uuid,
       giveWater: selectedPlant.giveWater,
       createDate: selectedPlant.createDate,
+      imgPath: selectedPlant.imgPath,
     });
   }, [plantList, setPlant]);
 
-  const renderPlantOrAddLink = useCallback((index : number) => {
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
-    if (plantList.length > index) {
-      const plant = plantList[index];
-      return (
-        <PlantCard onClick={() => handlePickPlant(index)} key={index}>
-          <Link to={`/profile?plantId=${plant.id}`}>
-            <ImgBox>
-              <PlantImg src={plantImg} alt="plant" />
-              <CharacterName>{plant.name}</CharacterName>
-              <Level>Lv.{plantLevel}</Level>
-            </ImgBox>
-          </Link>
-        </PlantCard>
-      );
+  const renderPlantOrAddLink = useCallback(
+    (index: number) => {
+      if (isLoading) {
+        return <div>Loading...</div>;
+      }
+  
+      if (plantList.length > index) {
+        const plant = plantList[index];
+  
+        return (
+          <PlantCard onClick={() => handlePickPlant(index)} key={index}>
+            <Link to={`/profile?plantId=${plant.id}`}>
+              <ImgBox>
+                <PlantImg src={plant.imgPath} alt="plant" />
+                <CharacterName>{plant.name}</CharacterName>
+                <Level>Lv.{plantLevel}</Level>
+              </ImgBox>
+            </Link>
+          </PlantCard>
+        );
     } else {
       return (
         <PlantCard key={index}>
@@ -98,7 +88,7 @@ const MyPlant = () => {
         </PlantCard>
       );
     }
-  }, [plantList, plantImg, plantLevel, handlePickPlant]);
+  }, [plantList, plantLevel, handlePickPlant]);
 
   return (
     <MyPlantBackGround>
