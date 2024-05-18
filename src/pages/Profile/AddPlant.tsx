@@ -6,6 +6,8 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/userState";
 import { warningAlert } from "../../components/Alert";
+import { usePlantList } from "../../hooks/useGetPlantList";
+
 
 const AddPlant = () => {
   // 상태 선언: 주소, 우편번호, 상세주소
@@ -20,6 +22,9 @@ const AddPlant = () => {
 
   // Recoil을 통해 userState에서 사용자 정보 가져오기
   const user = useRecoilValue(userState);
+  const fetchPlantList = usePlantList(); // usePlantList 훅 사용
+
+  
 
   useEffect(() => {
     if (user) {
@@ -55,6 +60,7 @@ const AddPlant = () => {
       });
 
       console.log(response.data); // 성공 응답 처리
+      await fetchPlantList(); // 식물 리스트를 최신 상태로 업데이트
       navigate("/myplant"); // 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
     } catch (error: any) {
       await warningAlert(error.response.data.message);

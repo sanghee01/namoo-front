@@ -161,11 +161,12 @@ export const BtnBox = styled.div`
 
 export const QuestBox = styled.div`
   display: flex;
+  flex-direction: row;
   height: 22%;
   border-radius: 30px;
   background-color: #feefc6;
   margin: 10px;
-  justify-content: center;
+  justify-content: space-around;
 
   &:hover {
     border: 2px solid #f0e68c;
@@ -173,6 +174,21 @@ export const QuestBox = styled.div`
   }
 
   @media screen and (max-width: 600px) {
-    padding: 10px;
+    padding: 20px;
   }
 `;
+
+export const CheckBox = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+`
+
+export const CheckImg = styled.img`
+  height: 100px;
+  width: 100px;
+`
+
+
+

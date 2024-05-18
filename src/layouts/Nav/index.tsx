@@ -11,9 +11,12 @@ import { plantState } from "../../state/plantState";
 const Nav = () => {
   const user = useRecoilValue(userState);
   const plant = useRecoilValue(plantState);
+  
+  // plant.id가 존재하는 경우, URL에 plantId 쿼리 파라미터를 추가
+  const profileLink = plant.id ? `/profile?plantId=${plant.id}` : "/myplant";
+
   return (
     <>
-      {/* 로그인 전 페이지면 탭 안보이게, 식물 데이터가 없을 때는 Tabs 배경색깔만 보이도록 */}
       {user && plant.name ? (
         <Tabs>
           <Tab>
@@ -29,13 +32,14 @@ const Nav = () => {
             </Link>
           </Tab>
           <Tab>
-            <Link to="/history?page=0?sort=temp">
+            <Link to="/history?page=0&sort=temp">
               <BsBarChartFill size="40" />
               <span>기록</span>
             </Link>
           </Tab>
           <Tab>
-            <Link to="/myplant">
+            {/* plant.id의 존재 여부에 따라 다른 링크를 사용 */}
+            <Link to={profileLink}>
               <ImLeaf size="40" />
               <span>프로필</span>
             </Link>
@@ -43,7 +47,7 @@ const Nav = () => {
         </Tabs>
       ) : user && !plant.name ? (
         <Footer>
-          <img src="../public/assets/images/logo1.png" />
+          <img src="../assets/images/logo1.png" alt="logo" />
         </Footer>
       ) : (
         <></>

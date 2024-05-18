@@ -1,5 +1,7 @@
-import { IoMdBookmarks, IoIosTrophy } from "react-icons/io";
-import { MdArrowBackIos, MdDeleteForever } from "react-icons/md";
+import { FaBookBookmark } from "react-icons/fa6";
+import { FaTrophy } from "react-icons/fa";
+import { IoChevronBackOutline } from "react-icons/io5";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import {
   ProfileBackGround,
@@ -19,6 +21,8 @@ import {
   IconBox,
   QuestBox,
   Container,
+  CheckBox,
+  CheckImg
 } from "./styles";
 import React, { useEffect } from "react";
 import axios from "axios";
@@ -26,7 +30,12 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
 import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
+import { isCheckedInState  } from "../../state/checkState";
 import { errorAlert, successAlert, Confirm } from "../../components/Alert";
+import { usePlantList } from "../../hooks/useGetPlantList";
+
+
+
 
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
@@ -34,6 +43,8 @@ const Profile: React.FC = () => {
   const plantImg = useRecoilValue(plantImgState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
+  const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,6 +52,8 @@ const Profile: React.FC = () => {
   // URL에서 plantId 쿼리 파라미터 읽기
   const queryParams = new URLSearchParams(location.search);
   const plantId = queryParams.get("plantId");
+  const fetchPlantList = usePlantList(); // 식물 목록을 가져오는 훅
+
 
   useEffect(() => {
     const fetchPlantData = async () => {
@@ -94,6 +107,7 @@ const Profile: React.FC = () => {
           },
         });
         await successAlert("식물이 삭제되었습니다.");
+        await fetchPlantList(); // 식물 목록을 최신 상태로 업데이트
         navigate("/myplant");
       } catch (error) {
         console.error("식물 삭제 중 에러가 발생했습니다:", error);
@@ -101,18 +115,46 @@ const Profile: React.FC = () => {
       }
     }
   };
+  const handleCheckIn = async () => {
+    const confirmCheckIn = window.confirm("출석체크하시겠습니까?");
+    if (user && user.accessToken && confirmCheckIn) {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
+  
+        if (response.status === 200) {
+          setIsCheckedIn(true); // Recoil 상태 업데이트
+          sessionStorage.setItem('isCheckedIn', 'true'); // sessionStorage에 출석체크 상태 저장
+          alert("출석체크가 완료되었습니다.");
+          console.log("출석체크 응답:", response);
+        }
+      } catch (error) {
+        console.error("출석체크 중 에러가 발생했습니다:", error);
+        alert("출석체크에 실패했습니다.");
+      }
+    }
+  };
+  useEffect(() => {
+    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
+    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
+    setIsCheckedIn(storedIsCheckedIn);
+  }, []);
+    
 
   return (
     <ProfileBackGround>
       <Header>
         <Container>
           <Link to="/myplant">
-            <MdArrowBackIos size="30" />
+            <IoChevronBackOutline size="30" />
           </Link>
-          <Text>식물이야기</Text>
+          <Text style={{ paddingLeft: '10px' }}>식물이야기</Text>
         </Container>
         <SettingBox>
-          <MdDeleteForever size="40" onClick={handleDeletePlant} />
+            <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
         </SettingBox>
       </Header>
       <Main>
@@ -142,7 +184,7 @@ const Profile: React.FC = () => {
                 <Text>식물도감</Text>
               </TextBox>
               <IconBox>
-                <IoMdBookmarks color="#a8511c" size="80" />
+                <FaBookBookmark color="#a8511c" size="80" />
               </IconBox>
             </Link>
           </BtnBox>
@@ -152,12 +194,17 @@ const Profile: React.FC = () => {
                 <Text>명예의 전당</Text>
               </TextBox>
               <IconBox>
-                <IoIosTrophy color="#ffc400" size="80" />
+                <FaTrophy color="#ffc400" size="80" />
               </IconBox>
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox></QuestBox>
+        <QuestBox>
+        {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
+          <CheckBox onClick={handleCheckIn}>
+            <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
+          </CheckBox>
+        </QuestBox>
       </Main>
     </ProfileBackGround>
   );
