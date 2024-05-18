@@ -22,7 +22,7 @@ import {
   QuestBox,
   Container,
   CheckBox,
-  CheckImg
+  CheckImg,
 } from "./styles";
 import React, { useEffect } from "react";
 import axios from "axios";
@@ -230,12 +230,12 @@ const Profile: React.FC = () => {
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox>
-        {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
-          <CheckBox onClick={handleCheckIn}>
-            <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
-          </CheckBox>
-        </QuestBox>
+        <QuestBox isCheckedIn={isCheckedIn}>
+    {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
+    <CheckBox onClick={!isCheckedIn ? handleCheckIn : undefined}>
+        <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
+    </CheckBox>
+</QuestBox>
       </Main>
     </ProfileBackGround>
   );
