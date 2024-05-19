@@ -113,7 +113,9 @@ export const DetailBox = styled.div`
   }
 `;
 export const PlantImg = styled.img`
-  height: 200px;
+  width: 100%;
+  height: auto; 
+  objectFit: contain;
 `;
 
 export const CharacterName = styled.span`
