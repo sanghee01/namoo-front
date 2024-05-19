@@ -45,7 +45,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   return (
     <>
       {!isDeleted && (
-        <NotificationContainer key={id} isRead={isRead}>
+        <NotificationContainer key={id} $isread={isRead ? 1 : 0}>
           <div onClick={handleClickNotification}>
             <h4>{notificationType}</h4>
             <Content>
@@ -62,16 +62,16 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
 export default NotificationModal;
 
-const NotificationContainer = styled.div<{ isRead: boolean }>`
+const NotificationContainer = styled.div<{ $isread: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  background-color: ${(props) => (props.isRead ? "#e0e0e079" : "#e1f9d2")};
+  background-color: ${(props) => (props.$isread ? "#e0e0e079" : "#e1f9d2")};
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 8px;
-  color: ${(props) => (props.isRead ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)")};
+  color: ${(props) => (props.$isread ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)")};
 
   & > div {
     display: flex;
@@ -99,22 +99,4 @@ const Content = styled.div`
   & span {
     font-size: 0.7rem;
   }
-`;
-
-const AcceptBtn = styled.span`
-  padding: 4px 6px;
-  background-color: ${(props) => props.color};
-  border-radius: 7px;
-  &:hover {
-    cursor: pointer;
-    filter: contrast(80%);
-  }
-`;
-
-const ProgressBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  width: 15%;
 `;

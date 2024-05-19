@@ -3,8 +3,8 @@ import { atom } from "recoil";
 interface Notification {
   id: number;
   description: string;
-  link: number;
-  read: boolean;
+  link: string;
+  isRead: boolean;
   notificationType: string;
   createdDate: string;
 }

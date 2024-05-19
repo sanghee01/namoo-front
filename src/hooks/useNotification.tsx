@@ -31,8 +31,7 @@ export function usePatchNotification() {
 
   const patchNotifiction = async (notificationId: number) => {
     try {
-      console.log("accessToken", accessToken);
-      const response = await axios.patch(
+      await axios.patch(
         `${import.meta.env.VITE_SERVER_APIADDRESS}/notification/${notificationId}`,
         {},
         {
@@ -41,8 +40,6 @@ export function usePatchNotification() {
           },
         },
       );
-
-      console.log(response);
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }

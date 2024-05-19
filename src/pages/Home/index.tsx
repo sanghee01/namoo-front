@@ -132,7 +132,7 @@ const Home = () => {
               </div>
             </header>
             <div>
-              {isThereNotifications ? (
+              {isThereNotifications && notificationList.length > 0 ? (
                 notificationList.map((notification) => {
                   return (
                     <NotificationModal
