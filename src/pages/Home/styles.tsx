@@ -163,7 +163,7 @@ export const SideBar = styled.aside`
   }
 `;
 
-export const Modal = styled.div`
+export const QuestModalBox = styled.div`
   position: fixed;
   padding: 1rem;
   top: 20%;
@@ -187,7 +187,37 @@ export const Modal = styled.div`
   }
 `;
 
-export const ModalCloseBtn = styled.div`
+export const NotificationModalBox = styled(QuestModalBox)`
+  top: 8%;
+  left: 10%;
+  width: 80%;
+  height: 30%;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
+  border: 5px solid #eae5dc;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & header {
+    display: flex;
+    justify-content: space-between;
+
+    & svg {
+      font-size: 25px;
+    }
+
+    & h3 {
+      text-align: center;
+      color: #53390a;
+    }
+  }
+`;
+
+export const QuestModalCloseBtn = styled.div`
   text-align: center;
   padding: 12px 0px;
   border-radius: 10px;
