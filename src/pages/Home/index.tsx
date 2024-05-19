@@ -17,6 +17,7 @@ import {
   SideBar,
   CharacterName,
   NotificationModalBox,
+  NoNotification,
   QuestModalBox,
   QuestModalCloseBtn,
 } from "./styles";
@@ -30,7 +31,7 @@ import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
-import { useGetNotification } from "../../hooks/useNotification";
+import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNotification";
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
 
@@ -38,6 +39,7 @@ const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
   const getNotification = useGetNotification();
+  const deleteAllNotifiction = useDeleteAllNotification();
 
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
@@ -45,10 +47,9 @@ const Home = () => {
   const questList = useRecoilValue(questState);
   const notificationList = useRecoilValue(notificationState);
 
-  console.log("알림", notificationList);
   const [isOpenQuest, setIsOpenQuest] = useState(false);
   const [isOpenNotification, setIsNotification] = useState(false);
-
+  const [isThereNotifications, setIsThereNotifications] = useState(true);
   // 퀘스트 모달 열기
   const handleOpenQuest = () => {
     setIsOpenQuest(true);
@@ -69,6 +70,12 @@ const Home = () => {
   // 알림창 닫기
   const handleCloseNotificaition = () => {
     setIsNotification(false);
+  };
+
+  // 알림 전체 삭제
+  const handleDeleteAllNotification = () => {
+    deleteAllNotifiction();
+    setIsThereNotifications(false); // 삭제되면 바로 안보이도록 설정하기 위함
   };
 
   // 원격 물 주기
@@ -119,22 +126,29 @@ const Home = () => {
           <NotificationModalBox>
             <header>
               <h3>알림</h3>
-              <IoClose onClick={handleCloseNotificaition} />
+              <div>
+                <span onClick={handleDeleteAllNotification}>전체 삭제</span>
+                <IoClose onClick={handleCloseNotificaition} />
+              </div>
             </header>
             <div>
-              {notificationList.map((notification) => {
-                return (
-                  <NotificationModal
-                    key={notification.id}
-                    id={notification.id}
-                    description={notification.description}
-                    link={notification.link}
-                    isRead={notification.isRead}
-                    notificationType={notification.notificationType}
-                    createdDate={notification.createdDate}
-                  />
-                );
-              })}
+              {isThereNotifications ? (
+                notificationList.map((notification) => {
+                  return (
+                    <NotificationModal
+                      key={notification.id}
+                      id={notification.id}
+                      description={notification.description}
+                      link={notification.link}
+                      isRead={notification.isRead}
+                      notificationType={notification.notificationType}
+                      createdDate={notification.createdDate}
+                    />
+                  );
+                })
+              ) : (
+                <NoNotification>알림이 없습니다.</NoNotification>
+              )}
             </div>
           </NotificationModalBox>
         )}

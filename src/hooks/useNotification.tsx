@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userState } from "../state/userState";
-import { warningAlert } from "../components/Alert";
+import { successAlert, warningAlert } from "../components/Alert";
 import { notificationState } from "../state/notificationState";
 
 export function useGetNotification() {
@@ -27,8 +27,8 @@ export function useGetNotification() {
 
 export function usePatchNotification() {
   const user = useRecoilValue(userState);
-
   const accessToken = user?.accessToken;
+
   const patchNotifiction = async (notificationId: number) => {
     try {
       console.log("accessToken", accessToken);
@@ -48,4 +48,42 @@ export function usePatchNotification() {
     }
   };
   return patchNotifiction;
+}
+
+export function useDeleteNotification() {
+  const user = useRecoilValue(userState);
+  const accessToken = user?.accessToken;
+
+  const deleteNotifiction = async (notificationId: number) => {
+    try {
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_APIADDRESS}/notification/${notificationId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      successAlert(response.data.message);
+    } catch (error: any) {
+      await warningAlert(error.response.data.message);
+    }
+  };
+  return deleteNotifiction;
+}
+
+export function useDeleteAllNotification() {
+  const user = useRecoilValue(userState);
+  const accessToken = user?.accessToken;
+
+  const deleteAllNotifiction = async () => {
+    try {
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_APIADDRESS}/notification`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      successAlert(response.data.message);
+    } catch (error: any) {
+      await warningAlert(error.response.data.message);
+    }
+  };
+  return deleteAllNotifiction;
 }

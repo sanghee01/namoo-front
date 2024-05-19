@@ -205,16 +205,42 @@ export const NotificationModalBox = styled(QuestModalBox)`
   & header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 
     & svg {
-      font-size: 25px;
+      font-size: 1.7rem;
     }
 
     & h3 {
       text-align: center;
       color: #53390a;
+      margin: 0;
+    }
+
+    & > div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    & span {
+      font-size: 0.9rem;
+      padding: 3px 7px;
+      background-color: #ffe0e0;
+      border-radius: 5px;
+      color: #8a3a3a;
+      font-weight: 600;
+
+      &:hover {
+        filter: contrast(80%);
+      }
     }
   }
+`;
+
+export const NoNotification = styled.div`
+  color: rgba(0, 0, 0, 0.7);
 `;
 
 export const QuestModalCloseBtn = styled.div`

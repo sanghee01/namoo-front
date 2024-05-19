@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import { usePatchNotification } from "../hooks/useNotification";
+import { useDeleteNotification, usePatchNotification } from "../hooks/useNotification";
+import { FaTrashAlt } from "react-icons/fa";
+import { useCallback, useState } from "react";
 
 interface NotificationModalProps {
   id: number;
@@ -23,9 +24,10 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const navegate = useNavigate();
   const date = new Date(createdDate);
   const patchNotification = usePatchNotification();
-  const handleClickNotification = (e: React.MouseEvent<EventTarget>) => {
-    e.preventDefault();
+  const deleteNotification = useDeleteNotification();
+  const [isDeleted, setIsDeleted] = useState(false);
 
+  const handleClickNotification = useCallback(() => {
     patchNotification(id); // 알림 읽음 요청
 
     if (link === "history") {
@@ -33,25 +35,36 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
     } else {
       navegate("/home");
     }
-  };
+  }, [id, link, navegate, patchNotification]);
 
-  if (link)
-    return (
-      <NotificationContainer key={id} isRead={isRead} onClick={handleClickNotification}>
-        <h4>{notificationType}</h4>
-        <Content>
-          <p>{description}</p>
-          <span>{date.toLocaleString()}</span>
-        </Content>
-      </NotificationContainer>
-    );
+  const handleDeleteNotification = useCallback(() => {
+    deleteNotification(id); // 알림 삭제 요청
+    setIsDeleted(true);
+  }, [deleteNotification, id]);
+
+  return (
+    <>
+      {!isDeleted && (
+        <NotificationContainer key={id} isRead={isRead}>
+          <div onClick={handleClickNotification}>
+            <h4>{notificationType}</h4>
+            <Content>
+              <p>{description}</p>
+              <span>{date.toLocaleString()}</span>
+            </Content>
+          </div>
+          {isRead && <FaTrashAlt onClick={handleDeleteNotification} />}
+        </NotificationContainer>
+      )}
+    </>
+  );
 };
 
 export default NotificationModal;
 
 const NotificationContainer = styled.div<{ isRead: boolean }>`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
   background-color: ${(props) => (props.isRead ? "#e0e0e079" : "#e1f9d2")};
@@ -59,6 +72,17 @@ const NotificationContainer = styled.div<{ isRead: boolean }>`
   padding: 12px;
   margin-bottom: 8px;
   color: ${(props) => (props.isRead ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)")};
+
+  & > div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 95%;
+  }
+
+  & svg {
+    font-size: 1.1rem;
+  }
 
   &:hover {
     cursor: pointer;
