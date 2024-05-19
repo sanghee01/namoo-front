@@ -27,19 +27,20 @@ import { plantImgState } from "../../state/plantState";
 import { useCallback, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
-import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
 import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNotification";
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
+import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
 
 const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
   const getNotification = useGetNotification();
   const deleteAllNotifiction = useDeleteAllNotification();
+  const giveWater = usePlantGiveWater();
 
   const plant = useRecoilValue(plantState);
   const plantImg = useRecoilValue(plantImgState);
@@ -81,7 +82,7 @@ const Home = () => {
   // 원격 물 주기
   const handleGiveWater = useCallback(async () => {
     try {
-      await giveWaterToPlant(plant.id);
+      await giveWater(plant.id);
       await successAlert("물 주기 성공!");
     } catch (error: any) {
       await warningAlert(error.response.data.message);
