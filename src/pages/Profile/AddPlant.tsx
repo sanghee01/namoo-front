@@ -75,18 +75,35 @@ const AddPlant = () => {
       </Header>
       <SubText>01 식물 선택</SubText>
       <SelectPlant>
-        <PlantCard onClick={() => setSelectedPlant("1")} $isSelected={selectedPlant === "1"}>
-          <ImgBox>
-            <PlantImg src="/assets/images/plant.png" alt="plant" />
-            <Name>상추</Name>
-          </ImgBox>
-        </PlantCard>
-        <PlantCard onClick={() => setSelectedPlant("4")} $isSelected={selectedPlant === "4"}>
-          <ImgBox>
-            <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
-            <Name>딸기</Name>
-          </ImgBox>
-        </PlantCard>
+        <PlantCardBox>
+          <PlantCard onClick={() => setSelectedPlant("1")} $isSelected={selectedPlant === "1"}>
+            <ImgBox>
+              <PlantImg src="/assets/images/plant.png" alt="plant" />
+              <Name>상추</Name>
+            </ImgBox>
+          </PlantCard>
+          <PlantCard onClick={() => setSelectedPlant("2")} $isSelected={selectedPlant === "2"}>
+              <ImgBox>
+                <StrawberryImg src="/assets/images/onion.png" alt="onion" />
+                <Name>양파</Name>
+              </ImgBox>
+          </PlantCard>
+          </PlantCardBox>
+          <PlantCardBox>
+            <PlantCard onClick={() => setSelectedPlant("3")} $isSelected={selectedPlant === "3"}>
+              <ImgBox>
+                <StrawberryImg src="/assets/images/greenOnion.png" alt="greenOnion" />
+                <Name>대파</Name>
+              </ImgBox>
+            </PlantCard>
+            <PlantCard onClick={() => setSelectedPlant("4")} $isSelected={selectedPlant === "4"}>
+              <ImgBox>
+                <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
+                <Name>딸기</Name>
+              </ImgBox>
+            </PlantCard>
+          </PlantCardBox>
+        
       </SelectPlant>
       <NameContainer>
         <NameBox>
@@ -134,6 +151,7 @@ export const AddPlantBackGround = styled.div`
   background-color: #fffaed;
   background-size: cover;
   height: 100%;
+  overflow: auto;
 `;
 
 export const Header = styled.div`
@@ -167,18 +185,19 @@ export const SubText = styled.p`
 
 export const SelectPlant = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   padding: 5px;
 `;
+
+export const PlantCardBox = styled.div`
+  display : flex;
+  flex-direction : row;
+`
 
 export const PlantCard = styled.div<{ $isSelected: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 60%;
   border-radius: 30px;
   background-color: #feefc6;
   margin: 10px;
