@@ -3,6 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { IoIosWater } from "react-icons/io";
 import { BsCameraFill } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 import {
   HomeBackGround,
   Header,
@@ -15,8 +16,10 @@ import {
   LevelImg,
   SideBar,
   CharacterName,
-  Modal,
-  ModalCloseBtn,
+  NotificationModalBox,
+  NoNotification,
+  QuestModalBox,
+  QuestModalCloseBtn,
 } from "./styles";
 import { plantLevelState, plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
@@ -27,27 +30,50 @@ import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
+import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNotification";
+import NotificationModal from "../../components/NotificationModal";
+import { notificationState } from "../../state/notificationState";
 
 const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
+  const getNotification = useGetNotification();
+  const deleteAllNotifiction = useDeleteAllNotification();
 
   const plant = useRecoilValue(plantState);
   const plantLevel = useRecoilValue(plantLevelState);
   const questList = useRecoilValue(questState);
+  const notificationList = useRecoilValue(notificationState);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  console.log("questList", questList);
-
+  const [isOpenQuest, setIsOpenQuest] = useState(false);
+  const [isOpenNotification, setIsNotification] = useState(false);
+  const [isThereNotifications, setIsThereNotifications] = useState(true);
   // 퀘스트 모달 열기
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
+  const handleOpenQuest = () => {
+    setIsOpenQuest(true);
     getQuest();
   };
 
   // 퀘스트 모달 닫기
   const handleCloseModal = () => {
-    setIsOpenModal(false);
+    setIsOpenQuest(false);
+  };
+
+  // 알림창 열기
+  const handleOpenNotificaition = () => {
+    setIsNotification(true);
+    getNotification();
+  };
+
+  // 알림창 닫기
+  const handleCloseNotificaition = () => {
+    setIsNotification(false);
+  };
+
+  // 알림 전체 삭제
+  const handleDeleteAllNotification = () => {
+    deleteAllNotifiction();
+    setIsThereNotifications(false); // 삭제되면 바로 안보이도록 설정하기 위함
   };
 
   // 원격 물 주기
@@ -67,7 +93,7 @@ const Home = () => {
           <FaHeart color="#b72020" size="30" />
           <progress value={plant.exp} max="400"></progress>
         </FriendshipBar>
-        <BiSolidBell color="#ffc400" size="40" />
+        <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="40" />
       </Header>
       <Main>
         <CharacterBox>
@@ -82,7 +108,7 @@ const Home = () => {
         </CharacterBox>
         <SideBar>
           <div>
-            <FaBook onClick={handleOpenModal} color="#a8511c" size="40" />
+            <FaBook onClick={handleOpenQuest} color="#a8511c" size="40" />
             <span>퀘스트</span>
           </div>
           <div onClick={handleGiveWater}>
@@ -94,8 +120,38 @@ const Home = () => {
             <span>질병확인</span>
           </div>
         </SideBar>
-        {isOpenModal && (
-          <Modal>
+        {isOpenNotification && (
+          <NotificationModalBox>
+            <header>
+              <h3>알림</h3>
+              <div>
+                <span onClick={handleDeleteAllNotification}>전체 삭제</span>
+                <IoClose onClick={handleCloseNotificaition} />
+              </div>
+            </header>
+            <div>
+              {isThereNotifications && notificationList.length > 0 ? (
+                notificationList.map((notification) => {
+                  return (
+                    <NotificationModal
+                      key={notification.id}
+                      id={notification.id}
+                      description={notification.description}
+                      link={notification.link}
+                      isRead={notification.isRead}
+                      notificationType={notification.notificationType}
+                      createdDate={notification.createdDate}
+                    />
+                  );
+                })
+              ) : (
+                <NoNotification>알림이 없습니다.</NoNotification>
+              )}
+            </div>
+          </NotificationModalBox>
+        )}
+        {isOpenQuest && (
+          <QuestModalBox>
             <h3>주간 퀘스트</h3>
             <div>
               {questList.map((quest) => {
@@ -114,8 +170,8 @@ const Home = () => {
                 );
               })}
             </div>
-            <ModalCloseBtn onClick={handleCloseModal}>닫기</ModalCloseBtn>
-          </Modal>
+            <QuestModalCloseBtn onClick={handleCloseModal}>닫기</QuestModalCloseBtn>
+          </QuestModalBox>
         )}
       </Main>
     </HomeBackGround>
