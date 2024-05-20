@@ -30,6 +30,20 @@ export async function Confirm(text: string) {
 
   return result.isConfirmed;
 }
+
+export async function CheckConfirm(text: string) {
+  const result = await Swal.fire({
+    title: "",
+    text: text,
+    icon: "question",
+    confirmButtonText: "확인",
+    cancelButtonText: "취소",
+    showCancelButton: true,
+  });
+
+  return result.isConfirmed;
+}
+
 export async function successAlert(text: string) {
   await Swal.fire({
     title: "성공!",

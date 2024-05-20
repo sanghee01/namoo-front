@@ -5,7 +5,9 @@ import Postcode from "../../components/Postcode";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../state/userState";
-import { warningAlert } from "../../components/Alert";
+import { warningAlert, successAlert } from "../../components/Alert";
+import { usePlantList } from "../../hooks/useGetPlantList";
+
 
 const AddPlant = () => {
   // 상태 선언: 주소, 우편번호, 상세주소
@@ -20,6 +22,9 @@ const AddPlant = () => {
 
   // Recoil을 통해 userState에서 사용자 정보 가져오기
   const user = useRecoilValue(userState);
+  const fetchPlantList = usePlantList(); // usePlantList 훅 사용
+
+  
 
   useEffect(() => {
     if (user) {
@@ -55,6 +60,8 @@ const AddPlant = () => {
       });
 
       console.log(response.data); // 성공 응답 처리
+      await fetchPlantList(); // 식물 리스트를 최신 상태로 업데이트
+      await successAlert("식물 입양 완료!");
       navigate("/myplant"); // 성공 후 처리 로직 (예: 알림 표시, 페이지 이동 등)
     } catch (error: any) {
       await warningAlert(error.response.data.message);
@@ -68,18 +75,35 @@ const AddPlant = () => {
       </Header>
       <SubText>01 식물 선택</SubText>
       <SelectPlant>
-        <PlantCard onClick={() => setSelectedPlant("1")} $isSelected={selectedPlant === "1"}>
-          <ImgBox>
-            <PlantImg src="/assets/images/plant.png" alt="plant" />
-            <Name>상추</Name>
-          </ImgBox>
-        </PlantCard>
-        <PlantCard onClick={() => setSelectedPlant("4")} $isSelected={selectedPlant === "4"}>
-          <ImgBox>
-            <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
-            <Name>딸기</Name>
-          </ImgBox>
-        </PlantCard>
+        <PlantCardBox>
+          <PlantCard onClick={() => setSelectedPlant("1")} $isSelected={selectedPlant === "1"}>
+            <ImgBox>
+              <PlantImg src="/assets/images/plant.png" alt="plant" />
+              <Name>상추</Name>
+            </ImgBox>
+          </PlantCard>
+          <PlantCard onClick={() => setSelectedPlant("2")} $isSelected={selectedPlant === "2"}>
+              <ImgBox>
+                <StrawberryImg src="/assets/images/onion.png" alt="onion" />
+                <Name>양파</Name>
+              </ImgBox>
+          </PlantCard>
+          </PlantCardBox>
+          <PlantCardBox>
+            <PlantCard onClick={() => setSelectedPlant("3")} $isSelected={selectedPlant === "3"}>
+              <ImgBox>
+                <StrawberryImg src="/assets/images/greenOnion.png" alt="greenOnion" />
+                <Name>대파</Name>
+              </ImgBox>
+            </PlantCard>
+            <PlantCard onClick={() => setSelectedPlant("4")} $isSelected={selectedPlant === "4"}>
+              <ImgBox>
+                <StrawberryImg src="/assets/images/strawberry.png" alt="strawberry" />
+                <Name>딸기</Name>
+              </ImgBox>
+            </PlantCard>
+          </PlantCardBox>
+        
       </SelectPlant>
       <NameContainer>
         <NameBox>
@@ -127,6 +151,7 @@ export const AddPlantBackGround = styled.div`
   background-color: #fffaed;
   background-size: cover;
   height: 100%;
+  overflow: auto;
 `;
 
 export const Header = styled.div`
@@ -160,18 +185,19 @@ export const SubText = styled.p`
 
 export const SelectPlant = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   padding: 5px;
 `;
+
+export const PlantCardBox = styled.div`
+  display : flex;
+  flex-direction : row;
+`
 
 export const PlantCard = styled.div<{ $isSelected: boolean }>`
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: 60%;
   border-radius: 30px;
   background-color: #feefc6;
   margin: 10px;

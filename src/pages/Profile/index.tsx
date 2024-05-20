@@ -1,5 +1,7 @@
-import { IoMdBookmarks, IoIosTrophy } from "react-icons/io";
-import { MdArrowBackIos, MdDeleteForever } from "react-icons/md";
+import { FaBookBookmark } from "react-icons/fa6";
+import { FaTrophy } from "react-icons/fa";
+import { IoChevronBackOutline } from "react-icons/io5";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import {
   ProfileBackGround,
@@ -19,21 +21,29 @@ import {
   IconBox,
   QuestBox,
   Container,
+  CheckBox,
+  CheckImg,
 } from "./styles";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
-import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
-import { errorAlert, successAlert, Confirm } from "../../components/Alert";
+import { plantLevelState, plantState, todayMessageState } from "../../state/plantState";
+import { isCheckedInState  } from "../../state/checkState";
+import { errorAlert, successAlert, Confirm, CheckConfirm } from "../../components/Alert";
+import { usePlantList } from "../../hooks/useGetPlantList";
+
+
+
 
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
   const plantLevel = useRecoilValue(plantLevelState);
-  const plantImg = useRecoilValue(plantImgState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
+  const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,6 +51,8 @@ const Profile: React.FC = () => {
   // URL에서 plantId 쿼리 파라미터 읽기
   const queryParams = new URLSearchParams(location.search);
   const plantId = queryParams.get("plantId");
+  const fetchPlantList = usePlantList(); // 식물 목록을 가져오는 훅
+
 
   useEffect(() => {
     const fetchPlantData = async () => {
@@ -82,6 +94,41 @@ const Profile: React.FC = () => {
     fetchPlantData();
   }, [plantId, user]);
 
+  useEffect(() => {
+    const checkInStatus = async () => {
+      if (user && user.accessToken) { // 로그인 상태 확인
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`, // 사용자 인증 토큰
+            },
+            validateStatus: function (status) {
+              return status === 406 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
+            },
+          });
+  
+          // API 응답으로부터 출석체크 상태를 확인합니다.
+          if (response.status === 406) {
+            setIsCheckedIn(true); // 이미 출석체크를 했다면 상태를 true로 변경
+          } else {
+            setIsCheckedIn(false); // 그렇지 않으면 false로 설정
+          }
+        } catch (error) {
+          console.error("출석체크 상태 확인 중 에러가 발생했습니다:", error);
+        }
+      }
+    };
+  
+    checkInStatus();
+  }, [user]);
+  
+
+  useEffect(() => {
+    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
+    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
+    setIsCheckedIn(storedIsCheckedIn);
+  }, []);
+
   const handleDeletePlant = async (e: React.MouseEvent<EventTarget>) => {
     e.preventDefault();
 
@@ -94,6 +141,7 @@ const Profile: React.FC = () => {
           },
         });
         await successAlert("식물이 삭제되었습니다.");
+        await fetchPlantList(); // 식물 목록을 최신 상태로 업데이트
         navigate("/myplant");
       } catch (error) {
         console.error("식물 삭제 중 에러가 발생했습니다:", error);
@@ -102,23 +150,49 @@ const Profile: React.FC = () => {
     }
   };
 
+  const handleCheckIn = async () => {
+    const confirmCheckIn = await CheckConfirm("출석체크하시겠습니까?");
+    if (user && user.accessToken && confirmCheckIn) {
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {}, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
+        
+  
+        if (response.status === 200) {
+          setIsCheckedIn(true); // Recoil 상태 업데이트
+          sessionStorage.setItem('isCheckedIn', 'true'); // sessionStorage에 출석체크 상태 저장
+          await successAlert("출석체크가 완료되었습니다.");
+          console.log("출석체크 응답:", response);
+        }
+      } catch (error) {
+        console.error("출석체크 중 에러가 발생했습니다:", error);
+        await errorAlert("출석체크에 실패했습니다.");
+      }
+    }
+  };
+  
+    
+
   return (
     <ProfileBackGround>
       <Header>
         <Container>
           <Link to="/myplant">
-            <MdArrowBackIos size="30" />
+            <IoChevronBackOutline size="30" />
           </Link>
-          <Text>식물이야기</Text>
+          <Text style={{ paddingLeft: '10px' }}>식물이야기</Text>
         </Container>
         <SettingBox>
-          <MdDeleteForever size="40" onClick={handleDeletePlant} />
+            <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
         </SettingBox>
       </Header>
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src={plantImg} alt="plant" />
+            <PlantImg src={plant.imgPath} alt="plant" />
             <CharacterName>{plant.name}</CharacterName>
             <Level>Lv.{plantLevel}</Level>
           </ProfileBox>
@@ -142,7 +216,7 @@ const Profile: React.FC = () => {
                 <Text>식물도감</Text>
               </TextBox>
               <IconBox>
-                <IoMdBookmarks color="#a8511c" size="80" />
+                <FaBookBookmark color="#a8511c" size="80" />
               </IconBox>
             </Link>
           </BtnBox>
@@ -152,12 +226,17 @@ const Profile: React.FC = () => {
                 <Text>명예의 전당</Text>
               </TextBox>
               <IconBox>
-                <IoIosTrophy color="#ffc400" size="80" />
+                <FaTrophy color="#ffc400" size="80" />
               </IconBox>
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox></QuestBox>
+        <QuestBox $isCheckedIn={isCheckedIn}>
+    {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
+    <CheckBox onClick={!isCheckedIn ? handleCheckIn : undefined}>
+        <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
+    </CheckBox>
+</QuestBox>
       </Main>
     </ProfileBackGround>
   );

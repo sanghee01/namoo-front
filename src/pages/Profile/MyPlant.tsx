@@ -2,30 +2,31 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { IoMdSettings } from "react-icons/io";
+import { AiFillSetting } from "react-icons/ai";
 import { plantLevelState, plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
-import { plantImgState } from "../../state/plantState";
 
 const MyPlant = () => {
   const getPlantList = usePlantList(); 
   const plantList = useRecoilValue(plantListState);
   const [plant, setPlant] = useRecoilState(plantState);
-  const [plantImg, setPlantImg] = useRecoilState(plantImgState);
   const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 식물 리스트 가져오기 및 상태 업데이트
   useEffect(() => {
     const fetchPlantList = async () => {
-      if (!plantList || plantList.length === 0) {
-        await getPlantList();
-      }
+      await getPlantList();
+      setIsLoading(false); // 로딩 완료
     };
-
-    fetchPlantList();
-  }, [getPlantList, plantList]);
+  
+    if (!plantList || plantList.length === 0) {
+      fetchPlantList();
+    } else {
+      setIsLoading(false); // plantList가 존재하면 로딩 완료
+    }
+  }, []);
 
   // 경험치에 따른 식물 레벨 설정
   useEffect(() => {
@@ -38,18 +39,11 @@ const MyPlant = () => {
     }
   }, [plant.exp, setPlantLevel]);
 
-  // 식물 리스트와 레벨에 따른 이미지 설정
+
+  // plantList 업데이트 확인
   useEffect(() => {
-    if (plantList.length > 0 && plantLevel) {
-      plantList.forEach((plant) => {
-        if (plant.plantType === "상추") {
-          setPlantImg(`/assets/images/lettuce${plantLevel}.png`);
-        } else if (plant.plantType === "딸기") {
-          setPlantImg("/assets/images/strawberry.png");
-        }
-      });
-    }
-  }, [plantList, plantLevel, setPlantImg]);
+    console.log('plantList:', plantList);
+  }, [plantList]);
 
   const handlePickPlant = useCallback((index : number) => {
     const selectedPlant = plantList[index];
@@ -61,23 +55,30 @@ const MyPlant = () => {
       uuid: selectedPlant.uuid,
       giveWater: selectedPlant.giveWater,
       createDate: selectedPlant.createDate,
+      imgPath: selectedPlant.imgPath,
     });
   }, [plantList, setPlant]);
 
-  const renderPlantOrAddLink = useCallback((index : number) => {
-    if (plantList.length > index) {
-      const plant = plantList[index];
-      return (
-        <PlantCard onClick={() => handlePickPlant(index)} key={index}>
-          <Link to={`/profile?plantId=${plant.id}`}>
-            <ImgBox>
-              <PlantImg src={plantImg} alt="plant" />
-              <CharacterName>{plant.name}</CharacterName>
-              <Level>Lv.{plantLevel}</Level>
-            </ImgBox>
-          </Link>
-        </PlantCard>
-      );
+  const renderPlantOrAddLink = useCallback(
+    (index: number) => {
+      if (isLoading) {
+        return <div>Loading...</div>;
+      }
+  
+      if (plantList.length > index) {
+        const plant = plantList[index];
+  
+        return (
+          <PlantCard onClick={() => handlePickPlant(index)} key={index}>
+            <Link to={`/profile?plantId=${plant.id}`}>
+              <ImgBox>
+                <PlantImg src={plant.imgPath} alt="plant" />
+                <CharacterName>{plant.name}</CharacterName>
+                <Level>Lv.{plantLevel}</Level>
+              </ImgBox>
+            </Link>
+          </PlantCard>
+        );
     } else {
       return (
         <PlantCard key={index}>
@@ -87,18 +88,27 @@ const MyPlant = () => {
         </PlantCard>
       );
     }
-  }, [plantList, plantImg, plantLevel, handlePickPlant]);
+  }, [plantList, plantLevel, handlePickPlant]);
 
   return (
     <MyPlantBackGround>
       <Header>
         <Text>내 식물들</Text>
         <Link to="/setting">
-          <IoMdSettings size="40" />
+          <AiFillSetting size="40" />
         </Link>
       </Header>
-      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
-      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
+      {!isLoading && (
+      <>
+        <Container>
+          {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
+        </Container>
+        <Container>
+          {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
+        </Container>
+      </>
+    )}
+
     </MyPlantBackGround>
   );
 };

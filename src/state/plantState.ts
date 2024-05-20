@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
-interface Plant {
+export interface Plant {
   id: number;
   name: string;
   exp: number;
@@ -9,6 +9,7 @@ interface Plant {
   uuid: string;
   giveWater: boolean;
   createDate: string;
+  imgPath: string; // 이미지 경로 속성 추가
 }
 
 interface PlantHistory {
@@ -43,7 +44,8 @@ export const plantState = atom<Plant>({
     uuid: "",
     giveWater: false,
     createDate: "",
-  }, // 초기값
+    imgPath: "", // 기본값 설정
+  },
   effects_UNSTABLE: [persistAtom],
 });
 

@@ -32,6 +32,7 @@ const useLogout = () => {
       uuid: "",
       giveWater: false,
       createDate: "",
+      imgPath:"",
     });
     setPlantImg("");
 
