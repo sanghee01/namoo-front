@@ -3,7 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import Modal from './Modal'; // 경로에 따라 적절히 조정해 주세요.
+import Modal from './Modal'; 
+import styled from 'styled-components';
 
 type NavigationOptions = {
     prevEl?: Element | null;
@@ -24,6 +25,27 @@ const images: ImageData[] = [
   { id: "onion", src: "/assets/images/OnionBook.png", alt: "onion" },
   { id: "greenonion", src: "/assets/images/greenOnionBook.png", alt: "greenonion" }
 ];
+
+const StyledButton = styled.button`
+  background-color: #bb8e79;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #a57a64;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(165, 42, 42, 0.5);
+  }
+`;
 
 const ImageSlider: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string>("");
@@ -64,8 +86,8 @@ const ImageSlider: React.FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <button ref={navigationPrevRef}>이전</button>
-      <button ref={navigationNextRef}>다음</button>
+      <StyledButton ref={navigationPrevRef}>이전</StyledButton>
+      <StyledButton ref={navigationNextRef}>다음</StyledButton>
 
       <Modal isOpen={selectedImage !== ""} onClose={handleCloseModal}>
         {images
