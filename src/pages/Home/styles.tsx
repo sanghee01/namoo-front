@@ -199,7 +199,7 @@ export const NotificationModalBox = styled(QuestModalBox)`
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
   overflow-y: scroll;
-
+  padding: 20px;
   &::-webkit-scrollbar {
     display: none;
   }
