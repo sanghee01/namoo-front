@@ -2,17 +2,9 @@ import styled from "styled-components";
 import { MdArrowBackIos } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Text } from "./styles";
-import { useState } from "react";
-import Modal from "../../components/Modal";
+import ImageSlider from "../../components/Swiper";
 
 const Encyclopedia = () => {
-  const [selectedImage, setSelectedImage] = useState("");
-
-  // 상태 업데이트 시 콘솔 로그 추가
-  const handleImageSelect = (image: any) => {
-    console.log(`Selected image: ${image}`);
-    setSelectedImage(image);
-  };
 
   return (
     <EncyclopediaBackGround>
@@ -23,17 +15,8 @@ const Encyclopedia = () => {
         <Text>식물 도감</Text>
       </Header>
       <Container>
-        <BookOne onClick={() => handleImageSelect("lettuce")}>
-          <BookImg src="/assets/images/LettuceBookShelf.png" alt="lettuce" />
-        </BookOne>
-        <BookOne onClick={() => handleImageSelect("strawberry")}>
-          <BookImg src="/assets/images/StrawberryBookShelf.png" alt="strawberry" />
-        </BookOne>
+        <ImageSlider></ImageSlider>
       </Container>
-      <Modal isOpen={selectedImage !== ""} onClose={() => setSelectedImage("")}>
-        {selectedImage === "lettuce" && <img src="/assets/images/LettuceDetail.png" alt="Lettuce" />}
-        {selectedImage === "strawberry" && <img src="/assets/images/StrawberryDetail.png" alt="Strawberry" />}
-      </Modal>
     </EncyclopediaBackGround>
   );
 };
