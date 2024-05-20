@@ -29,21 +29,16 @@ import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
-import { plantLevelState, plantState, todayMessageState } from "../../state/plantState";
-import { isCheckedInState  } from "../../state/checkState";
+import { plantState, todayMessageState } from "../../state/plantState";
+import { isCheckedInState } from "../../state/checkState";
 import { errorAlert, successAlert, Confirm, CheckConfirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
-
-
-
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
-  const plantLevel = useRecoilValue(plantLevelState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
   const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
-
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,7 +47,6 @@ const Profile: React.FC = () => {
   const queryParams = new URLSearchParams(location.search);
   const plantId = queryParams.get("plantId");
   const fetchPlantList = usePlantList(); // 식물 목록을 가져오는 훅
-
 
   useEffect(() => {
     const fetchPlantData = async () => {
@@ -96,7 +90,8 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     const checkInStatus = async () => {
-      if (user && user.accessToken) { // 로그인 상태 확인
+      if (user && user.accessToken) {
+        // 로그인 상태 확인
         try {
           const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
             headers: {
@@ -106,7 +101,7 @@ const Profile: React.FC = () => {
               return status === 406 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
             },
           });
-  
+
           // API 응답으로부터 출석체크 상태를 확인합니다.
           if (response.status === 406) {
             setIsCheckedIn(true); // 이미 출석체크를 했다면 상태를 true로 변경
@@ -118,14 +113,13 @@ const Profile: React.FC = () => {
         }
       }
     };
-  
+
     checkInStatus();
   }, [user]);
-  
 
   useEffect(() => {
     // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
-    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
+    const storedIsCheckedIn = sessionStorage.getItem("isCheckedIn") === "true";
     setIsCheckedIn(storedIsCheckedIn);
   }, []);
 
@@ -154,16 +148,19 @@ const Profile: React.FC = () => {
     const confirmCheckIn = await CheckConfirm("출석체크하시겠습니까?");
     if (user && user.accessToken && confirmCheckIn) {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {}, {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
+        const response = await axios.post(
+          `${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+            },
           },
-        });
-        
-  
+        );
+
         if (response.status === 200) {
           setIsCheckedIn(true); // Recoil 상태 업데이트
-          sessionStorage.setItem('isCheckedIn', 'true'); // sessionStorage에 출석체크 상태 저장
+          sessionStorage.setItem("isCheckedIn", "true"); // sessionStorage에 출석체크 상태 저장
           await successAlert("출석체크가 완료되었습니다.");
           console.log("출석체크 응답:", response);
         }
@@ -173,8 +170,6 @@ const Profile: React.FC = () => {
       }
     }
   };
-  
-    
 
   return (
     <ProfileBackGround>
@@ -183,10 +178,10 @@ const Profile: React.FC = () => {
           <Link to="/myplant">
             <IoChevronBackOutline size="30" />
           </Link>
-          <Text style={{ paddingLeft: '10px' }}>식물이야기</Text>
+          <Text style={{ paddingLeft: "10px" }}>식물이야기</Text>
         </Container>
         <SettingBox>
-            <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
+          <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
         </SettingBox>
       </Header>
       <Main>
@@ -194,7 +189,7 @@ const Profile: React.FC = () => {
           <ProfileBox>
             <PlantImg src={plant.imgPath} alt="plant" />
             <CharacterName>{plant.name}</CharacterName>
-            <Level>Lv.{plantLevel}</Level>
+            <Level>Lv.{plant.level}</Level>
           </ProfileBox>
           <DetailBox>
             <Text>{plant.createDate}</Text>
@@ -232,11 +227,15 @@ const Profile: React.FC = () => {
           </BtnBox>
         </BtnContainer>
         <QuestBox $isCheckedIn={isCheckedIn}>
-    {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
-    <CheckBox onClick={!isCheckedIn ? handleCheckIn : undefined}>
-        <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
-    </CheckBox>
-</QuestBox>
+          {isCheckedIn ? (
+            <CheckBox>출석하셨습니다!</CheckBox>
+          ) : (
+            <CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>
+          )}
+          <CheckBox onClick={!isCheckedIn ? handleCheckIn : undefined}>
+            <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
+          </CheckBox>
+        </QuestBox>
       </Main>
     </ProfileBackGround>
   );

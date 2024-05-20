@@ -165,7 +165,7 @@ export const SideBar = styled.aside`
 
 export const QuestModalBox = styled.div`
   position: fixed;
-  padding: 1rem;
+  padding: 10px;
   top: 20%;
   left: 30%;
   width: 40%;
@@ -174,15 +174,15 @@ export const QuestModalBox = styled.div`
   border-radius: 25px;
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
-
   & h3 {
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 10px;
     color: #53390a;
   }
   @media screen and (max-width: 450px) {
-    left: 10%;
-    width: 80%;
+    left: 7.5%;
+    width: 85%;
     height: 60%;
   }
 `;
@@ -244,6 +244,7 @@ export const NoNotification = styled.div`
 `;
 
 export const QuestModalCloseBtn = styled.div`
+  width: 90%;
   text-align: center;
   padding: 12px 0px;
   border-radius: 10px;
