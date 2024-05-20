@@ -85,7 +85,7 @@ const Home = () => {
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }
-  }, [plant.id]);
+  }, [giveWater, plant.id]);
 
   return (
     <HomeBackGround>
