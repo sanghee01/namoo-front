@@ -21,7 +21,7 @@ import {
   QuestModalBox,
   QuestModalCloseBtn,
 } from "./styles";
-import { plantLevelState, plantState } from "../../state/plantState";
+import { plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
 import { useCallback, useState } from "react";
 import { questState } from "../../state/questState";
@@ -42,7 +42,6 @@ const Home = () => {
   const giveWater = usePlantGiveWater();
 
   const plant = useRecoilValue(plantState);
-  const plantLevel = useRecoilValue(plantLevelState);
   const questList = useRecoilValue(questState);
   const notificationList = useRecoilValue(notificationState);
 
@@ -102,7 +101,7 @@ const Home = () => {
           <Character>
             <PlantImg src={plant.imgPath} alt="plant" />
             <div>
-              <LevelImg src={`/assets/images/level${plantLevel}.png`} alt="level" />
+              <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
               <CharacterName>{plant.name}</CharacterName>
             </div>
           </Character>

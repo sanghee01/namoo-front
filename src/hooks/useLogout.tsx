@@ -28,11 +28,12 @@ const useLogout = () => {
       id: 0,
       name: "",
       exp: 0,
+      level: 1,
       plantType: "",
       uuid: "",
       giveWater: false,
       createDate: "",
-      imgPath:"",
+      imgPath: "",
     });
     setPlantImg("");
 

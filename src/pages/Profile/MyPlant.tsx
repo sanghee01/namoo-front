@@ -3,16 +3,15 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AiFillSetting } from "react-icons/ai";
-import { plantLevelState, plantListState } from "../../state/plantState";
+import { plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { useEffect, useCallback, useState } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
-  const getPlantList = usePlantList(); 
+  const getPlantList = usePlantList();
   const plantList = useRecoilValue(plantListState);
-  const [plant, setPlant] = useRecoilState(plantState);
-  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
+  const [, setPlant] = useRecoilState(plantState);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const MyPlant = () => {
       await getPlantList();
       setIsLoading(false); // 로딩 완료
     };
-  
+
     if (!plantList || plantList.length === 0) {
       fetchPlantList();
     } else {
@@ -28,67 +27,61 @@ const MyPlant = () => {
     }
   }, []);
 
-  // 경험치에 따른 식물 레벨 설정
-  useEffect(() => {
-    if (plant.exp >= 400) {
-      setPlantLevel(4);
-    } else if (plant.exp >= 300) {
-      setPlantLevel(3);
-    } else if (plant.exp >= 200) {
-      setPlantLevel(2);
-    }
-  }, [plant.exp, setPlantLevel]);
-
-
   // plantList 업데이트 확인
   useEffect(() => {
-    console.log('plantList:', plantList);
+    console.log("plantList:", plantList);
   }, [plantList]);
 
-  const handlePickPlant = useCallback((index : number) => {
-    const selectedPlant = plantList[index];
-    setPlant({
-      id: selectedPlant.id,
-      name: selectedPlant.name,
-      exp: selectedPlant.exp,
-      plantType: selectedPlant.plantType,
-      uuid: selectedPlant.uuid,
-      giveWater: selectedPlant.giveWater,
-      createDate: selectedPlant.createDate,
-      imgPath: selectedPlant.imgPath,
-    });
-  }, [plantList, setPlant]);
+  const handlePickPlant = useCallback(
+    (index: number) => {
+      const selectedPlant = plantList[index];
+      setPlant({
+        id: selectedPlant.id,
+        name: selectedPlant.name,
+        exp: selectedPlant.exp,
+        level: selectedPlant.level,
+        plantType: selectedPlant.plantType,
+        uuid: selectedPlant.uuid,
+        giveWater: selectedPlant.giveWater,
+        createDate: selectedPlant.createDate,
+        imgPath: selectedPlant.imgPath,
+      });
+    },
+    [plantList, setPlant],
+  );
 
   const renderPlantOrAddLink = useCallback(
     (index: number) => {
       if (isLoading) {
         return <div>Loading...</div>;
       }
-  
+
       if (plantList.length > index) {
         const plant = plantList[index];
-  
+
         return (
           <PlantCard onClick={() => handlePickPlant(index)} key={index}>
             <Link to={`/profile?plantId=${plant.id}`}>
               <ImgBox>
                 <PlantImg src={plant.imgPath} alt="plant" />
                 <CharacterName>{plant.name}</CharacterName>
-                <Level>Lv.{plantLevel}</Level>
+                <Level>Lv.{plant.level}</Level>
               </ImgBox>
             </Link>
           </PlantCard>
         );
-    } else {
-      return (
-        <PlantCard key={index}>
-          <Link to="/addplant">
-            <FcPlus size="60" />
-          </Link>
-        </PlantCard>
-      );
-    }
-  }, [plantList, plantLevel, handlePickPlant]);
+      } else {
+        return (
+          <PlantCard key={index}>
+            <Link to="/addplant">
+              <FcPlus size="60" />
+            </Link>
+          </PlantCard>
+        );
+      }
+    },
+    [isLoading, plantList, handlePickPlant],
+  );
 
   return (
     <MyPlantBackGround>
@@ -99,20 +92,14 @@ const MyPlant = () => {
         </Link>
       </Header>
       {!isLoading && (
-      <>
-        <Container>
-          {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
-        </Container>
-        <Container>
-          {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
-        </Container>
-      </>
-    )}
-
+        <>
+          <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
+          <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
+        </>
+      )}
     </MyPlantBackGround>
   );
 };
-
 
 export const MyPlantBackGround = styled.div`
   flex: 1;
