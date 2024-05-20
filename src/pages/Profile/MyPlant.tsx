@@ -175,12 +175,10 @@ export const ImgBox = styled.div`
 `;
 
 export const PlantImg = styled.img`
-  height: 180px;
-  margin: 10px;
+  height: 150px;
 `;
 
 export const CharacterName = styled.span`
-  margin: 5px 5px 0px 5px;
   font-weight: 500;
 `;
 
