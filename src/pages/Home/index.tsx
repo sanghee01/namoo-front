@@ -1,5 +1,4 @@
 import { BiSolidBell } from "react-icons/bi";
-import { FaHeart } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { IoIosWater } from "react-icons/io";
 import { BsCameraFill } from "react-icons/bs";
@@ -15,7 +14,6 @@ import {
   TableImg,
   LevelImg,
   SideBar,
-  CharacterName,
   NotificationModalBox,
   NoNotification,
   QuestModalBox,
@@ -23,7 +21,7 @@ import {
 } from "./styles";
 import { plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
 import { useNavigate } from "react-router";
@@ -48,6 +46,8 @@ const Home = () => {
   const [isOpenQuest, setIsOpenQuest] = useState(false);
   const [isOpenNotification, setIsNotification] = useState(false);
   const [isThereNotifications, setIsThereNotifications] = useState(true);
+  const [growthGauge, setGrowthGauge] = useState(0);
+
   // 퀘스트 모달 열기
   const handleOpenQuest = () => {
     setIsOpenQuest(true);
@@ -86,12 +86,21 @@ const Home = () => {
     }
   }, [giveWater, plant.id]);
 
+  // 성장도 게이지
+  useEffect(() => {
+    if (plant.exp >= 100) {
+      setGrowthGauge(plant.exp - 100 * Math.floor(plant.exp / 100));
+    } else {
+      setGrowthGauge(plant.exp);
+    }
+  }, [plant.exp]);
+
   return (
     <HomeBackGround>
       <Header>
         <FriendshipBar>
-          <FaHeart color="#b72020" size="30" />
-          <progress value={plant.exp} max="400"></progress>
+          <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
+          <progress value={growthGauge} max="100"></progress>
         </FriendshipBar>
         <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="40" />
       </Header>
@@ -100,10 +109,7 @@ const Home = () => {
           <TableImg src="/assets/images/table.png" alt="plant" />
           <Character>
             <PlantImg src={plant.imgPath} alt="plant" />
-            <div>
-              <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
-              <CharacterName>{plant.name}</CharacterName>
-            </div>
+            <span>{plant.name}</span>
           </Character>
         </CharacterBox>
         <SideBar>
