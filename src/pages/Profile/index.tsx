@@ -22,16 +22,16 @@ import {
   QuestBox,
   Container,
   CheckBox,
-  CheckImg
+  CheckImg,
 } from "./styles";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
-import { plantLevelState, plantImgState, plantState, todayMessageState } from "../../state/plantState";
+import { plantLevelState, plantState, todayMessageState } from "../../state/plantState";
 import { isCheckedInState  } from "../../state/checkState";
-import { errorAlert, successAlert, Confirm } from "../../components/Alert";
+import { errorAlert, successAlert, Confirm, CheckConfirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 
@@ -40,7 +40,6 @@ import { usePlantList } from "../../hooks/useGetPlantList";
 const Profile: React.FC = () => {
   const user = useRecoilValue(userState);
   const plantLevel = useRecoilValue(plantLevelState);
-  const plantImg = useRecoilValue(plantImgState);
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
   const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
@@ -95,6 +94,41 @@ const Profile: React.FC = () => {
     fetchPlantData();
   }, [plantId, user]);
 
+  useEffect(() => {
+    const checkInStatus = async () => {
+      if (user && user.accessToken) { // 로그인 상태 확인
+        try {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`, // 사용자 인증 토큰
+            },
+            validateStatus: function (status) {
+              return status === 406 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
+            },
+          });
+  
+          // API 응답으로부터 출석체크 상태를 확인합니다.
+          if (response.status === 406) {
+            setIsCheckedIn(true); // 이미 출석체크를 했다면 상태를 true로 변경
+          } else {
+            setIsCheckedIn(false); // 그렇지 않으면 false로 설정
+          }
+        } catch (error) {
+          console.error("출석체크 상태 확인 중 에러가 발생했습니다:", error);
+        }
+      }
+    };
+  
+    checkInStatus();
+  }, [user]);
+  
+
+  useEffect(() => {
+    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
+    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
+    setIsCheckedIn(storedIsCheckedIn);
+  }, []);
+
   const handleDeletePlant = async (e: React.MouseEvent<EventTarget>) => {
     e.preventDefault();
 
@@ -115,33 +149,31 @@ const Profile: React.FC = () => {
       }
     }
   };
+
   const handleCheckIn = async () => {
-    const confirmCheckIn = window.confirm("출석체크하시겠습니까?");
+    const confirmCheckIn = await CheckConfirm("출석체크하시겠습니까?");
     if (user && user.accessToken && confirmCheckIn) {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {
+        const response = await axios.post(`${import.meta.env.VITE_SERVER_APIADDRESS}/member/checkin`, {}, {
           headers: {
             Authorization: `Bearer ${user.accessToken}`,
           },
         });
+        
   
         if (response.status === 200) {
           setIsCheckedIn(true); // Recoil 상태 업데이트
           sessionStorage.setItem('isCheckedIn', 'true'); // sessionStorage에 출석체크 상태 저장
-          alert("출석체크가 완료되었습니다.");
+          await successAlert("출석체크가 완료되었습니다.");
           console.log("출석체크 응답:", response);
         }
       } catch (error) {
         console.error("출석체크 중 에러가 발생했습니다:", error);
-        alert("출석체크에 실패했습니다.");
+        await errorAlert("출석체크에 실패했습니다.");
       }
     }
   };
-  useEffect(() => {
-    // sessionStorage에서 출석체크 상태를 읽어와서 Recoil 상태를 업데이트
-    const storedIsCheckedIn = sessionStorage.getItem('isCheckedIn') === 'true';
-    setIsCheckedIn(storedIsCheckedIn);
-  }, []);
+  
     
 
   return (
@@ -160,7 +192,7 @@ const Profile: React.FC = () => {
       <Main>
         <ProfileCard>
           <ProfileBox>
-            <PlantImg src={plantImg} alt="plant" />
+            <PlantImg src={plant.imgPath} alt="plant" />
             <CharacterName>{plant.name}</CharacterName>
             <Level>Lv.{plantLevel}</Level>
           </ProfileBox>
@@ -199,12 +231,12 @@ const Profile: React.FC = () => {
             </Link>
           </BtnBox>
         </BtnContainer>
-        <QuestBox>
-        {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
-          <CheckBox onClick={handleCheckIn}>
-            <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
-          </CheckBox>
-        </QuestBox>
+        <QuestBox $isCheckedIn={isCheckedIn}>
+    {isCheckedIn ? (<CheckBox>출석하셨습니다!</CheckBox>) : (<CheckBox onClick={handleCheckIn}>출석체크를 해주세요!</CheckBox>)}
+    <CheckBox onClick={!isCheckedIn ? handleCheckIn : undefined}>
+        <CheckImg src={isCheckedIn ? "/assets/images/checked.png" : "/assets/images/nonCheck.png"} />
+    </CheckBox>
+</QuestBox>
       </Main>
     </ProfileBackGround>
   );

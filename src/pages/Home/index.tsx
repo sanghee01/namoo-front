@@ -23,7 +23,6 @@ import {
 } from "./styles";
 import { plantLevelState, plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
-import { plantImgState } from "../../state/plantState";
 import { useCallback, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
@@ -42,7 +41,6 @@ const Home = () => {
   const deleteAllNotifiction = useDeleteAllNotification();
 
   const plant = useRecoilValue(plantState);
-  const plantImg = useRecoilValue(plantImgState);
   const plantLevel = useRecoilValue(plantLevelState);
   const questList = useRecoilValue(questState);
   const notificationList = useRecoilValue(notificationState);
@@ -101,7 +99,7 @@ const Home = () => {
         <CharacterBox>
           <TableImg src="/assets/images/table.png" alt="plant" />
           <Character>
-            <PlantImg src={plantImg} alt="plant" />
+            <PlantImg src={plant.imgPath} alt="plant" />
             <div>
               <LevelImg src={`/assets/images/level${plantLevel}.png`} alt="level" />
               <CharacterName>{plant.name}</CharacterName>
