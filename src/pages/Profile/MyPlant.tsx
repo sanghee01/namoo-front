@@ -5,32 +5,33 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { AiFillSetting } from "react-icons/ai";
 import { plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
-import { useEffect, useCallback, useState } from "react";
+import { userState } from "../../state/userState";
+import { useEffect, useCallback, useRef } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
-  const getPlantList = usePlantList();
+  const getPlantList = usePlantList(); 
+  const user = useRecoilValue(userState); // userState에서 유저 정보 불러오기
   const plantList = useRecoilValue(plantListState);
   const [, setPlant] = useRecoilState(plantState);
-  const [isLoading, setIsLoading] = useState(false);
+  const isFetchedRef = useRef(false);
+
 
   useEffect(() => {
     const fetchPlantList = async () => {
-      await getPlantList();
-      setIsLoading(false); // 로딩 완료
+      if (user && !isFetchedRef.current) {
+        await getPlantList();
+        isFetchedRef.current = true;
+      }
     };
+  
+    fetchPlantList();
+  }, [user, getPlantList]);
+  
 
-    if (!plantList || plantList.length === 0) {
-      fetchPlantList();
-    } else {
-      setIsLoading(false); // plantList가 존재하면 로딩 완료
-    }
-  }, []);
-
-  // plantList 업데이트 확인
   useEffect(() => {
-    console.log("plantList:", plantList);
-  }, [plantList]);
+    console.log('plantList:', plantList);
+  }, []);
 
   const handlePickPlant = useCallback(
     (index: number) => {
@@ -52,10 +53,6 @@ const MyPlant = () => {
 
   const renderPlantOrAddLink = useCallback(
     (index: number) => {
-      if (isLoading) {
-        return <div>Loading...</div>;
-      }
-
       if (plantList.length > index) {
         const plant = plantList[index];
 
@@ -80,7 +77,8 @@ const MyPlant = () => {
         );
       }
     },
-    [isLoading, plantList, handlePickPlant],
+
+    [plantList, handlePickPlant]
   );
 
   return (
@@ -91,12 +89,12 @@ const MyPlant = () => {
           <AiFillSetting size="40" />
         </Link>
       </Header>
-      {!isLoading && (
-        <>
-          <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
-          <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
-        </>
-      )}
+      <Container>
+        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
+      </Container>
+      <Container>
+        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
+      </Container>
     </MyPlantBackGround>
   );
 };
@@ -162,12 +160,10 @@ export const ImgBox = styled.div`
 `;
 
 export const PlantImg = styled.img`
-  height: 180px;
-  margin: 10px;
+  height: 150px;
 `;
 
 export const CharacterName = styled.span`
-  margin: 5px 5px 0px 5px;
   font-weight: 500;
 `;
 

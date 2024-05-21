@@ -46,13 +46,10 @@ export const TextBox = styled.div`
   height: 50%;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 15px 15px 15px 25px;
+  padding: 15px 15px 5px 25px;
   flex-direction: column;
-
-  @media screen and (max-width: 600px) {
-    padding: 25px;
-  }
 `;
+
 export const IconBox = styled.div`
   display: flex;
   height: 50%;
@@ -114,12 +111,11 @@ export const DetailBox = styled.div`
 `;
 export const PlantImg = styled.img`
   width: 100%;
-  height: auto; 
-  objectFit: contain;
+  height: 150px; 
+  object-fit: cover;
 `;
 
 export const CharacterName = styled.span`
-  margin: 5px 5px 0px 5px;
   font-weight: 500;
   font-size: 18px;
 
