@@ -22,7 +22,7 @@ import {
   CharacterName,
 } from "./styles";
 import { plantState } from "../../state/plantState";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useCallback, useEffect, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
@@ -48,7 +48,7 @@ const Home = () => {
   const deleteAllNotifiction = useDeleteAllNotification();
   const giveWater = usePlantGiveWater();
 
-  const plant = useRecoilValue(plantState);
+  const [plant, setPlant] = useRecoilState(plantState);
   const questList = useRecoilValue(questState);
   const notificationList = useRecoilValue(notificationState);
 
@@ -57,6 +57,32 @@ const Home = () => {
   const [isThereNotifications, setIsThereNotifications] = useState(true);
   const [growthGauge, setGrowthGauge] = useState(0);
   const [hearts, setHearts] = useState<Heart[]>([]);
+
+  // 식물 정보 변동 시 모든 값 업데이트
+  useEffect(() => {
+    setPlant({
+      id: plant.id,
+      name: plant.name,
+      exp: plant.exp,
+      level: plant.level,
+      plantType: plant.plantType,
+      uuid: plant.uuid,
+      giveWater: plant.giveWater,
+      createDate: plant.createDate,
+      imgPath: plant.imgPath,
+    });
+  }, [
+    plant.createDate,
+    plant.exp,
+    plant.giveWater,
+    plant.id,
+    plant.imgPath,
+    plant.level,
+    plant.name,
+    plant.plantType,
+    plant.uuid,
+    setPlant,
+  ]);
 
   // 퀘스트 모달 열기
   const handleOpenQuest = () => {

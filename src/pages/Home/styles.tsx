@@ -173,6 +173,7 @@ export const QuestModalBox = styled.div`
   border-radius: 25px;
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
+  z-index: 100;
   & h3 {
     text-align: center;
     margin-top: 10px;
