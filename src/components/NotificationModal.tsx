@@ -26,10 +26,11 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const patchNotification = usePatchNotification();
   const deleteNotification = useDeleteNotification();
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isReadNotification, setIsReadNotification] = useState(false);
 
   const handleClickNotification = useCallback(() => {
     patchNotification(id); // 알림 읽음 요청
-
+    setIsReadNotification(true);
     if (link === "history") {
       navegate("/history");
     } else {
@@ -45,7 +46,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   return (
     <>
       {!isDeleted && (
-        <NotificationContainer key={id} $isread={isRead ? 1 : 0}>
+        <NotificationContainer key={id} $isread={isRead} isReadNotification={isReadNotification}>
           <div onClick={handleClickNotification}>
             <h4>{notificationType}</h4>
             <Content>
@@ -62,16 +63,16 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 
 export default NotificationModal;
 
-const NotificationContainer = styled.div<{ $isread: number }>`
+const NotificationContainer = styled.div<{ $isread: boolean; isReadNotification: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  background-color: ${(props) => (props.$isread ? "#e0e0e079" : "#e1f9d2")};
+  background-color: ${(props) => (props.$isread || props.isReadNotification ? "#e0e0e079" : "#e1f9d2")};
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 8px;
-  color: ${(props) => (props.$isread ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)")};
+  color: ${(props) => (props.$isread || props.isReadNotification ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,1)")};
 
   & > div {
     display: flex;

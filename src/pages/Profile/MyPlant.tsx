@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AiFillSetting } from "react-icons/ai";
-import { plantLevelState, plantListState } from "../../state/plantState";
+import { plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { userState } from "../../state/userState";
 import { useEffect, useCallback, useRef } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
+
   const getPlantList = usePlantList(); 
   const user = useRecoilValue(userState); // userState에서 유저 정보 불러오기
   const plantList = useRecoilValue(plantListState);
@@ -70,7 +71,7 @@ const MyPlant = () => {
               <ImgBox>
                 <PlantImg src={plant.imgPath} alt="plant" />
                 <CharacterName>{plant.name}</CharacterName>
-                <Level>Lv.{plantLevel}</Level>
+                <Level>Lv.{plant.level}</Level>
               </ImgBox>
             </Link>
           </PlantCard>
@@ -105,7 +106,6 @@ const MyPlant = () => {
     </MyPlantBackGround>
   );
 };
-
 
 export const MyPlantBackGround = styled.div`
   flex: 1;

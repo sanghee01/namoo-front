@@ -21,27 +21,27 @@ import {
   QuestModalBox,
   QuestModalCloseBtn,
 } from "./styles";
-import { plantLevelState, plantState } from "../../state/plantState";
+import { plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
 import { useCallback, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
-import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
 import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNotification";
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
+import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
 
 const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
   const getNotification = useGetNotification();
   const deleteAllNotifiction = useDeleteAllNotification();
+  const giveWater = usePlantGiveWater();
 
   const plant = useRecoilValue(plantState);
-  const plantLevel = useRecoilValue(plantLevelState);
   const questList = useRecoilValue(questState);
   const notificationList = useRecoilValue(notificationState);
 
@@ -79,12 +79,12 @@ const Home = () => {
   // 원격 물 주기
   const handleGiveWater = useCallback(async () => {
     try {
-      await giveWaterToPlant(plant.id);
+      await giveWater(plant.id);
       await successAlert("물 주기 성공!");
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }
-  }, [plant.id]);
+  }, [giveWater, plant.id]);
 
   return (
     <HomeBackGround>
@@ -101,7 +101,7 @@ const Home = () => {
           <Character>
             <PlantImg src={plant.imgPath} alt="plant" />
             <div>
-              <LevelImg src={`/assets/images/level${plantLevel}.png`} alt="level" />
+              <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
               <CharacterName>{plant.name}</CharacterName>
             </div>
           </Character>
