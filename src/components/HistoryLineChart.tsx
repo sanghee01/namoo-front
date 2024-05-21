@@ -44,7 +44,6 @@ const HistoryLineChart = ({ dataName, min, max, value, dataList, borderColor, ba
   };
 
   const dates = dataList.map((date) => new Date(date));
-  console.log(dates);
   const hours = dates.map((date) => String(date.getHours()).padStart(2, "0"));
   const minutes = dates.map((date) => String(date.getMinutes()).padStart(2, "0"));
   const labels = [];
