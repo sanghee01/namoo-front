@@ -33,6 +33,7 @@ import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNot
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
 import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
+import styled, { keyframes } from "styled-components";
 
 const Home = () => {
   const navegate = useNavigate();
@@ -49,6 +50,7 @@ const Home = () => {
   const [isOpenNotification, setIsNotification] = useState(false);
   const [isThereNotifications, setIsThereNotifications] = useState(true);
   const [growthGauge, setGrowthGauge] = useState(0);
+  const [hearts, setHearts] = useState<Heart[]>([]);
 
   // 퀘스트 모달 열기
   const handleOpenQuest = () => {
@@ -97,8 +99,22 @@ const Home = () => {
     }
   }, [plant.exp]);
 
+  // 화면 클릭시 하트
+  const handleClickHeartEffect = (e: React.MouseEvent<HTMLDivElement>) => {
+    const newHeart = {
+      id: Date.now(),
+      x: e.clientX - 25,
+      y: e.clientY - 25,
+    };
+    setHearts((prevHearts) => [...prevHearts, newHeart]);
+
+    setTimeout(() => {
+      setHearts((prevHearts) => prevHearts.filter((heart) => heart.id !== newHeart.id));
+    }, 1000);
+  };
+
   return (
-    <HomeBackGround>
+    <HomeBackGround onClick={handleClickHeartEffect}>
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
@@ -187,8 +203,37 @@ const Home = () => {
           </QuestModalBox>
         )}
       </Main>
+      {hearts.map((heart) => (
+        <HeartImage key={heart.id} style={{ left: `${heart.x}px`, top: `${heart.y}px` }} />
+      ))}
     </HomeBackGround>
   );
 };
 
 export default Home;
+
+const pop = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+const HeartImage = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-image: url("./public/assets/images/heart.png");
+  background-size: cover;
+  opacity: 0;
+  animation: ${pop} 0.8s forwards;
+  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
+`;
