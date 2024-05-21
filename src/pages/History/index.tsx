@@ -13,16 +13,16 @@ const History = () => {
   const user = useRecoilValue(userState);
 
   useEffect(() => {
-    if (plantHistoryData.length === 0 && user.name === "koala") {
+    if (plantHistoryData.length === 0 && user?.username === "koala") {
       // 현재 아두이노 기기 가지고 있는 계정이 코알라뿐이므로
       getPlantHistoryData();
-    } else {
+    } else if (user?.username === "koala") {
       // 3분마다 식물 데이터 업데이트 요청
       setTimeout(() => {
         getPlantHistoryData();
       }, 18000);
     }
-  }, [getPlantHistoryData, plantHistoryData, user.name]);
+  }, [getPlantHistoryData, plantHistoryData, user?.username]);
 
   const dateList = plantHistoryData.map((data) => data.createdDate);
   const tempList = plantHistoryData.map((data) => data.temp);
