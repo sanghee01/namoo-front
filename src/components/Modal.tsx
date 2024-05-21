@@ -22,7 +22,7 @@ const ModalContent = styled.div`
   width: 70%; /* 너비를 화면의 70%로 설정 */
   max-width: 500px; /* 최대 너비를 500px로 설정하여 너무 넓어지지 않도록 함 */
 
-  @media (max-width: 375px) {
+  @media (max-width: 600px) {
     width: 90%; /* 화면의 너비를 90%로 설정 */
   }
 `;
