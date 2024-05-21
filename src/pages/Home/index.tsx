@@ -15,15 +15,15 @@ import {
   TableImg,
   LevelImg,
   SideBar,
-  CharacterName,
   NotificationModalBox,
   NoNotification,
   QuestModalBox,
   QuestModalCloseBtn,
+  CharacterName,
 } from "./styles";
 import { plantState } from "../../state/plantState";
-import { useRecoilValue } from "recoil";
-import { useCallback, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useCallback, useEffect, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
 import { useNavigate } from "react-router";
@@ -33,6 +33,13 @@ import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNot
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
 import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
+import styled, { keyframes } from "styled-components";
+
+interface Heart {
+  id: number;
+  x: number;
+  y: number;
+}
 
 const Home = () => {
   const navegate = useNavigate();
@@ -41,13 +48,42 @@ const Home = () => {
   const deleteAllNotifiction = useDeleteAllNotification();
   const giveWater = usePlantGiveWater();
 
-  const plant = useRecoilValue(plantState);
+  const [plant, setPlant] = useRecoilState(plantState);
   const questList = useRecoilValue(questState);
   const notificationList = useRecoilValue(notificationState);
 
   const [isOpenQuest, setIsOpenQuest] = useState(false);
   const [isOpenNotification, setIsNotification] = useState(false);
   const [isThereNotifications, setIsThereNotifications] = useState(true);
+  const [growthGauge, setGrowthGauge] = useState(0);
+  const [hearts, setHearts] = useState<Heart[]>([]);
+
+  // 식물 정보 변동 시 모든 값 업데이트
+  useEffect(() => {
+    setPlant({
+      id: plant.id,
+      name: plant.name,
+      exp: plant.exp,
+      level: plant.level,
+      plantType: plant.plantType,
+      uuid: plant.uuid,
+      giveWater: plant.giveWater,
+      createDate: plant.createDate,
+      imgPath: plant.imgPath,
+    });
+  }, [
+    plant.createDate,
+    plant.exp,
+    plant.giveWater,
+    plant.id,
+    plant.imgPath,
+    plant.level,
+    plant.name,
+    plant.plantType,
+    plant.uuid,
+    setPlant,
+  ]);
+
   // 퀘스트 모달 열기
   const handleOpenQuest = () => {
     setIsOpenQuest(true);
@@ -55,7 +91,7 @@ const Home = () => {
   };
 
   // 퀘스트 모달 닫기
-  const handleCloseModal = () => {
+  const handleCloseQuest = () => {
     setIsOpenQuest(false);
   };
 
@@ -86,12 +122,35 @@ const Home = () => {
     }
   }, [giveWater, plant.id]);
 
+  // 성장도 게이지
+  useEffect(() => {
+    if (plant.exp >= 100) {
+      setGrowthGauge(plant.exp - 100 * Math.floor(plant.exp / 100));
+    } else {
+      setGrowthGauge(plant.exp);
+    }
+  }, [plant.exp]);
+
+  // 화면 클릭시 하트
+  const handleClickHeartEffect = (e: React.MouseEvent<HTMLDivElement>) => {
+    const newHeart = {
+      id: Date.now(),
+      x: e.clientX - 25,
+      y: e.clientY - 25,
+    };
+    setHearts((prevHearts) => [...prevHearts, newHeart]);
+
+    setTimeout(() => {
+      setHearts((prevHearts) => prevHearts.filter((heart) => heart.id !== newHeart.id));
+    }, 1000);
+  };
+
   return (
-    <HomeBackGround>
+    <HomeBackGround onClick={handleClickHeartEffect}>
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
-          <progress value={plant.exp} max="400"></progress>
+          <progress value={growthGauge} max="100"></progress>
         </FriendshipBar>
         <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="40" />
       </Header>
@@ -141,6 +200,8 @@ const Home = () => {
                       isRead={notification.isRead}
                       notificationType={notification.notificationType}
                       createdDate={notification.createdDate}
+                      handleCloseNotificaition={handleCloseNotificaition}
+                      handleOpenQuest={handleOpenQuest}
                     />
                   );
                 })
@@ -170,12 +231,41 @@ const Home = () => {
                 );
               })}
             </div>
-            <QuestModalCloseBtn onClick={handleCloseModal}>닫기</QuestModalCloseBtn>
+            <QuestModalCloseBtn onClick={handleCloseQuest}>닫기</QuestModalCloseBtn>
           </QuestModalBox>
         )}
       </Main>
+      {hearts.map((heart) => (
+        <HeartImage key={heart.id} style={{ left: `${heart.x}px`, top: `${heart.y}px` }} />
+      ))}
     </HomeBackGround>
   );
 };
 
 export default Home;
+
+const pop = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+const HeartImage = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-image: url("./public/assets/images/heart.png");
+  background-size: cover;
+  opacity: 0;
+  animation: ${pop} 0.8s forwards;
+  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
+`;

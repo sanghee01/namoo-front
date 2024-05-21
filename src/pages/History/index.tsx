@@ -5,27 +5,30 @@ import { useGetPlantHistoryData } from "../../hooks/useGetPlantHistoryData";
 import { useRecoilValue } from "recoil";
 import { plantHistoryState } from "../../state/plantState";
 import HistoryBarChart from "../../components/HistoryBarChart";
+import { userState } from "../../state/userState";
 
 const History = () => {
   const getPlantHistoryData = useGetPlantHistoryData();
   const plantHistoryData = useRecoilValue(plantHistoryState);
+  const user = useRecoilValue(userState);
 
   useEffect(() => {
-    if (plantHistoryData.length === 0) {
+    if (plantHistoryData.length === 0 && user?.username === "koala") {
+      // 현재 아두이노 기기 가지고 있는 계정이 코알라뿐이므로
       getPlantHistoryData();
-    } else {
+    } else if (user?.username === "koala") {
       // 3분마다 식물 데이터 업데이트 요청
       setTimeout(() => {
         getPlantHistoryData();
       }, 18000);
     }
-  }, [getPlantHistoryData, plantHistoryData]);
+  }, [getPlantHistoryData, plantHistoryData, user?.username]);
 
   const dateList = plantHistoryData.map((data) => data.createdDate);
   const tempList = plantHistoryData.map((data) => data.temp);
   const humidityList = plantHistoryData.map((data) => data.humidity);
   const soilHumidityList = plantHistoryData.map((data) => (data.soilHumidity / 1000) * 100);
-  const lightList = plantHistoryData.map((data) => (data.light / 3000) * 100);
+  const lightList = plantHistoryData.map((data) => ((data.light > 2000 ? 2000 : data.light) / 2000) * 100);
   const remainingWaterList = plantHistoryData.map((data) => (data.remainingWater / 3000) * 100);
   const gaveWaterList = plantHistoryData.map((data) => Number(data.gaveWater));
 

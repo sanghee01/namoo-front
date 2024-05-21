@@ -75,7 +75,6 @@ export const CharacterBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  align-items: center;
   width: 100%;
   margin-top: 70px;
 `;
@@ -174,6 +173,7 @@ export const QuestModalBox = styled.div`
   border-radius: 25px;
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
+  z-index: 100;
   & h3 {
     text-align: center;
     margin-top: 10px;
@@ -197,7 +197,7 @@ export const NotificationModalBox = styled(QuestModalBox)`
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
   overflow-y: scroll;
-
+  padding: 20px;
   &::-webkit-scrollbar {
     display: none;
   }
