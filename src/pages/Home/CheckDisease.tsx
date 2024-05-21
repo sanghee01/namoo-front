@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import {  Link } from 'react-router-dom'; 
+import { MdArrowBackIos } from "react-icons/md";
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -31,6 +33,7 @@ const CheckDisease: React.FC = () => {
     }
   };
 
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -42,8 +45,13 @@ const CheckDisease: React.FC = () => {
 
   return (
     <DiseaseBackGround>
+      <Header>
+      <Link to="/home">
+          <MdArrowBackIos size="30" />
+      </Link>
+      <HeaderText>질병 확인</HeaderText>
+    </Header>
     <Container>
-      <Text>질병 확인</Text>
       <DropzoneContainer {...getRootProps()}>
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -67,6 +75,23 @@ export const DiseaseBackGround = styled.div`
   background-size: 550px 700px;
   height: 100%;
 `;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  height: 10%;
+
+  svg:hover {
+    cursor: pointer;
+  }
+`;
+
+const HeaderText = styled.h2`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
 
 const Container = styled.div`
   height: 80vh;
