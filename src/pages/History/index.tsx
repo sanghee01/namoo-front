@@ -5,13 +5,16 @@ import { useGetPlantHistoryData } from "../../hooks/useGetPlantHistoryData";
 import { useRecoilValue } from "recoil";
 import { plantHistoryState } from "../../state/plantState";
 import HistoryBarChart from "../../components/HistoryBarChart";
+import { userState } from "../../state/userState";
 
 const History = () => {
   const getPlantHistoryData = useGetPlantHistoryData();
   const plantHistoryData = useRecoilValue(plantHistoryState);
+  const user = useRecoilValue(userState);
 
   useEffect(() => {
-    if (plantHistoryData.length === 0) {
+    if (plantHistoryData.length === 0 && user.name === "koala") {
+      // 현재 아두이노 기기 가지고 있는 계정이 코알라뿐이므로
       getPlantHistoryData();
     } else {
       // 3분마다 식물 데이터 업데이트 요청
@@ -19,7 +22,7 @@ const History = () => {
         getPlantHistoryData();
       }, 18000);
     }
-  }, [getPlantHistoryData, plantHistoryData]);
+  }, [getPlantHistoryData, plantHistoryData, user.name]);
 
   const dateList = plantHistoryData.map((data) => data.createdDate);
   const tempList = plantHistoryData.map((data) => data.temp);
