@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AiFillSetting } from "react-icons/ai";
-import { plantLevelState, plantListState } from "../../state/plantState";
+import { plantListState } from "../../state/plantState";
 import { plantState } from "../../state/plantState";
 import { userState } from "../../state/userState";
 import { useEffect, useCallback, useRef } from "react";
@@ -13,8 +13,7 @@ const MyPlant = () => {
   const getPlantList = usePlantList(); 
   const user = useRecoilValue(userState); // userState에서 유저 정보 불러오기
   const plantList = useRecoilValue(plantListState);
-  const [plant, setPlant] = useRecoilState(plantState);
-  const [plantLevel, setPlantLevel] = useRecoilState(plantLevelState);
+  const [, setPlant] = useRecoilState(plantState);
   const isFetchedRef = useRef(false);
 
 
@@ -30,34 +29,27 @@ const MyPlant = () => {
   }, [user, getPlantList]);
   
 
-  // 경험치에 따른 식물 레벨 설정
-  useEffect(() => {
-    if (plant.exp >= 400) {
-      setPlantLevel(4);
-    } else if (plant.exp >= 300) {
-      setPlantLevel(3);
-    } else if (plant.exp >= 200) {
-      setPlantLevel(2);
-    }
-  }, [plant.exp, setPlantLevel]);
-
   useEffect(() => {
     console.log('plantList:', plantList);
   }, []);
 
-  const handlePickPlant = useCallback((index: number) => {
-    const selectedPlant = plantList[index];
-    setPlant({
-      id: selectedPlant.id,
-      name: selectedPlant.name,
-      exp: selectedPlant.exp,
-      plantType: selectedPlant.plantType,
-      uuid: selectedPlant.uuid,
-      giveWater: selectedPlant.giveWater,
-      createDate: selectedPlant.createDate,
-      imgPath: selectedPlant.imgPath,
-    });
-  }, [plantList, setPlant]);
+  const handlePickPlant = useCallback(
+    (index: number) => {
+      const selectedPlant = plantList[index];
+      setPlant({
+        id: selectedPlant.id,
+        name: selectedPlant.name,
+        exp: selectedPlant.exp,
+        level: selectedPlant.level,
+        plantType: selectedPlant.plantType,
+        uuid: selectedPlant.uuid,
+        giveWater: selectedPlant.giveWater,
+        createDate: selectedPlant.createDate,
+        imgPath: selectedPlant.imgPath,
+      });
+    },
+    [plantList, setPlant],
+  );
 
   const renderPlantOrAddLink = useCallback(
     (index: number) => {
@@ -70,7 +62,7 @@ const MyPlant = () => {
               <ImgBox>
                 <PlantImg src={plant.imgPath} alt="plant" />
                 <CharacterName>{plant.name}</CharacterName>
-                <Level>Lv.{plantLevel}</Level>
+                <Level>Lv.{plant.level}</Level>
               </ImgBox>
             </Link>
           </PlantCard>
@@ -85,7 +77,7 @@ const MyPlant = () => {
         );
       }
     },
-    [plantList, plantLevel, handlePickPlant]
+    [ plantList, handlePickPlant],
   );
 
   return (
@@ -105,7 +97,6 @@ const MyPlant = () => {
     </MyPlantBackGround>
   );
 };
-
 
 export const MyPlantBackGround = styled.div`
   flex: 1;

@@ -21,15 +21,14 @@ export function usePlantList() {
 
       const plants = response.data.content.slice(0, 4).map((plant: Plant) => {
         const plantType = plant.plantType;
-        const plantLevel = plant.exp >= 400 ? 4 : plant.exp >= 300 ? 3 : plant.exp >= 200 ? 2 : 1;
         const imgPath =
-                plantType === "상추"
-                ? `/assets/images/lettuce${plantLevel}.png`
-                : plantType === "딸기"
-                ? "/assets/images/strawberry.png"
-                : plantType === "대파"
-                ? "/assets/images/greenOnion.png"
-                : "/assets/images/onion.png";
+          plantType === "상추"
+            ? `/assets/images/lettuce${plant.level}.png`
+            : plantType === "딸기"
+            ? "/assets/images/strawberry.png"
+            : plantType === "대파"
+            ? "/assets/images/greenOnion.png"
+            : "/assets/images/onion.png";
 
         return { ...plant, imgPath };
       });
