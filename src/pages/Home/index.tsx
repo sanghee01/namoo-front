@@ -35,6 +35,12 @@ import { notificationState } from "../../state/notificationState";
 import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
 import styled, { keyframes } from "styled-components";
 
+interface Heart {
+  id: number;
+  x: number;
+  y: number;
+}
+
 const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
