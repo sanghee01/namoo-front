@@ -11,6 +11,8 @@ interface NotificationModalProps {
   isRead: boolean;
   notificationType: string;
   createdDate: string;
+  handleCloseNotificaition: () => void;
+  handleOpenQuest: () => void;
 }
 
 const NotificationModal: React.FC<NotificationModalProps> = ({
@@ -20,6 +22,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   isRead,
   notificationType,
   createdDate,
+  handleCloseNotificaition,
+  handleOpenQuest,
 }) => {
   const navegate = useNavigate();
   const date = new Date(createdDate);
@@ -33,10 +37,11 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
     setIsReadNotification(true);
     if (link === "history") {
       navegate("/history");
-    } else {
-      navegate("/home");
+    } else if (notificationType === "퀘스트") {
+      handleCloseNotificaition();
+      handleOpenQuest();
     }
-  }, [id, link, navegate, patchNotification]);
+  }, [handleCloseNotificaition, handleOpenQuest, id, link, navegate, notificationType, patchNotification]);
 
   const handleDeleteNotification = useCallback(() => {
     deleteNotification(id); // 알림 삭제 요청

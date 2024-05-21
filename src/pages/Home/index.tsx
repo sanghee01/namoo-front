@@ -57,7 +57,7 @@ const Home = () => {
   };
 
   // 퀘스트 모달 닫기
-  const handleCloseModal = () => {
+  const handleCloseQuest = () => {
     setIsOpenQuest(false);
   };
 
@@ -152,6 +152,8 @@ const Home = () => {
                       isRead={notification.isRead}
                       notificationType={notification.notificationType}
                       createdDate={notification.createdDate}
+                      handleCloseNotificaition={handleCloseNotificaition}
+                      handleOpenQuest={handleOpenQuest}
                     />
                   );
                 })
@@ -181,7 +183,7 @@ const Home = () => {
                 );
               })}
             </div>
-            <QuestModalCloseBtn onClick={handleCloseModal}>닫기</QuestModalCloseBtn>
+            <QuestModalCloseBtn onClick={handleCloseQuest}>닫기</QuestModalCloseBtn>
           </QuestModalBox>
         )}
       </Main>

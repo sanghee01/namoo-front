@@ -69,7 +69,7 @@ const QuestModal: React.FC<ModalProps> = ({
             </AcceptBtn>
           </>
         ) : (
-          <AcceptBtn color="#f7cfcc" onClick={handleAcceptQuest}>
+          <AcceptBtn color="#edd1b6" onClick={handleAcceptQuest}>
             수락
           </AcceptBtn>
         )}
