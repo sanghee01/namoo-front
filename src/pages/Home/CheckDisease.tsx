@@ -3,10 +3,6 @@ import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 import axios from 'axios';
 
-export interface accept {
-  [key: string]: string[];
-}
-
 const CheckDisease: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
@@ -41,28 +37,36 @@ const CheckDisease: React.FC = () => {
       'image/png': ['.png'],
       'image/jpg': ['.jpg'],
       'image/jpeg': ['.jpeg'],
-      },
+    },
   });
-  
 
   return (
+    <DiseaseBackGround>
     <Container>
-      <h2>질병 체크</h2>
+      <Text>질병 확인</Text>
       <DropzoneContainer {...getRootProps()}>
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p>Drop the file here...</p>
+          <p>파일을 여기에 드롭하세요...</p>
         ) : (
-          <p>Drag and drop a file or click to upload</p>
+          <p>{preview ? <PreviewImage src={preview} alt="Preview" /> : <Upload src="assets/images/upload.png" alt="Upload" />}</p>
         )}
       </DropzoneContainer>
-      {preview && <PreviewImage src={preview} alt="Preview" />}
-      <UploadButton onClick={handleUpload}>Upload</UploadButton>
+      <UploadButton onClick={handleUpload}>보내기</UploadButton>
     </Container>
+    </DiseaseBackGround>
+
   );
 };
 
 export default CheckDisease;
+
+export const DiseaseBackGround = styled.div`
+  background-repeat: no-repeat;
+  background-color: #fffaed;
+  background-size: 550px 700px;
+  height: 100%;
+`;
 
 const Container = styled.div`
   height: 80vh;
@@ -74,31 +78,45 @@ const Container = styled.div`
 `;
 
 const DropzoneContainer = styled.div`
-  width: 100%;
+  width: 80%;
   height: 200px;
+  border-radius: 20px;
   border: 2px dashed #cccccc;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin: 20px;
+  overflow: hidden; /* 박스 밖으로 넘치는 부분 숨기기 */
+  position: relative; /* 절대 위치 지정 기준 */
 `;
 
+const Upload = styled.img`
+  height: 150px;
+  width: 150px;
+`
+
+const Text = styled.h2`
+  padding: 10px;
+`
 const PreviewImage = styled.img`
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  margin-bottom: 20px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* 이미지가 박스에 비율을 맞춰 조정 */
+  position: absolute; /* 박스 내에서 절대 위치 지정 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 이미지가 박스의 중앙에 위치하도록 조정 */
 `;
 
 const UploadButton = styled.button`
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #c59978;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
   &:hover {
-    background-color: #0056b3;
+    background-color: #ae8870;
   }
 `;
