@@ -98,12 +98,12 @@ const Profile: React.FC = () => {
               Authorization: `Bearer ${user.accessToken}`, // 사용자 인증 토큰
             },
             validateStatus: function (status) {
-              return status === 406 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
+              return status === 402 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
             },
           });
 
           // API 응답으로부터 출석체크 상태를 확인합니다.
-          if (response.status === 406) {
+          if (response.status === 402) {
             setIsCheckedIn(true); // 이미 출석체크를 했다면 상태를 true로 변경
           } else {
             setIsCheckedIn(false); // 그렇지 않으면 false로 설정

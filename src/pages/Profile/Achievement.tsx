@@ -16,8 +16,37 @@ interface Achievement {
     completed: boolean;
 }
 
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    achievement: Achievement | null;
+  }
+// 모달 컴포넌트 정의
+const Modal: React.FC<ModalProps> = ({ isOpen, achievement, onClose }) =>  {
+    if (!isOpen) return null;
+
+    return (
+        <div style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: 'white',
+            padding: '20px',
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+            zIndex: 1000
+        }}>
+            <h2>{achievement?.title}</h2>
+            <p>{achievement?.description}</p>
+            <button onClick={onClose}>Close</button>
+        </div>
+    );
+};
+
 const Achievement = () => {
     const [achievements, setAchievements] = useState<Achievement[]>([]);
+    const [selectedAchievement, setSelectedAchievement] = useState<Achievement | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const user = useRecoilValue(userState);
 
     const fetchAchievements = async () => {
@@ -42,15 +71,6 @@ const Achievement = () => {
         }
     };
 
-    // fetchAchievements 함수를 호출하고 데이터를 콘솔에 출력
-fetchAchievements().then(data => {
-    if (data) {
-        console.log('받아온 데이터:', data);
-    } else {
-        console.log('데이터를 가져오지 못했습니다.');
-    }
-});
-
     useEffect(() => {
         const init = async () => {
             const data = await fetchAchievements();
@@ -60,7 +80,7 @@ fetchAchievements().then(data => {
         };
         init();
     }, [user]);
-    
+
 //테스트용 post 요청
 /*    useEffect(() => {
         const completeAchievement = async (achievementId: number) => {
@@ -93,6 +113,12 @@ fetchAchievements().then(data => {
         completeAchievement(2);
     }, [user]);
 */
+    // 업적 클릭 핸들러
+    const handleAchievementClick = (achievement: Achievement) => {
+    setSelectedAchievement(achievement);
+    setIsModalOpen(true);
+  };
+
     const renderAchievements = () => {
         const chunks = [];
         for (let i = 0; i < achievements.length; i += 2) {
@@ -102,7 +128,7 @@ fetchAchievements().then(data => {
         return chunks.map((chunk, index) => (
             <Container key={index}>
                 {chunk.map((achievement, idx) => (
-                    <Badge key={idx}>
+                    <Badge key={idx} onClick={() => handleAchievementClick(achievement)}>
                         <BadgeImg
                             src={achievement.completed ? `/assets/images/unlock${idx + 1}.png` : "/assets/images/lock.png"}
                             alt="achievement"
@@ -122,6 +148,11 @@ fetchAchievements().then(data => {
                 <Text>명예의 전당</Text>
             </Header>
             {renderAchievements()}
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                achievement={selectedAchievement}
+            />
         </AchievementBackGround>
     );
 };
