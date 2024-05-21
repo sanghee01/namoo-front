@@ -120,10 +120,6 @@ const Upload = styled.img`
   height: 150px;
   width: 150px;
 `
-
-const Text = styled.h2`
-  padding: 10px;
-`
 const PreviewImage = styled.img`
   max-width: 100%;
   max-height: 100%;
