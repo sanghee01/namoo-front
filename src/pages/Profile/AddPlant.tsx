@@ -224,7 +224,6 @@ export const ImgBox = styled.div`
 export const PlantImg = styled.img`
   width: 120px;
   height: 120px;
-  margin: 10px;
 
   @media screen and (max-width: 600px) {
     width: 120px;
@@ -235,7 +234,6 @@ export const PlantImg = styled.img`
 
 export const StrawberryImg = styled.img`
   height: 150px;
-  margin: 10px;
 
   @media screen and (max-width: 600px) {
     height: 150px;
@@ -254,7 +252,6 @@ export const NameContainer = styled.div`
 `;
 
 export const Name = styled.span`
-  margin: 5px 5px 0px 5px;
   font-weight: 500;
 
   @media screen and (max-width: 600px) {
@@ -264,7 +261,7 @@ export const Name = styled.span`
 
 export const Input = styled.input`
   padding: 15px;
-  margin: 10px 5px 10px 25px;
+  margin: 10px 5px 10px 15px;
   height: 45px;
   width: 490px;
   border-radius: 15px;
@@ -272,7 +269,7 @@ export const Input = styled.input`
 
   @media screen and (max-width: 600px) {
     padding: 15px;
-    margin: 10px 5px 10px 25px;
+    margin: 10px 5px 10px 15px;
     height: 45px;
     width: 340px;
   }
