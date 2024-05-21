@@ -31,14 +31,29 @@ const Modal: React.FC<ModalProps> = ({ isOpen, achievement, onClose }) =>  {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            backgroundColor: 'white',
+            backgroundColor: '#F5F5DC', // 베이지 색으로 배경 설정
+            color: '#3E704D', // 짙은 초록색으로 글자 색상 설정
             padding: '20px',
-            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-            zIndex: 1000
+            borderRadius: '10px', // 모서리를 둥글게
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)', // 그림자를 조금 더 부드럽게
+            zIndex: 1000,
+            width: '300px', // 모달창의 너비 설정
+            height: '200px', // 모달창의 높이 설정
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between' // 내용물을 공간에 맞게 정렬
         }}>
             <h2>{achievement?.title}</h2>
             <p>{achievement?.description}</p>
-            <button onClick={onClose}>Close</button>
+            <button onClick={onClose} style={{
+                backgroundColor: '#8FBC8F', // 연두색으로 버튼 배경 설정
+                color: 'white', // 버튼 글자 색상을 흰색으로
+                border: 'none', // 테두리 제거
+                borderRadius: '5px', // 버튼 모서리를 둥글게
+                padding: '10px 20px', // 패딩 조정
+                cursor: 'pointer', // 마우스 오버 시 커서 변경
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)' // 버튼에 그림자 추가
+            }}>닫기</button>
         </div>
     );
 };
