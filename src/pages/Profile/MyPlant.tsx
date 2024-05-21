@@ -77,7 +77,8 @@ const MyPlant = () => {
         );
       }
     },
-    [ plantList, handlePickPlant],
+
+    [plantList, handlePickPlant]
   );
 
   return (
