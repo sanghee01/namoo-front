@@ -51,7 +51,7 @@ export const FriendshipBar = styled.div`
   }
 
   progress::-webkit-progress-value {
-    background: #fbe036;
+    background: #ff8a8a;
     border-radius: 0px;
   }
 
@@ -82,25 +82,15 @@ export const CharacterBox = styled.div`
 export const Character = styled.div`
   position: relative;
   top: -310px;
-
-  span {
-    position: relative;
-    top: -30px;
-    left: 30%;
-    font-weight: 500;
-    font-size: 1rem;
-    padding: 4px 6px;
-    background-color: #fffdccf1;
-    border-radius: 8px;
-    border: 3px solid #ddbc7e;
+  div {
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
   }
-
   @media screen and (max-width: 600px) {
     top: -215px;
-
-    span {
-      font-size: 0.9rem;
-    }
   }
 `;
 
@@ -130,6 +120,13 @@ export const LevelImg = styled.img`
     height: 30px;
     width: 30px;
   }
+`;
+
+export const CharacterName = styled.span`
+  font-weight: 500;
+  font-size: 1rem;
+  margin-left: 5px;
+  transform: translateY(10%);
 `;
 
 export const SideBar = styled.aside`

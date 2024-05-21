@@ -1,4 +1,5 @@
 import { BiSolidBell } from "react-icons/bi";
+import { FaHeart } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { IoIosWater } from "react-icons/io";
 import { BsCameraFill } from "react-icons/bs";
@@ -18,6 +19,7 @@ import {
   NoNotification,
   QuestModalBox,
   QuestModalCloseBtn,
+  CharacterName,
 } from "./styles";
 import { plantState } from "../../state/plantState";
 import { useRecoilValue } from "recoil";
@@ -99,7 +101,7 @@ const Home = () => {
     <HomeBackGround>
       <Header>
         <FriendshipBar>
-          <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
+          <FaHeart color="#b72020" size="30" />
           <progress value={growthGauge} max="100"></progress>
         </FriendshipBar>
         <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="40" />
@@ -109,7 +111,10 @@ const Home = () => {
           <TableImg src="/assets/images/table.png" alt="plant" />
           <Character>
             <PlantImg src={plant.imgPath} alt="plant" />
-            <span>{plant.name}</span>
+            <div>
+              <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
+              <CharacterName>{plant.name}</CharacterName>
+            </div>
           </Character>
         </CharacterBox>
         <SideBar>
