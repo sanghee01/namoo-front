@@ -21,6 +21,7 @@ import {
   QuestModalBox,
   QuestModalCloseBtn,
   CharacterName,
+  HeartImage,
 } from "./styles";
 import { plantState } from "../../state/plantState";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -34,7 +35,6 @@ import { useDeleteAllNotification, useGetCountNotification, useGetNotification }
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
 import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
-import styled, { keyframes } from "styled-components";
 
 interface Heart {
   id: number;
@@ -262,29 +262,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const pop = keyframes`
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-`;
-
-const HeartImage = styled.div`
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background-image: url("/assets/images/heart.png");
-  background-size: cover;
-  opacity: 0;
-  animation: ${pop} 0.8s forwards;
-  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
-`;

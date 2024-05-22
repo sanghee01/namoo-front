@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const HomeBackGround = styled.div`
   background-image: url("/assets/images/background2.png");
@@ -252,4 +252,30 @@ export const QuestModalCloseBtn = styled.div`
   font-size: 0.9rem;
   margin: auto;
   margin-top: 15px;
+`;
+
+const pop = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+export const HeartImage = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-image: url("/assets/images/heart.png");
+  background-size: cover;
+  opacity: 0;
+  animation: ${pop} 0.8s forwards;
+  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
 `;
