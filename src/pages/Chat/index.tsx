@@ -6,11 +6,11 @@ import axios from "axios";
 const Chat = () => {
   const [messages, setMessages] = useState([{ id: 1, text: "안녕하세요! 무엇을 도와드릴까요?", isUser: false }]);
   const [inputText, setInputText] = useState("");
-
   const item = localStorage.getItem("recoil-persist");
+
   const parsedItem = JSON.parse(item);
-  const plantId = parsedItem.plantState.id;
-  console.log(plantId);
+  const plantName = parsedItem.plantState.name;
+  console.log(plantName);
 
   const handleSendMessage = () => {
     if (inputText.trim() !== "") {
@@ -18,6 +18,7 @@ const Chat = () => {
       setInputText("");
 
       const sendData = async () => {
+        let responseText = "";
         const plantInfoUrl = `${import.meta.env.VITE_SERVER_APIADDRESS}/flask/plant/1?memberId=1`;
         console.log("URL: ", plantInfoUrl);
         try {
@@ -31,24 +32,26 @@ const Chat = () => {
           };
           try {
             const response = await axios.post(url, data);
-            console.log(response.data);
+            console.log(response.data.open_ai_message);
+            responseText = response.data.open_ai_message;
           } catch (error) {
             console.error(error);
           }
         } catch (error) {
           console.error(error);
         }
+        // AI의 응답 추가
+        setTimeout(() => {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { id: prevMessages.length + 1, text: responseText, isUser: false },
+          ]);
+        }, 1000);
       };
 
       sendData();
 
       // AI의 응답 추가
-      setTimeout(() => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { id: prevMessages.length + 1, text: "네, 어떤 도움이 필요하신가요?", isUser: false },
-        ]);
-      }, 1000);
     }
   };
 
@@ -68,7 +71,7 @@ const Chat = () => {
       <ChatContent>
         {messages.map((message, index) => (
           <BubbleWrapper key={index} isUser={message.isUser}>
-            {!message.isUser && <BubbleName>{plantId}</BubbleName>}
+            {!message.isUser && <BubbleName>{plantName}</BubbleName>}
             <ChatBubble isUser={message.isUser}>{message.text}</ChatBubble>
           </BubbleWrapper>
         ))}
