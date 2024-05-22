@@ -8,8 +8,8 @@ const Chat = () => {
   const [inputText, setInputText] = useState("");
   const item = localStorage.getItem("recoil-persist");
 
-  const parsedItem = JSON.parse(item);
-  const plantName = parsedItem.plantState.name;
+  const parsedItem = item ? JSON.parse(item) : null;
+  const plantName = parsedItem?.plantState?.name || "";
   console.log(plantName);
 
   const handleSendMessage = () => {
