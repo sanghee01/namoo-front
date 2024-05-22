@@ -4,7 +4,7 @@ import { BsFillSendFill } from "react-icons/bs";
 import axios from "axios";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([{ id: 1, text: "안녕하세요! 무엇을 도와드릴까요?", isUser: false }]);
+  const [messages, setMessages] = useState([{ id: 1, text: "반가워! 나랑 이야기하자!", isUser: false }]);
   const [inputText, setInputText] = useState("");
   const item = localStorage.getItem("recoil-persist");
 
