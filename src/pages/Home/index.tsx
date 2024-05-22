@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import {
   HomeBackGround,
   Header,
+  NotificationBox,
   FriendshipBar,
   Main,
   CharacterBox,
@@ -17,9 +18,12 @@ import {
   SideBar,
   NotificationModalBox,
   NoNotification,
+  NotificationHeader,
+  NotificationBody,
   QuestModalBox,
   QuestModalCloseBtn,
   CharacterName,
+  HeartImage,
 } from "./styles";
 import { plantState } from "../../state/plantState";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -29,11 +33,10 @@ import QuestModal from "../../components/QuestModal";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
-import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNotification";
+import { useDeleteAllNotification, useGetCountNotification, useGetNotification } from "../../hooks/useNotification";
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
 import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
-import styled, { keyframes } from "styled-components";
 
 interface Heart {
   id: number;
@@ -45,6 +48,7 @@ const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
   const getNotification = useGetNotification();
+  const getCountNotification = useGetCountNotification();
   const deleteAllNotifiction = useDeleteAllNotification();
   const giveWater = usePlantGiveWater();
 
@@ -57,6 +61,19 @@ const Home = () => {
   const [isThereNotifications, setIsThereNotifications] = useState(true);
   const [growthGauge, setGrowthGauge] = useState(0);
   const [hearts, setHearts] = useState<Heart[]>([]);
+  const [countNotification, setCountNotification] = useState(0);
+
+  useEffect(() => {
+    const fetchCountNotification = async () => {
+      try {
+        const count = await getCountNotification();
+        setCountNotification(count);
+      } catch (error) {
+        console.error("Error fetching count notification:", error);
+      }
+    };
+    fetchCountNotification();
+  }, [getCountNotification]);
 
   // 식물 정보 변동 시 모든 값 업데이트
   useEffect(() => {
@@ -99,6 +116,7 @@ const Home = () => {
   const handleOpenNotificaition = () => {
     setIsNotification(true);
     getNotification();
+    getCountNotification();
   };
 
   // 알림창 닫기
@@ -116,7 +134,7 @@ const Home = () => {
   const handleGiveWater = useCallback(async () => {
     try {
       await giveWater(plant.id);
-      await successAlert("물 주기 성공!");
+      await successAlert("원격으로 물이 공급됐습니다!");
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }
@@ -146,18 +164,21 @@ const Home = () => {
   };
 
   return (
-    <HomeBackGround onClick={handleClickHeartEffect}>
+    <HomeBackGround>
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
           <progress value={growthGauge} max="100"></progress>
         </FriendshipBar>
-        <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="40" />
+        <NotificationBox>
+          <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="38" />
+          <span>{countNotification}</span>
+        </NotificationBox>
       </Header>
       <Main>
         <CharacterBox>
           <TableImg src="/assets/images/table.png" alt="plant" />
-          <Character>
+          <Character onClick={handleClickHeartEffect}>
             <PlantImg src={plant.imgPath} alt="plant" />
             <div>
               <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
@@ -181,14 +202,16 @@ const Home = () => {
         </SideBar>
         {isOpenNotification && (
           <NotificationModalBox>
-            <header>
-              <h3>알림</h3>
-              <div>
-                <span onClick={handleDeleteAllNotification}>전체 삭제</span>
-                <IoClose onClick={handleCloseNotificaition} />
-              </div>
-            </header>
-            <div>
+            <NotificationHeader>
+              <header>
+                <h3>알림</h3>
+                <div>
+                  <span onClick={handleDeleteAllNotification}>전체 삭제</span>
+                  <IoClose onClick={handleCloseNotificaition} />
+                </div>
+              </header>
+            </NotificationHeader>
+            <NotificationBody>
               {isThereNotifications && notificationList.length > 0 ? (
                 notificationList.map((notification) => {
                   return (
@@ -208,7 +231,7 @@ const Home = () => {
               ) : (
                 <NoNotification>알림이 없습니다.</NoNotification>
               )}
-            </div>
+            </NotificationBody>
           </NotificationModalBox>
         )}
         {isOpenQuest && (
@@ -243,29 +266,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const pop = keyframes`
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-`;
-
-const HeartImage = styled.div`
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background-image: url("./public/assets/images/heart.png");
-  background-size: cover;
-  opacity: 0;
-  animation: ${pop} 0.8s forwards;
-  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
-`;

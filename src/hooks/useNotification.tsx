@@ -84,3 +84,23 @@ export function useDeleteAllNotification() {
   };
   return deleteAllNotifiction;
 }
+
+export function useGetCountNotification() {
+  const user = useRecoilValue(userState);
+  const accessToken = user?.accessToken;
+
+  const getCountNotifiction = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/notification/count`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return response.data.content;
+    } catch (error: any) {
+      await warningAlert(error.response.data.message);
+      return 0;
+    }
+  };
+  return getCountNotifiction;
+}
