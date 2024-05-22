@@ -7,7 +7,6 @@ const ModalBackground = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,9 +14,6 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
   z-index: 1001; /* 모달 콘텐츠의 z-index 설정 */
   width: 70%; /* 너비를 화면의 70%로 설정 */
   max-width: 500px; /* 최대 너비를 500px로 설정하여 너무 넓어지지 않도록 함 */

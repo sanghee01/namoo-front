@@ -14,6 +14,7 @@ export const Header = styled.div`
   align-items: center;
   padding: 25px;
   height: 10%;
+  margin-bottom: 10px;
 
   svg:hover {
     cursor: pointer;
@@ -79,8 +80,10 @@ export const ProfileCard = styled.div`
   border-radius: 30px;
   overflow: hidden;
   background-color: #feefc6;
-  margin: 10px;
-  padding: 20px 0px 5px 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
 
   @media screen and (max-width: 600px) {
     padding: 0px;
@@ -163,6 +166,7 @@ export const BtnContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 `;
 
 export const BtnBox = styled.div`
@@ -190,8 +194,10 @@ export const QuestBox = styled.div<QuestBoxProps>`
   height: 22%;
   border-radius: 30px;
   background-color: #feefc6;
-  margin: 10px;
   justify-content: space-around;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 
   ${({ $isCheckedIn }) =>
     $isCheckedIn &&
@@ -199,10 +205,6 @@ export const QuestBox = styled.div<QuestBoxProps>`
     cursor: not-allowed; /* 마우스 커서 변경 */
     pointer-events: none; /* 모든 클릭 이벤트 무시 */
   `}
-
-  @media screen and (max-width: 600px) {
-    padding: 20px;
-  }
 `;
 
 export const CheckBox = styled.div`

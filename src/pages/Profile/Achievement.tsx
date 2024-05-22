@@ -143,10 +143,11 @@ const Achievement = () => {
         return chunks.map((chunk, index) => (
             <Container key={index}>
                 {chunk.map((achievement, idx) => (
-                    <Badge key={idx} onClick={() => handleAchievementClick(achievement)}>
+                    <Badge key={idx}>
                         <BadgeImg
                             src={achievement.completed ? `/assets/images/unlock${achievement.achievementId}.png` : "/assets/images/lock.png"}
                             alt="achievement"
+                            onClick={() => handleAchievementClick(achievement)}
                         />
                     </Badge>
                 ))}

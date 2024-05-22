@@ -93,7 +93,7 @@ const ImageSlider: React.FC = () => {
         {images
           .filter((image) => image.id === selectedImage)
           .map((image) => (
-            <img key={image.id} src={image.src.replace('Book', 'Detail')} alt={image.alt} />
+            <img key={image.id} src={image.src.replace('Book', 'Detail')} alt={image.alt} onClick={handleCloseModal}/>
           ))}
       </Modal>
     </>
