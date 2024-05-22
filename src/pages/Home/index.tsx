@@ -134,7 +134,7 @@ const Home = () => {
   const handleGiveWater = useCallback(async () => {
     try {
       await giveWater(plant.id);
-      await successAlert("원격으로 물이 공급됐습니다!");
+      await successAlert("물주기 요청이 완료되었습니다. 성공 여부는 알림을 통해 확인하세요. (소요 시간 최대 30초)");
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }

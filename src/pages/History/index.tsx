@@ -28,7 +28,9 @@ const History = () => {
   const tempList = plantHistoryData.map((data) => data.temp);
   const humidityList = plantHistoryData.map((data) => data.humidity);
   const soilHumidityList = plantHistoryData.map((data) => (data.soilHumidity / 1000) * 100);
-  const lightList = plantHistoryData.map((data) => ((data.light > 2000 ? 2000 : data.light) / 2000) * 100);
+  const lightList = plantHistoryData.map((data) =>
+    100 - (data.light / 2000) * 100 < 0 ? 0 : 100 - (data.light / 2000) * 100,
+  );
   const remainingWaterList = plantHistoryData.map((data) => (data.remainingWater / 3000) * 100);
   const gaveWaterList = plantHistoryData.map((data) => Number(data.gaveWater));
 
