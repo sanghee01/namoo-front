@@ -22,7 +22,7 @@ const CheckDisease: React.FC = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
+      const response = await axios.post("http://127.0.0.1:5001/upload/", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -30,6 +30,7 @@ const CheckDisease: React.FC = () => {
       console.log(response.data);
     } catch (error) {
       console.error('Error uploading file', error);
+      
     }
   };
 
@@ -52,6 +53,7 @@ const CheckDisease: React.FC = () => {
       <HeaderText>질병 확인</HeaderText>
     </Header>
     <Container>
+      <Text>※작물 사진이 아니면 올바른 정보가 제공되지 않을 수 있습니다</Text>
       <DropzoneContainer {...getRootProps()}>
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -91,6 +93,11 @@ const HeaderText = styled.h2`
   font-size: 20px;
   font-weight: bold;
 `;
+
+const Text = styled.span`
+  font-size : 12px;
+  font - weight: bold;
+`
 
 
 const Container = styled.div`
