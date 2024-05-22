@@ -145,7 +145,7 @@ const Achievement = () => {
                 {chunk.map((achievement, idx) => (
                     <Badge key={idx} onClick={() => handleAchievementClick(achievement)}>
                         <BadgeImg
-                            src={achievement.completed ? `/assets/images/unlock${idx + 1}.png` : "/assets/images/lock.png"}
+                            src={achievement.completed ? `/assets/images/unlock${achievement.achievementId}.png` : "/assets/images/lock.png"}
                             alt="achievement"
                         />
                     </Badge>

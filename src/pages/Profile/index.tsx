@@ -23,6 +23,7 @@ import {
   Container,
   CheckBox,
   CheckImg,
+  DetailBoxContainer,
 } from "./styles";
 import React, { useEffect } from "react";
 import axios from "axios";
@@ -191,6 +192,7 @@ const Profile: React.FC = () => {
             <CharacterName>{plant.name}</CharacterName>
             <Level>Lv.{plant.level}</Level>
           </ProfileBox>
+          <DetailBoxContainer>
           <DetailBox>
             <Text>{plant.createDate}</Text>
             <span>생년월일</span>
@@ -203,6 +205,7 @@ const Profile: React.FC = () => {
             <Text>{todayMessage}</Text>
             <span>오늘의 한마디</span>
           </DetailBox>
+          </DetailBoxContainer>
         </ProfileCard>
         <BtnContainer>
           <BtnBox>
