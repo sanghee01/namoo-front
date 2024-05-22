@@ -30,7 +30,7 @@ import axios from "axios";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { userState } from "../../state/userState";
 import { useLocation, useNavigate } from "react-router-dom";
-import { plantState, todayMessageState } from "../../state/plantState";
+import { plantImgState, plantState, todayMessageState } from "../../state/plantState";
 import { isCheckedInState } from "../../state/checkState";
 import { errorAlert, successAlert, Confirm, CheckConfirm } from "../../components/Alert";
 import { usePlantList } from "../../hooks/useGetPlantList";
@@ -40,6 +40,8 @@ const Profile: React.FC = () => {
   const plant = useRecoilValue(plantState);
   const [todayMessage, setTodayMessage] = useRecoilState(todayMessageState);
   const [isCheckedIn, setIsCheckedIn] = useRecoilState(isCheckedInState);
+  const [, setPlant] = useRecoilState(plantState);
+  const [, setPlantImg] = useRecoilState(plantImgState);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -137,6 +139,18 @@ const Profile: React.FC = () => {
         });
         await successAlert("식물이 삭제되었습니다.");
         await fetchPlantList(); // 식물 목록을 최신 상태로 업데이트
+        setPlant({
+          id: 0,
+          name: "",
+          exp: 0,
+          level: 1,
+          plantType: "",
+          uuid: "",
+          giveWater: false,
+          createDate: "",
+          imgPath: "",
+        });
+        setPlantImg("");
         navigate("/myplant");
       } catch (error) {
         console.error("식물 삭제 중 에러가 발생했습니다:", error);
@@ -193,18 +207,18 @@ const Profile: React.FC = () => {
             <Level>Lv.{plant.level}</Level>
           </ProfileBox>
           <DetailBoxContainer>
-          <DetailBox>
-            <Text>{plant.createDate}</Text>
-            <span>생년월일</span>
-          </DetailBox>
-          <DetailBox>
-            <Text>{plant.exp}%</Text>
-            <span>애정도</span>
-          </DetailBox>
-          <DetailBox>
-            <Text>{todayMessage}</Text>
-            <span>오늘의 한마디</span>
-          </DetailBox>
+            <DetailBox>
+              <Text>{plant.createDate}</Text>
+              <span>생년월일</span>
+            </DetailBox>
+            <DetailBox>
+              <Text>{plant.exp}%</Text>
+              <span>애정도</span>
+            </DetailBox>
+            <DetailBox>
+              <Text>{todayMessage}</Text>
+              <span>오늘의 한마디</span>
+            </DetailBox>
           </DetailBoxContainer>
         </ProfileCard>
         <BtnContainer>
