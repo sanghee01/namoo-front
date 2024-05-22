@@ -191,12 +191,13 @@ export const NotificationModalBox = styled(QuestModalBox)`
   top: 8%;
   left: 10%;
   width: 80%;
-  height: 30%;
+  height: 40%;
+  min-height: 300px;
   background: white;
   border-radius: 25px;
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   padding: 20px;
   &::-webkit-scrollbar {
     display: none;
@@ -204,8 +205,9 @@ export const NotificationModalBox = styled(QuestModalBox)`
 `;
 
 export const NotificationHeader = styled.div`
-  position: fixed;
-  width: 70%;
+  position: relative;
+  width: 100%;
+  height: 40px;
   background-color: #fff;
   padding-bottom: 10px;
   & header {
@@ -244,7 +246,30 @@ export const NotificationHeader = styled.div`
 `;
 
 export const NotificationBody = styled.div`
-  padding-top: 40px;
+  width: calc(100% + 5px);
+  height: calc(100% - 40px);
+  padding-right: 5px;
+  overflow-y: scroll;
+  /* 스크롤바의 기본 트랙 스타일 */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* 스크롤바의 트랙 스타일 */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* 스크롤바의 핸들 스타일 */
+  &::-webkit-scrollbar-thumb {
+    background: #abffa9;
+    border-radius: 6px;
+  }
+
+  /* 스크롤바의 핸들을 호버할 때 스타일 */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 
 export const NoNotification = styled.div`
