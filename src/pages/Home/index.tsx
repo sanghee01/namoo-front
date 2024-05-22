@@ -18,6 +18,8 @@ import {
   SideBar,
   NotificationModalBox,
   NoNotification,
+  NotificationHeader,
+  NotificationBody,
   QuestModalBox,
   QuestModalCloseBtn,
   CharacterName,
@@ -200,14 +202,16 @@ const Home = () => {
         </SideBar>
         {isOpenNotification && (
           <NotificationModalBox>
-            <header>
-              <h3>알림</h3>
-              <div>
-                <span onClick={handleDeleteAllNotification}>전체 삭제</span>
-                <IoClose onClick={handleCloseNotificaition} />
-              </div>
-            </header>
-            <div>
+            <NotificationHeader>
+              <header>
+                <h3>알림</h3>
+                <div>
+                  <span onClick={handleDeleteAllNotification}>전체 삭제</span>
+                  <IoClose onClick={handleCloseNotificaition} />
+                </div>
+              </header>
+            </NotificationHeader>
+            <NotificationBody>
               {isThereNotifications && notificationList.length > 0 ? (
                 notificationList.map((notification) => {
                   return (
@@ -227,7 +231,7 @@ const Home = () => {
               ) : (
                 <NoNotification>알림이 없습니다.</NoNotification>
               )}
-            </div>
+            </NotificationBody>
           </NotificationModalBox>
         )}
         {isOpenQuest && (
