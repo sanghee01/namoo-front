@@ -1,15 +1,46 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { BsFillSendFill } from "react-icons/bs";
+import axios from "axios";
 
 const Chat = () => {
   const [messages, setMessages] = useState([{ id: 1, text: "안녕하세요! 무엇을 도와드릴까요?", isUser: false }]);
   const [inputText, setInputText] = useState("");
 
+  const item = localStorage.getItem("recoil-persist");
+  const parsedItem = JSON.parse(item);
+  const plantId = parsedItem.plantState.id;
+  console.log(plantId);
+
   const handleSendMessage = () => {
     if (inputText.trim() !== "") {
       setMessages((prevMessages) => [...prevMessages, { id: prevMessages.length + 1, text: inputText, isUser: true }]);
       setInputText("");
+
+      const sendData = async () => {
+        const plantInfoUrl = `${import.meta.env.VITE_SERVER_APIADDRESS}/flask/plant/1?memberId=1`;
+        console.log("URL: ", plantInfoUrl);
+        try {
+          const responsePlantData = await axios.get(plantInfoUrl);
+          console.log(responsePlantData.data);
+
+          const url = `${import.meta.env.VITE_FLASK_APIADDRESS}`;
+          const data = {
+            message: inputText,
+            plantData: responsePlantData.data, // plantInfoUrl에서 받은 데이터를 추가
+          };
+          try {
+            const response = await axios.post(url, data);
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      sendData();
 
       // AI의 응답 추가
       setTimeout(() => {
@@ -37,7 +68,7 @@ const Chat = () => {
       <ChatContent>
         {messages.map((message, index) => (
           <BubbleWrapper key={index} isUser={message.isUser}>
-            {!message.isUser && <BubbleName>식물ai</BubbleName>}
+            {!message.isUser && <BubbleName>{plantId}</BubbleName>}
             <ChatBubble isUser={message.isUser}>{message.text}</ChatBubble>
           </BubbleWrapper>
         ))}
