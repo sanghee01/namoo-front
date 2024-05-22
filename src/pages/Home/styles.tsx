@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const HomeBackGround = styled.div`
   background-image: url("/assets/images/background2.png");
@@ -14,15 +14,15 @@ export const Header = styled.div`
   align-items: center;
   padding: 25px;
   height: 10%;
+`;
+
+export const NotificationBox = styled.div`
+  span {
+    font-weight: 600;
+  }
 
   svg:hover {
     cursor: pointer;
-  }
-
-  @media screen and (max-width: 600px) {
-    svg {
-      width: 40px;
-    }
   }
 `;
 
@@ -201,42 +201,50 @@ export const NotificationModalBox = styled(QuestModalBox)`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
 
+export const NotificationHeader = styled.div`
+  position: fixed;
+  width: 70%;
+  background-color: #fff;
+  padding-bottom: 10px;
   & header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+  }
+  & svg {
+    font-size: 1.7rem;
+  }
 
-    & svg {
-      font-size: 1.7rem;
-    }
+  & h3 {
+    text-align: center;
+    color: #53390a;
+    margin: 0;
+  }
 
-    & h3 {
-      text-align: center;
-      color: #53390a;
-      margin: 0;
-    }
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-    & > div {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+  & span {
+    font-size: 0.9rem;
+    padding: 3px 7px;
+    background-color: #ffe0e0;
+    border-radius: 5px;
+    color: #8a3a3a;
+    font-weight: 600;
 
-    & span {
-      font-size: 0.9rem;
-      padding: 3px 7px;
-      background-color: #ffe0e0;
-      border-radius: 5px;
-      color: #8a3a3a;
-      font-weight: 600;
-
-      &:hover {
-        filter: contrast(80%);
-      }
+    &:hover {
+      filter: contrast(80%);
     }
   }
+`;
+
+export const NotificationBody = styled.div`
+  padding-top: 40px;
 `;
 
 export const NoNotification = styled.div`
@@ -252,4 +260,30 @@ export const QuestModalCloseBtn = styled.div`
   font-size: 0.9rem;
   margin: auto;
   margin-top: 15px;
+`;
+
+const pop = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+export const HeartImage = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-image: url("/assets/images/heart.png");
+  background-size: cover;
+  opacity: 0;
+  animation: ${pop} 0.8s forwards;
+  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
 `;
