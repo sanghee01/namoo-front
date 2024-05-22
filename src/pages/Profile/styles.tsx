@@ -102,6 +102,19 @@ export const ProfileBox = styled.div`
   }
 `;
 
+export const DetailBoxContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* 왼쪽 정렬 */
+  margin-left: 20px; /* ProfileBox와의 간격 조절 */
+
+  @media screen and (max-width: 600px) {
+    align-items: center; /* 작은 화면에서는 가운데 정렬 */
+    margin-left: 0;
+  }
+`;
+
 export const DetailBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -114,6 +127,7 @@ export const DetailBox = styled.div`
     font-size: 14px;
     font-weight: 500;
   }
+
 `;
 export const PlantImg = styled.img`
   width: 100%;
@@ -153,8 +167,6 @@ export const BtnContainer = styled.div`
 
 export const BtnBox = styled.div`
   flex: 1;
-  display: flex;
-  flex-direction: column;
   height: 90%;
   border-radius: 30px;
   background-color: #feefc6;
