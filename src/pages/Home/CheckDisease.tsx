@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import {  Link } from 'react-router-dom'; 
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Link } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
-import styled from 'styled-components';
-import axios from 'axios';
+import styled from "styled-components";
+import axios from "axios";
 
 const CheckDisease: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string>('');
+  const [preview, setPreview] = useState<string>("");
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -19,51 +19,55 @@ const CheckDisease: React.FC = () => {
     if (!selectedFile) return;
 
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("file", selectedFile);
 
     try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
+      const response = await axios.post("http://127.0.0.1:5001/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(response.data);
     } catch (error) {
-      console.error('Error uploading file', error);
+      console.error("Error uploading file", error);
     }
   };
-
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/png': ['.png'],
-      'image/jpg': ['.jpg'],
-      'image/jpeg': ['.jpeg'],
+      "image/png": [".png"],
+      "image/jpg": [".jpg"],
+      "image/jpeg": [".jpeg"],
     },
   });
 
   return (
     <DiseaseBackGround>
       <Header>
-      <Link to="/home">
+        <Link to="/home">
           <MdArrowBackIos size="30" />
-      </Link>
-      <HeaderText>질병 확인</HeaderText>
-    </Header>
-    <Container>
-      <DropzoneContainer {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>파일을 여기에 드롭하세요...</p>
-        ) : (
-          <p>{preview ? <PreviewImage src={preview} alt="Preview" /> : <Upload src="assets/images/upload.png" alt="Upload" />}</p>
-        )}
-      </DropzoneContainer>
-      <UploadButton onClick={handleUpload}>보내기</UploadButton>
-    </Container>
+        </Link>
+        <HeaderText>질병 확인</HeaderText>
+      </Header>
+      <Container>
+        <DropzoneContainer {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>파일을 여기에 드롭하세요...</p>
+          ) : (
+            <p>
+              {preview ? (
+                <PreviewImage src={preview} alt="Preview" />
+              ) : (
+                <Upload src="assets/images/upload.png" alt="Upload" />
+              )}
+            </p>
+          )}
+        </DropzoneContainer>
+        <UploadButton onClick={handleUpload}>보내기</UploadButton>
+      </Container>
     </DiseaseBackGround>
-
   );
 };
 
@@ -92,7 +96,6 @@ const HeaderText = styled.h2`
   font-weight: bold;
 `;
 
-
 const Container = styled.div`
   height: 80vh;
   display: flex;
@@ -119,7 +122,7 @@ const DropzoneContainer = styled.div`
 const Upload = styled.img`
   height: 150px;
   width: 150px;
-`
+`;
 const PreviewImage = styled.img`
   max-width: 100%;
   max-height: 100%;
