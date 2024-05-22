@@ -162,7 +162,7 @@ const Home = () => {
   };
 
   return (
-    <HomeBackGround onClick={handleClickHeartEffect}>
+    <HomeBackGround>
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
@@ -176,7 +176,7 @@ const Home = () => {
       <Main>
         <CharacterBox>
           <TableImg src="/assets/images/table.png" alt="plant" />
-          <Character>
+          <Character onClick={handleClickHeartEffect}>
             <PlantImg src={plant.imgPath} alt="plant" />
             <div>
               <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
@@ -282,7 +282,7 @@ const HeartImage = styled.div`
   position: absolute;
   width: 70px;
   height: 70px;
-  background-image: url("./public/assets/images/heart.png");
+  background-image: url("/assets/images/heart.png");
   background-size: cover;
   opacity: 0;
   animation: ${pop} 0.8s forwards;
