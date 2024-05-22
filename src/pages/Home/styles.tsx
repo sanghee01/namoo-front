@@ -14,15 +14,15 @@ export const Header = styled.div`
   align-items: center;
   padding: 25px;
   height: 10%;
+`;
+
+export const NotificationBox = styled.div`
+  span {
+    font-weight: 600;
+  }
 
   svg:hover {
     cursor: pointer;
-  }
-
-  @media screen and (max-width: 600px) {
-    svg {
-      width: 40px;
-    }
   }
 `;
 

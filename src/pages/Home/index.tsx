@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import {
   HomeBackGround,
   Header,
+  NotificationBox,
   FriendshipBar,
   Main,
   CharacterBox,
@@ -29,7 +30,7 @@ import QuestModal from "../../components/QuestModal";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
-import { useDeleteAllNotification, useGetNotification } from "../../hooks/useNotification";
+import { useDeleteAllNotification, useGetCountNotification, useGetNotification } from "../../hooks/useNotification";
 import NotificationModal from "../../components/NotificationModal";
 import { notificationState } from "../../state/notificationState";
 import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
@@ -45,6 +46,7 @@ const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
   const getNotification = useGetNotification();
+  const getCountNotification = useGetCountNotification();
   const deleteAllNotifiction = useDeleteAllNotification();
   const giveWater = usePlantGiveWater();
 
@@ -57,6 +59,19 @@ const Home = () => {
   const [isThereNotifications, setIsThereNotifications] = useState(true);
   const [growthGauge, setGrowthGauge] = useState(0);
   const [hearts, setHearts] = useState<Heart[]>([]);
+  const [countNotification, setCountNotification] = useState(0);
+
+  useEffect(() => {
+    const fetchCountNotification = async () => {
+      try {
+        const count = await getCountNotification();
+        setCountNotification(count);
+      } catch (error) {
+        console.error("Error fetching count notification:", error);
+      }
+    };
+    fetchCountNotification();
+  }, [getCountNotification]);
 
   // 식물 정보 변동 시 모든 값 업데이트
   useEffect(() => {
@@ -99,6 +114,7 @@ const Home = () => {
   const handleOpenNotificaition = () => {
     setIsNotification(true);
     getNotification();
+    getCountNotification();
   };
 
   // 알림창 닫기
@@ -152,7 +168,10 @@ const Home = () => {
           <FaHeart color="#b72020" size="30" />
           <progress value={growthGauge} max="100"></progress>
         </FriendshipBar>
-        <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="40" />
+        <NotificationBox>
+          <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="38" />
+          <span>{countNotification}</span>
+        </NotificationBox>
       </Header>
       <Main>
         <CharacterBox>
