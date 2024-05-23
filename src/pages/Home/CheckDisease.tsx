@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import styled from "styled-components";
 import axios from "axios";
+import { warningAlert } from "../../components/Alert";
 
 const CheckDisease: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -24,7 +25,6 @@ const CheckDisease: React.FC = () => {
     formData.append("file", selectedFile);
 
     try {
-      console.log("GKKGK");
       const response = await axios.post("http://127.0.0.1:5001/upload/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -43,6 +43,7 @@ const CheckDisease: React.FC = () => {
       }
     } catch (error) {
       console.error("Error uploading file", error);
+      await warningAlert("서버 점검 중입니다");
     }
   };
 
