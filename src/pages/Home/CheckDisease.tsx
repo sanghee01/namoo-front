@@ -1,71 +1,92 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import {  Link } from 'react-router-dom'; 
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Link } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
-import styled from 'styled-components';
-import axios from 'axios';
+import styled from "styled-components";
+import axios from "axios";
+import { warningAlert } from "../../components/Alert";
 
 const CheckDisease: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string>('');
+  const [preview, setPreview] = useState<string>("");
+  const [diseaseResult, setDiseaseResult] = useState<string | null>(null); // 질병 결과 상태 추가
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     setSelectedFile(file);
     setPreview(URL.createObjectURL(file));
+    setDiseaseResult(null); // 파일을 새로 드롭할 때마다 결과 초기화
   }, []);
 
   const handleUpload = async () => {
     if (!selectedFile) return;
 
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("file", selectedFile);
 
     try {
       const response = await axios.post("http://127.0.0.1:5001/upload/", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(response.data);
+      // 서버로부터 받은 응답에 따라 diseaseResult 상태 업데이트
+
+      const resultLabel = response.data.disease_label;
+      if (resultLabel === 0) {
+        setDiseaseResult("정상");
+      } else if (resultLabel === 1) {
+        setDiseaseResult("균핵병");
+      } else {
+        setDiseaseResult("노균병"); // 실제 조건에 맞는 값을 설정하세요
+      }
     } catch (error) {
-      console.error('Error uploading file', error);
-      
+
+      console.error("Error uploading file", error);
+      await warningAlert("서버 점검 중입니다");
+
     }
   };
-
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/png': ['.png'],
-      'image/jpg': ['.jpg'],
-      'image/jpeg': ['.jpeg'],
+      "image/png": [".png"],
+      "image/jpg": [".jpg"],
+      "image/jpeg": [".jpeg"],
     },
   });
 
   return (
     <DiseaseBackGround>
       <Header>
-      <Link to="/home">
+        <Link to="/home">
           <MdArrowBackIos size="30" />
-      </Link>
-      <HeaderText>질병 확인</HeaderText>
-    </Header>
-    <Container>
-      <Text>※작물 사진이 아니면 올바른 정보가 제공되지 않을 수 있습니다</Text>
-      <DropzoneContainer {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>파일을 여기에 드롭하세요...</p>
-        ) : (
-          <p>{preview ? <PreviewImage src={preview} alt="Preview" /> : <Upload src="assets/images/upload.png" alt="Upload" />}</p>
-        )}
-      </DropzoneContainer>
-      <UploadButton onClick={handleUpload}>보내기</UploadButton>
-    </Container>
-    </DiseaseBackGround>
+        </Link>
+        <HeaderText>질병 확인</HeaderText>
+      </Header>
+      <Container>
+        <Text>※작물 사진이 아니면 올바른 정보가 제공되지 않을 수 있습니다</Text>
+        <DropzoneContainer {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>파일을 여기에 드롭하세요...</p>
+          ) : (
+            <p>
+              {preview ? (
+                <PreviewImage src={preview} alt="Preview" />
+              ) : (
+                <Upload src="assets/images/upload.png" alt="Upload" />
+              )}
+            </p>
+          )}
+        </DropzoneContainer>
+        <UploadButton onClick={handleUpload}>보내기</UploadButton>
+        {diseaseResult && <ResultText>{diseaseResult}</ResultText>}
+      </Container>
 
+    </DiseaseBackGround>
   );
 };
 
@@ -97,8 +118,7 @@ const HeaderText = styled.h2`
 const Text = styled.span`
   font-size : 12px;
   font - weight: bold;
-`
-
+`;
 
 const Container = styled.div`
   height: 80vh;
@@ -126,7 +146,7 @@ const DropzoneContainer = styled.div`
 const Upload = styled.img`
   height: 150px;
   width: 150px;
-`
+`;
 const PreviewImage = styled.img`
   max-width: 100%;
   max-height: 100%;
@@ -147,4 +167,11 @@ const UploadButton = styled.button`
   &:hover {
     background-color: #ae8870;
   }
+`;
+
+const ResultText = styled.div`
+  margin-top: 20px;
+  font-size: 20px;
+  color: #2e2e2e;
+  font-weight: bold;
 `;
