@@ -8,11 +8,13 @@ import axios from "axios";
 const CheckDisease: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
+  const [diseaseResult, setDiseaseResult] = useState<string | null>(null); // 질병 결과 상태 추가
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     setSelectedFile(file);
     setPreview(URL.createObjectURL(file));
+    setDiseaseResult(null); // 파일을 새로 드롭할 때마다 결과 초기화
   }, []);
 
   const handleUpload = async () => {
@@ -22,12 +24,23 @@ const CheckDisease: React.FC = () => {
     formData.append("file", selectedFile);
 
     try {
-      const response = await axios.post("http://127.0.0.1:5001/upload", formData, {
+      console.log("GKKGK");
+      const response = await axios.post("http://127.0.0.1:5001/upload/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       console.log(response.data);
+      // 서버로부터 받은 응답에 따라 diseaseResult 상태 업데이트
+
+      const resultLabel = response.data.disease_label;
+      if (resultLabel === 0) {
+        setDiseaseResult("정상");
+      } else if (resultLabel === 1) {
+        setDiseaseResult("균핵병");
+      } else {
+        setDiseaseResult("노균병"); // 실제 조건에 맞는 값을 설정하세요
+      }
     } catch (error) {
       console.error("Error uploading file", error);
     }
@@ -51,6 +64,7 @@ const CheckDisease: React.FC = () => {
         <HeaderText>질병 확인</HeaderText>
       </Header>
       <Container>
+        <Text>※작물 사진이 아니면 올바른 정보가 제공되지 않을 수 있습니다</Text>
         <DropzoneContainer {...getRootProps()}>
           <input {...getInputProps()} />
           {isDragActive ? (
@@ -66,6 +80,7 @@ const CheckDisease: React.FC = () => {
           )}
         </DropzoneContainer>
         <UploadButton onClick={handleUpload}>보내기</UploadButton>
+        {diseaseResult && <ResultText>{diseaseResult}</ResultText>}
       </Container>
     </DiseaseBackGround>
   );
@@ -94,6 +109,11 @@ const Header = styled.div`
 const HeaderText = styled.h2`
   font-size: 20px;
   font-weight: bold;
+`;
+
+const Text = styled.span`
+  font-size : 12px;
+  font - weight: bold;
 `;
 
 const Container = styled.div`
@@ -143,4 +163,11 @@ const UploadButton = styled.button`
   &:hover {
     background-color: #ae8870;
   }
+`;
+
+const ResultText = styled.div`
+  margin-top: 20px;
+  font-size: 20px;
+  color: #2e2e2e;
+  font-weight: bold;
 `;
