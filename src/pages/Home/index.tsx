@@ -73,7 +73,7 @@ const Home = () => {
       }
     };
     fetchCountNotification();
-  }, [getCountNotification]);
+  }, []);
 
   // 식물 정보 변동 시 모든 값 업데이트
   useEffect(() => {
