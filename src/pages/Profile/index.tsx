@@ -71,8 +71,12 @@ const Profile: React.FC = () => {
               },
             },
           );
-          console.log(historyResponse.data);
 
+          if (historyResponse.data.content.content.length === 0) {
+            //식물 기록 없을 경우
+            setTodayMessage("아이 촉촉해~");
+            return;
+          }
           // soilHumidity에 따른 메시지 설정
           const { soilHumidity } = historyResponse.data.content.content[0];
           if (soilHumidity < 500) {
