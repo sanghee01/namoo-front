@@ -6,7 +6,6 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { plantHistoryState } from "../../state/plantState";
 import HistoryBarChart from "../../components/HistoryBarChart";
 import { userState } from "../../state/userState";
-import dummyData from "./plant-history.json";
 
 const History = () => {
   const getPlantHistoryData = useGetPlantHistoryData();
