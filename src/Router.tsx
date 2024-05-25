@@ -24,39 +24,51 @@ import ErrorPage from "./pages/Login/ErrorPage";
 import DeleteMemeberPage from "./pages/Profile/DeleteMemberPage";
 import { plantState } from "./state/plantState";
 import CheckDisease from "./pages/Home/CheckDisease";
+import { userState } from "./state/userState";
 
 const Router = () => {
   const plant = useRecoilValue(plantState);
-  console.log("planthi", plant);
+  const user = useRecoilValue(userState);
+
   return (
     <BrowserRouter>
       <Container>
         <Main>
           <Routes>
-            {/* 로그인 상태여야 접속할 수 있는 페이지 */}
-            <Route path="/repassword" element={<RePassword />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/myplant" element={<MyPlant />} />
-            <Route path="/addplant" element={<AddPlant />} />
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/achievement" element={<Achievement />} />
-            <Route path="/encyclopedia" element={<Encyclopedia />} />
-            <Route path="/delete-member" element={<DeleteMemeberPage />} />
-            <Route path="/check-disease" element={<CheckDisease />} />
-
-            {/* 로그인 상태가 아니어야 접속할 수 있는 페이지 */}
-            <Route path="/" element={<Start />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/findpassword" element={<FindPassword />} />
-            <Route path="/password/reset" element={<ChangePassword />} />
-            <Route path="/resend-mail" element={<ReAuthMail />} />
-            <Route path="/login-success" element={<LoginSuccess />} />
-            <Route path="/error-page" element={<ErrorPage />} />
-
+            {user ? (
+              <>
+                {/* 로그인 상태여야 접속할 수 있는 페이지 */}
+                <Route path="/myplant" element={<MyPlant />} />
+                <Route path="/repassword" element={<RePassword />} />
+                <Route path="/delete-member" element={<DeleteMemeberPage />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/addplant" element={<AddPlant />} />
+                <Route path="/setting" element={<Setting />} />
+                {plant.name && (
+                  <>
+                    {/* 식물 선택 상태여야지 접속할 수 있는 페이지 */}
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/history" element={<History />} />
+                    <Route path="/achievement" element={<Achievement />} />
+                    <Route path="/encyclopedia" element={<Encyclopedia />} />
+                    <Route path="/check-disease" element={<CheckDisease />} />
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {/* 로그인 상태가 아니어야 접속할 수 있는 페이지 */}
+                <Route path="/" element={<Start />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/findpassword" element={<FindPassword />} />
+                <Route path="/password/reset" element={<ChangePassword />} />
+                <Route path="/resend-mail" element={<ReAuthMail />} />
+                <Route path="/login-success" element={<LoginSuccess />} />
+                <Route path="/error-page" element={<ErrorPage />} />
+              </>
+            )}
             {/* 존재하지 않는 페이지 */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
