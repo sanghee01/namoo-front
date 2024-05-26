@@ -104,7 +104,7 @@ const SignUp = () => {
             onChange={handleChangePassword}
             placeholder="비밀번호 입력"
           />
-          <p>* 8자 이상, 알파벳, 숫자를 이용하여 조합</p>
+          <p>* 8자 이상, 알파벳, 숫자, 특수문자를 이용하여 조합</p>
           <Label htmlFor="passwordCheck">비밀번호 확인</Label>
           <Input
             type="password"

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import HistoryLineChart from "../../components/HistoryLineChart";
 import { useEffect } from "react";
 import { useGetPlantHistoryData } from "../../hooks/useGetPlantHistoryData";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { plantHistoryState } from "../../state/plantState";
 import HistoryBarChart from "../../components/HistoryBarChart";
 import { userState } from "../../state/userState";
@@ -11,6 +11,7 @@ const History = () => {
   const getPlantHistoryData = useGetPlantHistoryData();
   const plantHistoryData = useRecoilValue(plantHistoryState);
   const user = useRecoilValue(userState);
+  const setPlantHistory = useSetRecoilState(plantHistoryState);
 
   useEffect(() => {
     if (plantHistoryData.length === 0 && user?.username === "koala") {
@@ -21,6 +22,11 @@ const History = () => {
       setTimeout(() => {
         getPlantHistoryData();
       }, 18000);
+    } else if (user?.username !== "koala") {
+      //식물 1이 아닐경우 더미데이터로 대체
+      fetch("/plant-history.json")
+        .then((response) => response.json())
+        .then((data) => setPlantHistory(data.content.content));
     }
   }, [getPlantHistoryData, plantHistoryData, user?.username]);
 
