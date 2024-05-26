@@ -35,7 +35,7 @@ const Router = () => {
       <Container>
         <Main>
           <Routes>
-            {user ? (
+            {user && (
               <>
                 {/* 로그인 상태여야 접속할 수 있는 페이지 */}
                 <Route path="/myplant" element={<MyPlant />} />
@@ -56,20 +56,17 @@ const Router = () => {
                   </>
                 )}
               </>
-            ) : (
-              <>
-                {/* 로그인 상태가 아니어야 접속할 수 있는 페이지 */}
-                <Route path="/" element={<Start />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/findpassword" element={<FindPassword />} />
-                <Route path="/password/reset" element={<ChangePassword />} />
-                <Route path="/resend-mail" element={<ReAuthMail />} />
-                <Route path="/login-success" element={<LoginSuccess />} />
-                <Route path="/error-page" element={<ErrorPage />} />
-              </>
             )}
-            {/* 존재하지 않는 페이지 */}
+
+            {/* 로그인 상태가 아니어야 접속할 수 있는 페이지 */}
+            <Route path="/" element={<Start />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/findpassword" element={<FindPassword />} />
+            <Route path="/password/reset" element={<ChangePassword />} />
+            <Route path="/resend-mail" element={<ReAuthMail />} />
+            <Route path="/login-success" element={<LoginSuccess />} />
+            <Route path="/error-page" element={<ErrorPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Main>
