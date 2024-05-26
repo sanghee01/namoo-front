@@ -1,0 +1,362 @@
+{
+  "message": "1 회원의1 식물 기록입니다.",
+  "content": {
+    "content": [
+      {
+        "id": 397,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 595.0,
+        "remainingWater": 426.0,
+        "gaveWater": false,
+        "light": 368.0,
+        "createdDate": "2024-05-24T19:17:49.80429"
+      },
+      {
+        "id": 396,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 548.0,
+        "remainingWater": 443.0,
+        "gaveWater": false,
+        "light": 590.0,
+        "createdDate": "2024-05-24T19:07:46.658701"
+      },
+      {
+        "id": 395,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 447.0,
+        "remainingWater": 427.0,
+        "gaveWater": false,
+        "light": 806.0,
+        "createdDate": "2024-05-24T18:57:43.551554"
+      },
+      {
+        "id": 394,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 458.0,
+        "remainingWater": 417.0,
+        "gaveWater": false,
+        "light": 1040.0,
+        "createdDate": "2024-05-24T18:47:40.479156"
+      },
+      {
+        "id": 393,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 453.0,
+        "remainingWater": 432.0,
+        "gaveWater": false,
+        "light": 1221.0,
+        "createdDate": "2024-05-24T18:37:37.229272"
+      },
+      {
+        "id": 392,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 446.0,
+        "remainingWater": 480.0,
+        "gaveWater": false,
+        "light": 1392.0,
+        "createdDate": "2024-05-24T18:27:34.059818"
+      },
+      {
+        "id": 391,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 600.0,
+        "remainingWater": 464.0,
+        "gaveWater": false,
+        "light": 1519.0,
+        "createdDate": "2024-05-24T18:17:30.787403"
+      },
+      {
+        "id": 390,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 518.0,
+        "remainingWater": 464.0,
+        "gaveWater": false,
+        "light": 1619.0,
+        "createdDate": "2024-05-24T18:07:27.553795"
+      },
+      {
+        "id": 389,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 495.0,
+        "remainingWater": 464.0,
+        "gaveWater": false,
+        "light": 1695.0,
+        "createdDate": "2024-05-24T17:57:24.264656"
+      },
+      {
+        "id": 388,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 446.0,
+        "remainingWater": 459.0,
+        "gaveWater": false,
+        "light": 1758.0,
+        "createdDate": "2024-05-24T17:47:20.948022"
+      },
+      {
+        "id": 387,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 450.0,
+        "remainingWater": 466.0,
+        "gaveWater": false,
+        "light": 1806.0,
+        "createdDate": "2024-05-24T17:37:17.469852"
+      },
+      {
+        "id": 386,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 534.0,
+        "remainingWater": 463.0,
+        "gaveWater": false,
+        "light": 1839.0,
+        "createdDate": "2024-05-24T17:27:14.249452"
+      },
+      {
+        "id": 385,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 558.0,
+        "remainingWater": 487.0,
+        "gaveWater": false,
+        "light": 1877.0,
+        "createdDate": "2024-05-24T17:17:11.146185"
+      },
+      {
+        "id": 384,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 77.0,
+        "soilHumidity": 530.0,
+        "remainingWater": 469.0,
+        "gaveWater": false,
+        "light": 2067.0,
+        "createdDate": "2024-05-24T17:07:08.037806"
+      },
+      {
+        "id": 383,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 460.0,
+        "remainingWater": 433.0,
+        "gaveWater": false,
+        "light": 2091.0,
+        "createdDate": "2024-05-24T16:57:04.799363"
+      },
+      {
+        "id": 382,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 456.0,
+        "remainingWater": 437.0,
+        "gaveWater": false,
+        "light": 2101.0,
+        "createdDate": "2024-05-24T16:47:01.638279"
+      },
+      {
+        "id": 381,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 496.0,
+        "remainingWater": 450.0,
+        "gaveWater": false,
+        "light": 2118.0,
+        "createdDate": "2024-05-24T16:36:58.064644"
+      },
+      {
+        "id": 380,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 571.0,
+        "remainingWater": 469.0,
+        "gaveWater": false,
+        "light": 2144.0,
+        "createdDate": "2024-05-24T16:26:54.902431"
+      },
+      {
+        "id": 379,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 75.0,
+        "soilHumidity": 499.0,
+        "remainingWater": 409.0,
+        "gaveWater": false,
+        "light": 2160.0,
+        "createdDate": "2024-05-24T16:16:51.784462"
+      },
+      {
+        "id": 378,
+        "plantId": 1,
+        "temp": 23.0,
+        "humidity": 76.0,
+        "soilHumidity": 464.0,
+        "remainingWater": 437.0,
+        "gaveWater": false,
+        "light": 2174.0,
+        "createdDate": "2024-05-24T16:06:48.62539"
+      },
+      {
+        "id": 377,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 444.0,
+        "remainingWater": 421.0,
+        "gaveWater": false,
+        "light": 2188.0,
+        "createdDate": "2024-05-24T15:56:45.490076"
+      },
+      {
+        "id": 376,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 75.0,
+        "soilHumidity": 518.0,
+        "remainingWater": 423.0,
+        "gaveWater": false,
+        "light": 2064.0,
+        "createdDate": "2024-05-24T15:46:42.316131"
+      },
+      {
+        "id": 375,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 75.0,
+        "soilHumidity": 446.0,
+        "remainingWater": 417.0,
+        "gaveWater": false,
+        "light": 2085.0,
+        "createdDate": "2024-05-24T15:36:38.889858"
+      },
+      {
+        "id": 374,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 575.0,
+        "remainingWater": 432.0,
+        "gaveWater": false,
+        "light": 2100.0,
+        "createdDate": "2024-05-24T15:26:35.721026"
+      },
+      {
+        "id": 373,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 526.0,
+        "remainingWater": 433.0,
+        "gaveWater": false,
+        "light": 2112.0,
+        "createdDate": "2024-05-24T15:16:32.599262"
+      },
+      {
+        "id": 372,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 480.0,
+        "remainingWater": 427.0,
+        "gaveWater": false,
+        "light": 2127.0,
+        "createdDate": "2024-05-24T15:06:29.407219"
+      },
+      {
+        "id": 371,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 76.0,
+        "soilHumidity": 472.0,
+        "remainingWater": 430.0,
+        "gaveWater": false,
+        "light": 2128.0,
+        "createdDate": "2024-05-24T14:56:26.300942"
+      },
+      {
+        "id": 370,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 77.0,
+        "soilHumidity": 584.0,
+        "remainingWater": 427.0,
+        "gaveWater": false,
+        "light": 2149.0,
+        "createdDate": "2024-05-24T14:46:22.89099"
+      },
+      {
+        "id": 369,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 77.0,
+        "soilHumidity": 520.0,
+        "remainingWater": 422.0,
+        "gaveWater": false,
+        "light": 2155.0,
+        "createdDate": "2024-05-24T14:36:19.130118"
+      },
+      {
+        "id": 368,
+        "plantId": 1,
+        "temp": 22.6,
+        "humidity": 77.0,
+        "soilHumidity": 553.0,
+        "remainingWater": 429.0,
+        "gaveWater": false,
+        "light": 2159.0,
+        "createdDate": "2024-05-24T14:26:15.790475"
+      }
+    ],
+    "pageable": {
+      "pageNumber": 0,
+      "pageSize": 30,
+      "sort": {
+        "empty": false,
+        "sorted": true,
+        "unsorted": false
+      },
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "last": false,
+    "totalPages": 14,
+    "totalElements": 397,
+    "first": true,
+    "size": 30,
+    "number": 0,
+    "sort": {
+      "empty": false,
+      "sorted": true,
+      "unsorted": false
+    },
+    "numberOfElements": 30,
+    "empty": false
+  }
+}

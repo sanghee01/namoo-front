@@ -71,8 +71,12 @@ const Profile: React.FC = () => {
               },
             },
           );
-          console.log(historyResponse.data);
 
+          if (historyResponse.data.content.content.length === 0) {
+            //식물 기록 없을 경우
+            setTodayMessage("아이 촉촉해~");
+            return;
+          }
           // soilHumidity에 따른 메시지 설정
           const { soilHumidity } = historyResponse.data.content.content[0];
           if (soilHumidity < 500) {
@@ -100,13 +104,10 @@ const Profile: React.FC = () => {
             headers: {
               Authorization: `Bearer ${user.accessToken}`, // 사용자 인증 토큰
             },
-            validateStatus: function (status) {
-              return status === 402 || (status >= 200 && status < 300); // 406 또는 2xx 상태 코드를 성공으로 처리
-            },
           });
 
           // API 응답으로부터 출석체크 상태를 확인합니다.
-          if (response.status === 402) {
+          if (response.data.content === true) {
             setIsCheckedIn(true); // 이미 출석체크를 했다면 상태를 true로 변경
           } else {
             setIsCheckedIn(false); // 그렇지 않으면 false로 설정
