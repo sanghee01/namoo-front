@@ -78,7 +78,7 @@ const AddPlant = () => {
         <PlantCardBox>
           <PlantCard onClick={() => setSelectedPlant("1")} $isSelected={selectedPlant === "1"}>
             <ImgBox>
-              <PlantImg src="/assets/images/plant.png" alt="plant" />
+              <PlantImg src="/assets/images/lettuce1.png" alt="plant" />
               <Name>상추</Name>
             </ImgBox>
           </PlantCard>
@@ -223,11 +223,11 @@ export const ImgBox = styled.div`
 
 export const PlantImg = styled.img`
   width: 120px;
-  height: 120px;
+  height: 140px;
 
   @media screen and (max-width: 600px) {
     width: 120px;
-    height: 120px;
+    height: 150px;
     margin: 10px;
   }
 `;
