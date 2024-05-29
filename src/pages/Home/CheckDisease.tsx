@@ -41,11 +41,17 @@ const CheckDisease: React.FC = () => {
       } else {
         setDiseaseResult("노균병"); // 실제 조건에 맞는 값을 설정하세요
       }
-    } catch (error) {
 
+      // 업로드 성공 시 GET 요청 보내기
+      try {
+        const getResponse = await axios.get("https://api.namoo.store/flask/ques");
+        console.log(getResponse.data);
+      } catch (getError) {
+        console.error("Error fetching data", getError);
+      }
+    } catch (error) {
       console.error("Error uploading file", error);
       await warningAlert("서버 점검 중입니다");
-
     }
   };
 
@@ -85,7 +91,6 @@ const CheckDisease: React.FC = () => {
         <UploadButton onClick={handleUpload}>보내기</UploadButton>
         {diseaseResult && <ResultText>{diseaseResult}</ResultText>}
       </Container>
-
     </DiseaseBackGround>
   );
 };
