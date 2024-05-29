@@ -90,8 +90,8 @@ const Chat = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <SendButton onClick={handleSendMessage} style={{ fontSize: "auto" }}>
-          <BsFillSendFill size="75%" />
+        <SendButton onClick={handleSendMessage}>
+          <BsFillSendFill size="30" />
         </SendButton>
       </ChatInput>
     </ChatContainer>
@@ -199,6 +199,12 @@ const SendButton = styled.button`
   border: none;
   padding-top: 5px;
   cursor: pointer;
+
+  @media screen and (max-width: 400px) {
+    svg {
+      width: 25px;
+    }
+  }
 `;
 
 export default Chat;
