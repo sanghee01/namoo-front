@@ -14,21 +14,29 @@ const History = () => {
   const setPlantHistory = useSetRecoilState(plantHistoryState);
 
   useEffect(() => {
+    let intervalId: any;
     if (plantHistoryData.length === 0 && user?.username === "koala") {
       // 현재 아두이노 기기 가지고 있는 계정이 코알라뿐이므로
       getPlantHistoryData();
     } else if (user?.username === "koala") {
       // 3분마다 식물 데이터 업데이트 요청
-      setTimeout(() => {
+      intervalId = setInterval(() => {
         getPlantHistoryData();
-      }, 18000);
+      }, 180000);
     } else if (user?.username !== "koala") {
-      //식물 1이 아닐경우 더미데이터로 대체
+      // 식물 1이 아닐 경우 더미데이터로 대체
       fetch("/plant-history.json")
         .then((response) => response.json())
         .then((data) => setPlantHistory(data.content.content));
     }
-  }, [getPlantHistoryData, plantHistoryData, user?.username]);
+
+    // cleanup 함수 반환
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, []); // 빈 배열을 두 번째 인자로 전달하여 한 번만 실행되도록 설정
 
   const dateList = plantHistoryData.map((data) => data.createdDate);
   const tempList = plantHistoryData.map((data) => data.temp);
