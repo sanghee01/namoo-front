@@ -93,6 +93,12 @@ const QuestContainer = styled.div`
   & h4 {
     font-size: 0.9rem;
   }
+
+  @media screen and (max-width: 450px) {
+    & h4 {
+      font-size: 0.85rem;
+    }
+  }
 `;
 
 const QuestContent = styled.div`

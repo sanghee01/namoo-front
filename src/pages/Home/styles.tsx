@@ -24,6 +24,17 @@ export const NotificationBox = styled.div`
   svg:hover {
     cursor: pointer;
   }
+
+  @media screen and (max-width: 450px) {
+    svg {
+      margin-top: 7px;
+      width: 30px;
+    }
+
+    span {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const FriendshipBar = styled.div`
@@ -61,6 +72,16 @@ export const FriendshipBar = styled.div`
       width: 170px;
     }
   }
+
+  @media screen and (max-width: 450px) {
+    progress {
+      height: 17px;
+      width: 150px;
+    }
+    svg {
+      width: 25px;
+    }
+  }
 `;
 
 export const Main = styled.main`
@@ -89,8 +110,13 @@ export const Character = styled.div`
     align-items: center;
     gap: 5px;
   }
+
   @media screen and (max-width: 600px) {
     top: -215px;
+  }
+
+  @media screen and (max-width: 450px) {
+    top: -175px;
   }
 `;
 
@@ -99,6 +125,10 @@ export const PlantImg = styled.img`
 
   @media screen and (max-width: 600px) {
     width: 230px;
+  }
+
+  @media screen and (max-width: 450px) {
+    width: 190px;
   }
 `;
 
@@ -111,6 +141,11 @@ export const TableImg = styled.img`
     bottom: -300px;
     width: 280px;
   }
+
+  @media screen and (max-width: 450px) {
+    bottom: -270px;
+    width: 250px;
+  }
 `;
 
 export const LevelImg = styled.img`
@@ -120,6 +155,12 @@ export const LevelImg = styled.img`
     height: 30px;
     width: 30px;
   }
+
+  @media screen and (max-width: 450px) {
+    margin-top: 5px;
+    height: 25px;
+    width: 25px;
+  }
 `;
 
 export const CharacterName = styled.span`
@@ -127,6 +168,12 @@ export const CharacterName = styled.span`
   font-size: 1rem;
   margin-left: 5px;
   transform: translateY(10%);
+
+  @media screen and (max-width: 450px) {
+    margin-top: 5px;
+    margin-left: 2px;
+    font-size: 0.9rem;
+  }
 `;
 
 export const SideBar = styled.aside`
@@ -160,6 +207,24 @@ export const SideBar = styled.aside`
   @media screen and (max-width: 600px) {
     bottom: 300px;
   }
+
+  @media screen and (max-width: 450px) {
+    bottom: 180px;
+
+    div {
+      padding: 7px 0px;
+      margin: 4px 0px;
+    }
+
+    svg {
+      width: 30px;
+    }
+
+    span {
+      margin-top: 4px;
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 export const QuestModalBox = styled.div`
@@ -184,6 +249,7 @@ export const QuestModalBox = styled.div`
     left: 7.5%;
     width: 85%;
     height: 60%;
+    overflow: scroll;
   }
 `;
 

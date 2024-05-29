@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcPlus } from "react-icons/fc";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { AiFillSetting } from "react-icons/ai";
@@ -10,12 +10,12 @@ import { useEffect, useCallback, useRef } from "react";
 import { usePlantList } from "../../hooks/useGetPlantList";
 
 const MyPlant = () => {
-  const getPlantList = usePlantList(); 
+  const getPlantList = usePlantList();
   const user = useRecoilValue(userState); // userState에서 유저 정보 불러오기
   const plantList = useRecoilValue(plantListState);
   const [, setPlant] = useRecoilState(plantState);
   const isFetchedRef = useRef(false);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPlantList = async () => {
@@ -24,13 +24,12 @@ const MyPlant = () => {
         isFetchedRef.current = true;
       }
     };
-  
+
     fetchPlantList();
   }, [user, getPlantList]);
-  
 
   useEffect(() => {
-    console.log('plantList:', plantList);
+    console.log("plantList:", plantList);
   }, []);
 
   const handlePickPlant = useCallback(
@@ -78,23 +77,22 @@ const MyPlant = () => {
       }
     },
 
-    [plantList, handlePickPlant]
+    [plantList, handlePickPlant],
   );
 
   return (
     <MyPlantBackGround>
       <Header>
         <Text>내 식물들</Text>
-        <Link to="/setting">
-          <AiFillSetting size="40" />
-        </Link>
+        <AiFillSetting
+          onClick={() => {
+            navigate("/setting");
+          }}
+          size="35"
+        />
       </Header>
-      <Container>
-        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}
-      </Container>
-      <Container>
-        {Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}
-      </Container>
+      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i))}</Container>
+      <Container>{Array.from({ length: 2 }, (_, i) => renderPlantOrAddLink(i + 2))}</Container>
     </MyPlantBackGround>
   );
 };
@@ -131,7 +129,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  padding: 10px;
 `;
 
 export const PlantCard = styled.div`
@@ -149,6 +147,11 @@ export const PlantCard = styled.div`
     border: 2px solid #f0e68c;
     cursor: pointer;
   }
+
+  @media screen and (max-width: 400px) {
+    border-radius: 20px;
+    height: 95%;
+  }
 `;
 
 export const ImgBox = styled.div`
@@ -161,10 +164,18 @@ export const ImgBox = styled.div`
 
 export const PlantImg = styled.img`
   height: 150px;
+
+  @media screen and (max-width: 400px) {
+    height: 120px;
+  }
 `;
 
 export const CharacterName = styled.span`
   font-weight: 500;
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.9rem;
+  }
 `;
 
 export const Level = styled.span`
