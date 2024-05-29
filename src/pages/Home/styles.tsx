@@ -249,6 +249,7 @@ export const QuestModalBox = styled.div`
     left: 7.5%;
     width: 85%;
     height: 60%;
+    overflow: scroll;
   }
 `;
 
