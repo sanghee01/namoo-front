@@ -7,7 +7,6 @@ import {
   ProfileBackGround,
   Header,
   Text,
-  SettingBox,
   Main,
   ProfileCard,
   ProfileBox,
@@ -20,7 +19,7 @@ import {
   TextBox,
   IconBox,
   QuestBox,
-  Container,
+  HeaderLeft,
   CheckBox,
   CheckImg,
   DetailBoxContainer,
@@ -190,15 +189,11 @@ const Profile: React.FC = () => {
   return (
     <ProfileBackGround>
       <Header>
-        <Container>
-          <Link to="/myplant">
-            <IoChevronBackOutline size="30" />
-          </Link>
-          <Text style={{ paddingLeft: "10px" }}>식물이야기</Text>
-        </Container>
-        <SettingBox>
-          <RiDeleteBin6Fill size="40" onClick={handleDeletePlant} />
-        </SettingBox>
+        <HeaderLeft>
+          <IoChevronBackOutline onClick={() => navigate("/myplant")} size="30" />
+          <h3>식물이야기</h3>
+        </HeaderLeft>
+        <RiDeleteBin6Fill size="35" onClick={handleDeletePlant} />
       </Header>
       <Main>
         <ProfileCard>
@@ -229,7 +224,7 @@ const Profile: React.FC = () => {
                 <Text>식물도감</Text>
               </TextBox>
               <IconBox>
-                <FaBookBookmark color="#a8511c" size="80" />
+                <FaBookBookmark color="#a8511c" size="60" />
               </IconBox>
             </Link>
           </BtnBox>
@@ -239,7 +234,7 @@ const Profile: React.FC = () => {
                 <Text>명예의 전당</Text>
               </TextBox>
               <IconBox>
-                <FaTrophy color="#ffc400" size="80" />
+                <FaTrophy color="#ffc400" size="60" />
               </IconBox>
             </Link>
           </BtnBox>
