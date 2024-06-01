@@ -1,21 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { BsFillSendFill } from "react-icons/bs";
 import axios from "axios";
-import React, { useEffect, useRef } from "react";
 
 const Chat = () => {
   const [messages, setMessages] = useState([{ id: 1, text: "안녕하세요! 무엇을 도와드릴까요?", isUser: false }]);
   const [inputText, setInputText] = useState("");
   const item = localStorage.getItem("recoil-persist");
   const chatContentRef = useRef<HTMLDivElement | null>(null);
+
   const parsedItem = item ? JSON.parse(item) : null;
   const plantName = parsedItem?.plantState?.name || "";
   console.log(plantName);
+
   useEffect(() => {
-    const chatContent = chatContentRef.current;
-    if (chatContent) {
-      chatContent.querySelector(":last-child")?.scrollIntoView({ behavior: "smooth" });
+    if (chatContentRef.current) {
+      chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -73,7 +73,7 @@ const Chat = () => {
       <Top></Top>
       <ChatHeader>
         <RobotIcon>🤖</RobotIcon>
-        <ChatTitle>대화하기</ChatTitle>
+        <ChatTitle>Chatbot</ChatTitle>
       </ChatHeader>
       <ChatContent ref={chatContentRef}>
         {messages.map((message, index) => (
@@ -106,7 +106,7 @@ const ChatContainer = styled.div`
 `;
 
 const Top = styled.div`
-  height: 15px;
+  height: 20px;
   width: 100%;
   background-color: #75c975;
 `;
@@ -114,7 +114,7 @@ const Top = styled.div`
 const ChatHeader = styled.div`
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 10%;
   padding: 5px 15px;
   background-color: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -122,12 +122,12 @@ const ChatHeader = styled.div`
 
 const RobotIcon = styled.div`
   font-size: 30px;
-  margin-right: 7px;
+  margin-right: 4px;
 `;
 
 const ChatTitle = styled.h3`
   flex-grow: 1;
-  font-size: 23px;
+  font-size: 25px;
   font-weight: bold;
 `;
 
@@ -173,28 +173,20 @@ const BubbleName = styled.div`
 
 const ChatInput = styled.div`
   display: flex;
-  height: 9%;
-  padding: 3px 14px;
+  height: 8%;
+  padding: 2px 14px;
   background-color: #ffffff;
   box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
 `;
 
 const InputBox = styled.input`
   flex-grow: 1;
-  border-radius: 10px;
   border: none;
-  margin: 4px 0px;
-  padding-left: 8px;
-  padding: 10px;
-  font-size: 17px;
-  font-weight: bold;
-  &::placeholder {
-    color: #afafaf;
-  }
+  font-size: 16px;
 `;
 
 const SendButton = styled.button`
-  color: #61a263;
+  color: #939393;
   background-color: transparent;
   border: none;
   padding-top: 5px;
