@@ -2,30 +2,49 @@ import styled from "styled-components";
 import HistoryLineChart from "../../components/HistoryLineChart";
 import { useEffect } from "react";
 import { useGetPlantHistoryData } from "../../hooks/useGetPlantHistoryData";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { plantHistoryState } from "../../state/plantState";
 import HistoryBarChart from "../../components/HistoryBarChart";
+import { userState } from "../../state/userState";
 
 const History = () => {
   const getPlantHistoryData = useGetPlantHistoryData();
   const plantHistoryData = useRecoilValue(plantHistoryState);
+  const user = useRecoilValue(userState);
+  const setPlantHistory = useSetRecoilState(plantHistoryState);
 
   useEffect(() => {
-    if (plantHistoryData.length === 0) {
+    let intervalId: any;
+    if (plantHistoryData.length === 0 && user?.username === "koala") {
+      // 현재 아두이노 기기 가지고 있는 계정이 코알라뿐이므로
       getPlantHistoryData();
-    } else {
+    } else if (user?.username === "koala") {
       // 3분마다 식물 데이터 업데이트 요청
-      setTimeout(() => {
+      intervalId = setInterval(() => {
         getPlantHistoryData();
-      }, 18000);
+      }, 180000);
+    } else if (user?.username !== "koala") {
+      // 식물 1이 아닐 경우 더미데이터로 대체
+      fetch("/plant-history.json")
+        .then((response) => response.json())
+        .then((data) => setPlantHistory(data.content.content));
     }
-  }, [getPlantHistoryData, plantHistoryData]);
+
+    // cleanup 함수 반환
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, []); // 빈 배열을 두 번째 인자로 전달하여 한 번만 실행되도록 설정
 
   const dateList = plantHistoryData.map((data) => data.createdDate);
   const tempList = plantHistoryData.map((data) => data.temp);
   const humidityList = plantHistoryData.map((data) => data.humidity);
   const soilHumidityList = plantHistoryData.map((data) => (data.soilHumidity / 1000) * 100);
-  const lightList = plantHistoryData.map((data) => (data.light / 3000) * 100);
+  const lightList = plantHistoryData.map((data) =>
+    100 - (data.light / 2000) * 100 < 0 ? 0 : 100 - (data.light / 2000) * 100,
+  );
   const remainingWaterList = plantHistoryData.map((data) => (data.remainingWater / 3000) * 100);
   const gaveWaterList = plantHistoryData.map((data) => Number(data.gaveWater));
 

@@ -68,7 +68,7 @@ export function useCompleteQuest() {
           },
         },
       );
-      console.log(response);
+      successAlert(response.data.message);
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../state/userState";
 import { useSetRecoilState } from "recoil";
-import { plantListState } from "../state/plantState";
+import { plantListState, Plant } from "../state/plantState";
 import { useCallback } from "react";
 import { warningAlert } from "../components/Alert";
 
@@ -12,18 +12,32 @@ export function usePlantList() {
   const setPlant = useSetRecoilState(plantListState);
 
   const plantList = useCallback(async () => {
-    // useCallback을 사용하여 함수를 메모이제이션합니다.
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_APIADDRESS}/plant`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`, // 토큰 정보를 헤더에 포함
+          Authorization: `Bearer ${accessToken}`,
         },
       });
-      setPlant(response.data.content.slice(0, 4)); // 최대 4개의 식물 정보만 가져옴
+
+      const plants = response.data.content.slice(0, 4).map((plant: Plant) => {
+        const plantType = plant.plantType;
+        const imgPath =
+          plantType === "상추"
+            ? `/assets/images/lettuce${plant.level}.png`
+            : plantType === "딸기"
+            ? "/assets/images/strawberry.png"
+            : plantType === "대파"
+            ? "/assets/images/greenOnion.png"
+            : "/assets/images/onion.png";
+
+        return { ...plant, imgPath };
+      });
+
+      setPlant(plants);
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }
-  }, [accessToken, setPlant]); // accessToken과 setPlant 상태 변경시에만 함수가 다시 생성되도록 합니다.
+  }, [accessToken, setPlant]);
 
   return plantList;
 }

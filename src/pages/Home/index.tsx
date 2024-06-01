@@ -3,9 +3,11 @@ import { FaHeart } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { IoIosWater } from "react-icons/io";
 import { BsCameraFill } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 import {
   HomeBackGround,
   Header,
+  NotificationBox,
   FriendshipBar,
   Main,
   CharacterBox,
@@ -14,77 +16,179 @@ import {
   TableImg,
   LevelImg,
   SideBar,
+  NotificationModalBox,
+  NoNotification,
+  NotificationHeader,
+  NotificationBody,
+  QuestModalBox,
+  QuestModalCloseBtn,
   CharacterName,
-  Modal,
-  ModalCloseBtn,
+  HeartImage,
 } from "./styles";
-import { plantLevelState, plantState } from "../../state/plantState";
-import { useRecoilValue } from "recoil";
-import { plantImgState } from "../../state/plantState";
-import { useCallback, useState } from "react";
+import { plantState } from "../../state/plantState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useCallback, useEffect, useState } from "react";
 import { questState } from "../../state/questState";
 import QuestModal from "../../components/QuestModal";
-import { giveWaterToPlant } from "../../services/plantApi";
 import { useNavigate } from "react-router";
 import { useGetQuest } from "../../hooks/useQuest";
 import { successAlert, warningAlert } from "../../components/Alert";
+import { useDeleteAllNotification, useGetCountNotification, useGetNotification } from "../../hooks/useNotification";
+import NotificationModal from "../../components/NotificationModal";
+import { notificationState } from "../../state/notificationState";
+import { usePlantGiveWater } from "../../hooks/usePlantGiveWater";
+
+interface Heart {
+  id: number;
+  x: number;
+  y: number;
+}
 
 const Home = () => {
   const navegate = useNavigate();
   const getQuest = useGetQuest();
+  const getNotification = useGetNotification();
+  const getCountNotification = useGetCountNotification();
+  const deleteAllNotifiction = useDeleteAllNotification();
+  const giveWater = usePlantGiveWater();
 
-  const plant = useRecoilValue(plantState);
-  const plantImg = useRecoilValue(plantImgState);
-  const plantLevel = useRecoilValue(plantLevelState);
+  const [plant, setPlant] = useRecoilState(plantState);
   const questList = useRecoilValue(questState);
+  const notificationList = useRecoilValue(notificationState);
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  console.log("questList", questList);
+  const [isOpenQuest, setIsOpenQuest] = useState(false);
+  const [isOpenNotification, setIsNotification] = useState(false);
+  const [isThereNotifications, setIsThereNotifications] = useState(true);
+  const [growthGauge, setGrowthGauge] = useState(0);
+  const [hearts, setHearts] = useState<Heart[]>([]);
+  const [countNotification, setCountNotification] = useState(0);
+
+  useEffect(() => {
+    const fetchCountNotification = async () => {
+      try {
+        const count = await getCountNotification();
+        setCountNotification(count);
+      } catch (error) {
+        console.error("Error fetching count notification:", error);
+      }
+    };
+    fetchCountNotification();
+  }, []);
+
+  // 식물 정보 변동 시 모든 값 업데이트
+  useEffect(() => {
+    setPlant({
+      id: plant.id,
+      name: plant.name,
+      exp: plant.exp,
+      level: plant.level,
+      plantType: plant.plantType,
+      uuid: plant.uuid,
+      giveWater: plant.giveWater,
+      createDate: plant.createDate,
+      imgPath: plant.imgPath,
+    });
+  }, [
+    plant.createDate,
+    plant.exp,
+    plant.giveWater,
+    plant.id,
+    plant.imgPath,
+    plant.level,
+    plant.name,
+    plant.plantType,
+    plant.uuid,
+    setPlant,
+  ]);
 
   // 퀘스트 모달 열기
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
+  const handleOpenQuest = () => {
+    setIsOpenQuest(true);
     getQuest();
   };
 
   // 퀘스트 모달 닫기
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
+  const handleCloseQuest = () => {
+    setIsOpenQuest(false);
+  };
+
+  // 알림창 열기
+  const handleOpenNotificaition = () => {
+    setIsNotification(true);
+    getNotification();
+    getCountNotification();
+  };
+
+  // 알림창 닫기
+  const handleCloseNotificaition = () => {
+    setIsNotification(false);
+  };
+
+  // 알림 전체 삭제
+  const handleDeleteAllNotification = () => {
+    deleteAllNotifiction();
+    setIsThereNotifications(false); // 삭제되면 바로 안보이도록 설정하기 위함
   };
 
   // 원격 물 주기
   const handleGiveWater = useCallback(async () => {
     try {
-      await giveWaterToPlant(plant.id);
-      await successAlert("물 주기 성공!");
+      await giveWater(plant.id);
+      await successAlert("물주기 요청이 완료되었습니다. 성공 여부는 알림을 통해 확인하세요. (소요 시간 최대 30초)");
     } catch (error: any) {
       await warningAlert(error.response.data.message);
     }
-  }, [plant.id]);
+  }, [giveWater, plant.id]);
+
+  // 성장도 게이지
+  useEffect(() => {
+    if (plant.exp >= 100) {
+      setGrowthGauge(plant.exp - 100 * Math.floor(plant.exp / 100));
+    } else {
+      setGrowthGauge(plant.exp);
+    }
+  }, [plant.exp]);
+
+  // 화면 클릭시 하트
+  const handleClickHeartEffect = (e: React.MouseEvent<HTMLDivElement>) => {
+    const newHeart = {
+      id: Date.now(),
+      x: e.clientX - 25,
+      y: e.clientY - 25,
+    };
+    setHearts((prevHearts) => [...prevHearts, newHeart]);
+
+    setTimeout(() => {
+      setHearts((prevHearts) => prevHearts.filter((heart) => heart.id !== newHeart.id));
+    }, 1000);
+  };
 
   return (
     <HomeBackGround>
       <Header>
         <FriendshipBar>
           <FaHeart color="#b72020" size="30" />
-          <progress value={plant.exp} max="400"></progress>
+          <progress value={growthGauge} max="100"></progress>
         </FriendshipBar>
-        <BiSolidBell color="#ffc400" size="40" />
+        <NotificationBox>
+          <BiSolidBell onClick={handleOpenNotificaition} color="#ffc400" size="38" />
+          <span>{countNotification}</span>
+        </NotificationBox>
       </Header>
       <Main>
         <CharacterBox>
           <TableImg src="/assets/images/table.png" alt="plant" />
-          <Character>
-            <PlantImg src={plantImg} alt="plant" />
+          <Character onClick={handleClickHeartEffect}>
+            <PlantImg src={plant.imgPath} alt="plant" />
             <div>
-              <LevelImg src={`/assets/images/level${plantLevel}.png`} alt="level" />
+              <LevelImg src={`/assets/images/level${plant.level}.png`} alt="level" />
               <CharacterName>{plant.name}</CharacterName>
             </div>
           </Character>
         </CharacterBox>
         <SideBar>
           <div>
-            <FaBook onClick={handleOpenModal} color="#a8511c" size="40" />
+            <FaBook onClick={handleOpenQuest} color="#a8511c" size="40" />
             <span>퀘스트</span>
           </div>
           <div onClick={handleGiveWater}>
@@ -96,8 +200,42 @@ const Home = () => {
             <span>질병확인</span>
           </div>
         </SideBar>
-        {isOpenModal && (
-          <Modal>
+        {isOpenNotification && (
+          <NotificationModalBox>
+            <NotificationHeader>
+              <header>
+                <h3>알림</h3>
+                <div>
+                  <span onClick={handleDeleteAllNotification}>전체 삭제</span>
+                  <IoClose onClick={handleCloseNotificaition} />
+                </div>
+              </header>
+            </NotificationHeader>
+            <NotificationBody>
+              {isThereNotifications && notificationList.length > 0 ? (
+                notificationList.map((notification) => {
+                  return (
+                    <NotificationModal
+                      key={notification.id}
+                      id={notification.id}
+                      description={notification.description}
+                      link={notification.link}
+                      isRead={notification.isRead}
+                      notificationType={notification.notificationType}
+                      createdDate={notification.createdDate}
+                      handleCloseNotificaition={handleCloseNotificaition}
+                      handleOpenQuest={handleOpenQuest}
+                    />
+                  );
+                })
+              ) : (
+                <NoNotification>알림이 없습니다.</NoNotification>
+              )}
+            </NotificationBody>
+          </NotificationModalBox>
+        )}
+        {isOpenQuest && (
+          <QuestModalBox>
             <h3>주간 퀘스트</h3>
             <div>
               {questList.map((quest) => {
@@ -116,10 +254,13 @@ const Home = () => {
                 );
               })}
             </div>
-            <ModalCloseBtn onClick={handleCloseModal}>닫기</ModalCloseBtn>
-          </Modal>
+            <QuestModalCloseBtn onClick={handleCloseQuest}>닫기</QuestModalCloseBtn>
+          </QuestModalBox>
         )}
       </Main>
+      {hearts.map((heart) => (
+        <HeartImage key={heart.id} style={{ left: `${heart.x}px`, top: `${heart.y}px` }} />
+      ))}
     </HomeBackGround>
   );
 };

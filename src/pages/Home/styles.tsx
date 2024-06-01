@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const HomeBackGround = styled.div`
   background-image: url("/assets/images/background2.png");
@@ -14,14 +14,25 @@ export const Header = styled.div`
   align-items: center;
   padding: 25px;
   height: 10%;
+`;
+
+export const NotificationBox = styled.div`
+  span {
+    font-weight: 600;
+  }
 
   svg:hover {
     cursor: pointer;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 450px) {
     svg {
-      width: 40px;
+      margin-top: 7px;
+      width: 30px;
+    }
+
+    span {
+      font-size: 0.9rem;
     }
   }
 `;
@@ -61,6 +72,16 @@ export const FriendshipBar = styled.div`
       width: 170px;
     }
   }
+
+  @media screen and (max-width: 450px) {
+    progress {
+      height: 17px;
+      width: 150px;
+    }
+    svg {
+      width: 25px;
+    }
+  }
 `;
 
 export const Main = styled.main`
@@ -75,7 +96,6 @@ export const CharacterBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  align-items: center;
   width: 100%;
   margin-top: 70px;
 `;
@@ -90,8 +110,13 @@ export const Character = styled.div`
     align-items: center;
     gap: 5px;
   }
+
   @media screen and (max-width: 600px) {
     top: -215px;
+  }
+
+  @media screen and (max-width: 450px) {
+    top: -175px;
   }
 `;
 
@@ -100,6 +125,10 @@ export const PlantImg = styled.img`
 
   @media screen and (max-width: 600px) {
     width: 230px;
+  }
+
+  @media screen and (max-width: 450px) {
+    width: 190px;
   }
 `;
 
@@ -112,6 +141,11 @@ export const TableImg = styled.img`
     bottom: -300px;
     width: 280px;
   }
+
+  @media screen and (max-width: 450px) {
+    bottom: -270px;
+    width: 250px;
+  }
 `;
 
 export const LevelImg = styled.img`
@@ -121,6 +155,12 @@ export const LevelImg = styled.img`
     height: 30px;
     width: 30px;
   }
+
+  @media screen and (max-width: 450px) {
+    margin-top: 5px;
+    height: 25px;
+    width: 25px;
+  }
 `;
 
 export const CharacterName = styled.span`
@@ -128,6 +168,12 @@ export const CharacterName = styled.span`
   font-size: 1rem;
   margin-left: 5px;
   transform: translateY(10%);
+
+  @media screen and (max-width: 450px) {
+    margin-top: 5px;
+    margin-left: 2px;
+    font-size: 0.9rem;
+  }
 `;
 
 export const SideBar = styled.aside`
@@ -161,11 +207,29 @@ export const SideBar = styled.aside`
   @media screen and (max-width: 600px) {
     bottom: 300px;
   }
+
+  @media screen and (max-width: 450px) {
+    bottom: 180px;
+
+    div {
+      padding: 7px 0px;
+      margin: 4px 0px;
+    }
+
+    svg {
+      width: 30px;
+    }
+
+    span {
+      margin-top: 4px;
+      font-size: 0.8rem;
+    }
+  }
 `;
 
-export const Modal = styled.div`
+export const QuestModalBox = styled.div`
   position: fixed;
-  padding: 1rem;
+  padding: 10px;
   top: 20%;
   left: 30%;
   width: 40%;
@@ -174,20 +238,112 @@ export const Modal = styled.div`
   border-radius: 25px;
   box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
   border: 5px solid #eae5dc;
-
+  z-index: 100;
   & h3 {
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 10px;
     color: #53390a;
   }
   @media screen and (max-width: 450px) {
-    left: 10%;
-    width: 80%;
+    left: 7.5%;
+    width: 85%;
     height: 60%;
+    overflow: scroll;
   }
 `;
 
-export const ModalCloseBtn = styled.div`
+export const NotificationModalBox = styled(QuestModalBox)`
+  top: 8%;
+  left: 10%;
+  width: 80%;
+  height: 40%;
+  min-height: 300px;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px rgba(250, 150, 51, 0.1);
+  border: 5px solid #eae5dc;
+  /* overflow-y: scroll; */
+  padding: 20px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const NotificationHeader = styled.div`
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  padding-bottom: 10px;
+  & header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  & svg {
+    font-size: 1.7rem;
+  }
+
+  & h3 {
+    text-align: center;
+    color: #53390a;
+    margin: 0;
+  }
+
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  & span {
+    font-size: 0.9rem;
+    padding: 3px 7px;
+    background-color: #ffe0e0;
+    border-radius: 5px;
+    color: #8a3a3a;
+    font-weight: 600;
+
+    &:hover {
+      filter: contrast(80%);
+    }
+  }
+`;
+
+export const NotificationBody = styled.div`
+  width: calc(100% + 5px);
+  height: calc(100% - 40px);
+  padding-right: 5px;
+  overflow-y: scroll;
+  /* 스크롤바의 기본 트랙 스타일 */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* 스크롤바의 트랙 스타일 */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* 스크롤바의 핸들 스타일 */
+  &::-webkit-scrollbar-thumb {
+    background: #abffa9;
+    border-radius: 6px;
+  }
+
+  /* 스크롤바의 핸들을 호버할 때 스타일 */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
+export const NoNotification = styled.div`
+  color: rgba(0, 0, 0, 0.7);
+`;
+
+export const QuestModalCloseBtn = styled.div`
+  width: 90%;
   text-align: center;
   padding: 12px 0px;
   border-radius: 10px;
@@ -195,4 +351,30 @@ export const ModalCloseBtn = styled.div`
   font-size: 0.9rem;
   margin: auto;
   margin-top: 15px;
+`;
+
+const pop = keyframes`
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+`;
+
+export const HeartImage = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-image: url("/assets/images/heart.png");
+  background-size: cover;
+  opacity: 0;
+  animation: ${pop} 0.8s forwards;
+  pointer-events: auto; // 하트 이미지에는 포인터 이벤트 적용
 `;
