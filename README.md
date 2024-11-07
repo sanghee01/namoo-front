@@ -56,10 +56,10 @@
   </tr>
   <tr>
     <td align="center" width="200px" >
-      <a href="https://github.com/sanghee01/"><strong>이상희</strong></a><br>Fronted
+      <a href="https://github.com/sanghee01/"><strong>이상희</strong></a><br>Frontend
     </td>
     <td align="center" width="200px" >
-      <a href="https://github.com/maybeaj/"><strong>이효진</strong></a><br>Fronted
+      <a href="https://github.com/maybeaj/"><strong>이효진</strong></a><br>Frontend
     </td>
     <td align="center" width="200px" >
       <a href="https://github.com/nemokoala/"><strong>박재연</strong></a><br>Backend
